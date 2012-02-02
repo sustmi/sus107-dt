@@ -1,11 +1,11 @@
 cmake_minimum_required (VERSION 2.6)
-project (DP)
+project (sus107-dt)
 
 # wxWidgets
 find_package(wxWidgets COMPONENTS core base REQUIRED)
 include( "${wxWidgets_USE_FILE}" )
 
-add_executable(dp
+add_executable(sus107-dt
 	src/main.cpp
 	src/Emulator.cpp
 	src/Machine.cpp
@@ -18,7 +18,7 @@ add_executable(dp
 	src/util/Timer.cpp
 	src/Keyboard.cpp
 )
-target_link_libraries (dp
+target_link_libraries (sus107-dt
 	spectrum
 	opencv_core opencv_imgproc opencv_highgui opencv_ml opencv_video opencv_features2d opencv_calib3d opencv_objdetect opencv_contrib opencv_legacy opencv_flann
 	${wxWidgets_LIBRARIES}
@@ -37,4 +37,4 @@ make_directory (${Z80EX_BINARY_DIR})
 set (Z80EX_STATIC_ONLY true)
 add_subdirectory (${Z80EX_PATH} ${Z80EX_BINARY_DIR})
 link_directories (${Z80EX_BINARY_DIR})
-target_link_libraries (dp z80ex-static z80ex_dasm-static)
+target_link_libraries (sus107-dt z80ex-static z80ex_dasm-static)
