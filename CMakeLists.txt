@@ -29,7 +29,7 @@ if(CMAKE_BUILD_TYPE MATCHES "Release")
     set(CMAKE_CXX_FLAGS "-O2")
 endif()
 
-set (Z80EX_PATH "${PROJECT_SOURCE_DIR}/../z80ex"
+set (Z80EX_PATH "${PROJECT_SOURCE_DIR}/z80ex"
 	CACHE PATH "Path to Z80Ex library")
 include_directories("${Z80EX_PATH}/include")
 set (Z80EX_BINARY_DIR "${PROJECT_BINARY_DIR}/lib_z80ex")
