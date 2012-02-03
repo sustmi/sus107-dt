@@ -28,6 +28,7 @@ public:
 
 	void attach(Memory *memory, Cpu *cpu, Ula *ula);
 	Cpu *getCpu();
+	Memory *getMemory();
 
 	void step();
 	void stepInstruction();
@@ -37,10 +38,6 @@ public:
 
 	uint64_t getCurrentTime() { return currentTime; }
 	//void addEvent(int event);
-
-	int dasm(char *output, int output_size, unsigned flags, int *t_states, int *t_states2, Z80EX_WORD addr);
-
-	Z80EX_BYTE dasm_readbyte(Z80EX_WORD addr);
 
 	void setCpuFreq(uint64_t cpuFreq);
     uint64_t getCpuFreq() const;

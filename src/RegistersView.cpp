@@ -112,8 +112,29 @@ void RegistersView::setDebugger(Debugger *debugger)
 
 void RegistersView::OnRegEnter(wxCommandEvent &event)
 {
-	event.Skip();
-	wxLogDebug(wxT("Event handler (RegistersView::OnRegEnter) not implemented yet")); //notify the user that he hasn't implemented the event handler yet
+	wxTextCtrl *textCtl = wxDynamicCast(event.GetEventObject(), wxTextCtrl);
+	if (textCtl) {
+		int val;
+		if (sscanf(textCtl->GetValue().mb_str(), "%x", &val) == 1) {
+			Cpu *cpu = debugger->getEmulator()->getMachine()->getCpu();
+			switch (event.GetId()) {
+				case 101: cpu->setRegister(regAF, val); break;
+				case 102: cpu->setRegister(regBC, val); break;
+				case 103: cpu->setRegister(regDE, val); break;
+				case 104: cpu->setRegister(regHL, val); break;
+				case 105: cpu->setRegister(regAF_, val); break;
+				case 106: cpu->setRegister(regBC_, val); break;
+				case 107: cpu->setRegister(regDE_, val); break;
+				case 108: cpu->setRegister(regHL_, val); break;
+				case 109: cpu->setRegister(regPC, val); break;
+				case 110: cpu->setRegister(regSP, val); break;
+				case 111: cpu->setRegister(regIX, val); break;
+				case 112: cpu->setRegister(regIY, val); break;
+				case 113: cpu->setRegister(regI, val); break;
+				case 114: cpu->setRegister(regR, val); break;
+			}
+		}
+	}
 }
 
 

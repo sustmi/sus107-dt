@@ -10,6 +10,7 @@
 
 // begin wxGlade: ::dependencies
 #include <wx/notebook.h>
+#include <wx/grid.h>
 // end wxGlade
 
 // begin wxGlade: ::extracode
@@ -33,16 +34,19 @@ private:
 	// end wxGlade
 
 	Debugger *debugger;
+	int address;
 
 protected:
 	// begin wxGlade: DebuggerView::attributes
+	wxMenuBar* debugger_menubar;
 	wxPanel* notebook_pane_hex;
+	wxGrid* code_grid;
+	wxSlider* code_slider;
 	wxPanel* notebook_pane_code;
 	wxNotebook* notebook;
 	wxButton* button_step;
 	wxButton* button_continue;
 	wxButton* button_break;
-	wxMenuBar* debugger_menubar;
 	// end wxGlade
 
 	DECLARE_EVENT_TABLE();
@@ -52,6 +56,7 @@ public:
 	virtual void OnDebuggerContinue(wxCommandEvent &event); // wxGlade: <event_handler>
 	virtual void OnDebuggerBreak(wxCommandEvent &event); // wxGlade: <event_handler>
 	virtual void OnViewRegisters(wxCommandEvent &event); // wxGlade: <event_handler>
+	virtual void OnCodeSliderEndScroll(wxScrollEvent &event); // wxGlade: <event_handler>
     void setDebugger(Debugger *debugger);
 }; // wxGlade: end class
 

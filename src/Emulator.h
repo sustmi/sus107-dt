@@ -69,6 +69,7 @@ protected:
 	virtual void OnTapePlay(wxCommandEvent &event); // wxGlade: <event_handler>
 	virtual void OnTapeStop(wxCommandEvent &event); // wxGlade: <event_handler>
 	virtual void OnTapeRewind(wxCommandEvent &event); // wxGlade: <event_handler>
+	virtual void OnFileOpen(wxCommandEvent &event); // wxGlade: <event_handler>
 
 	void OnTimer(wxCommandEvent &event);
 	void OnPaint(wxPaintEvent &event);

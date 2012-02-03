@@ -61,7 +61,17 @@ void Debugger::setEmulator(Emulator *emulator)
     this->emulator = emulator;
 }
 
+int Debugger::dasm(char *output, int output_size, unsigned  flags, int *t_states, int *t_states2, Z80EX_WORD addr) {
+	return z80ex_dasm(output, output_size, flags, t_states, t_states2, ::dasm_readbyte, addr, this);
+}
 
+Z80EX_BYTE Debugger::dasm_readbyte(Z80EX_WORD addr) {
+	return this->getEmulator()->getMachine()->getMemory()->rawRead(addr);
+}
+Z80EX_BYTE dasm_readbyte(Z80EX_WORD addr, void *user_data) {
+	Debugger *debugger = (Debugger *)user_data;
+	return debugger->dasm_readbyte(addr);
+}
 
 
 

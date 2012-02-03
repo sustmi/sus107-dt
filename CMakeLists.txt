@@ -2,7 +2,7 @@ cmake_minimum_required (VERSION 2.6)
 project (sus107-dt)
 
 # wxWidgets
-find_package(wxWidgets COMPONENTS core base REQUIRED)
+find_package(wxWidgets COMPONENTS core base adv REQUIRED)
 include( "${wxWidgets_USE_FILE}" )
 
 add_executable(sus107-dt

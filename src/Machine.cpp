@@ -33,6 +33,10 @@ Cpu *Machine::getCpu()
 {
 	return cpu;
 }
+Memory *Machine::getMemory()
+{
+	return memory;
+}
 
 bool Machine::loadRom(const char *filename) {
 	FILE *f = fopen(filename, "rb");
@@ -157,20 +161,6 @@ uint64_t Machine::getCpuFreq() const {
 
 Z80EX_WORD Machine::getPC() {
 	return cpu->getRegister(regPC);
-}
-
-int Machine::dasm(char *output, int output_size, unsigned  flags, int *t_states, int *t_states2, Z80EX_WORD addr) {
-	return z80ex_dasm(output, output_size, flags, t_states, t_states2, ::dasm_readbyte, addr, this);
-}
-
-Z80EX_BYTE Machine::dasm_readbyte(Z80EX_WORD addr) {
-	return this->memory->rawRead(addr);
-}
-
-
-Z80EX_BYTE dasm_readbyte(Z80EX_WORD addr, void *user_data) {
-	Machine *machine = (Machine *)user_data;
-	return machine->dasm_readbyte(addr);
 }
 
 

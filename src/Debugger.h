@@ -28,6 +28,9 @@ public:
     Emulator *getEmulator() const;
     void setEmulator(Emulator *emulator);
 
+    int dasm(char *output, int output_size, unsigned flags, int *t_states, int *t_states2, Z80EX_WORD addr);
+    Z80EX_BYTE dasm_readbyte(Z80EX_WORD addr);
+
 private:
 	DebuggerView *debuggerView;
 	RegistersView *registersView;

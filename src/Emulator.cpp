@@ -16,17 +16,20 @@ Emulator::Emulator(wxWindow* parent, int id, const wxString& title, const wxPoin
 	// begin wxGlade: Emulator::Emulator
 	menubar = new wxMenuBar();
 	wxMenu* wxglade_tmp_menu_1 = new wxMenu();
-	wxglade_tmp_menu_1->Append(1, wxT("Start"), wxEmptyString, wxITEM_NORMAL);
-	wxglade_tmp_menu_1->Append(2, wxT("Stop"), wxEmptyString, wxITEM_NORMAL);
-	wxglade_tmp_menu_1->Append(7, wxT("Reset"), wxEmptyString, wxITEM_NORMAL);
-	wxglade_tmp_menu_1->Append(8, wxT("Debug"), wxEmptyString, wxITEM_NORMAL);
-	menubar->Append(wxglade_tmp_menu_1, wxT("Machine"));
+	wxglade_tmp_menu_1->Append(9, wxT("Open..."), wxEmptyString, wxITEM_NORMAL);
+	menubar->Append(wxglade_tmp_menu_1, wxT("File"));
 	wxMenu* wxglade_tmp_menu_2 = new wxMenu();
-	wxglade_tmp_menu_2->Append(3, wxT("Open"), wxEmptyString, wxITEM_NORMAL);
-	wxglade_tmp_menu_2->Append(4, wxT("Play"), wxEmptyString, wxITEM_NORMAL);
-	wxglade_tmp_menu_2->Append(5, wxT("Stop"), wxEmptyString, wxITEM_NORMAL);
-	wxglade_tmp_menu_2->Append(6, wxT("Rewind"), wxEmptyString, wxITEM_NORMAL);
-	menubar->Append(wxglade_tmp_menu_2, wxT("Tape"));
+	wxglade_tmp_menu_2->Append(1, wxT("Start"), wxEmptyString, wxITEM_NORMAL);
+	wxglade_tmp_menu_2->Append(2, wxT("Stop"), wxEmptyString, wxITEM_NORMAL);
+	wxglade_tmp_menu_2->Append(7, wxT("Reset"), wxEmptyString, wxITEM_NORMAL);
+	wxglade_tmp_menu_2->Append(8, wxT("Debug..."), wxEmptyString, wxITEM_NORMAL);
+	menubar->Append(wxglade_tmp_menu_2, wxT("Machine"));
+	wxMenu* wxglade_tmp_menu_3 = new wxMenu();
+	wxglade_tmp_menu_3->Append(3, wxT("Open..."), wxEmptyString, wxITEM_NORMAL);
+	wxglade_tmp_menu_3->Append(4, wxT("Play"), wxEmptyString, wxITEM_NORMAL);
+	wxglade_tmp_menu_3->Append(5, wxT("Stop"), wxEmptyString, wxITEM_NORMAL);
+	wxglade_tmp_menu_3->Append(6, wxT("Rewind"), wxEmptyString, wxITEM_NORMAL);
+	menubar->Append(wxglade_tmp_menu_3, wxT("Tape"));
 	SetMenuBar(menubar);
 	panel = new wxPanel(this, wxID_ANY);
 
@@ -67,9 +70,6 @@ void Emulator::init() {
 
 	debugger = new Debugger();
 	debugger->setEmulator(this);
-
-	tapeRecorder->load("manicminer.tzx");
-	//tapeRecorder->play();
 
 	timer = new wxTimer(this, 1);
 	stopWatch = new wxStopWatch();
@@ -153,6 +153,7 @@ void Emulator::stop()
 
 BEGIN_EVENT_TABLE(Emulator, wxFrame)
 	// begin wxGlade: Emulator::event_table
+	EVT_MENU(9, Emulator::OnFileOpen)
 	EVT_MENU(1, Emulator::OnMachineStart)
 	EVT_MENU(2, Emulator::OnMachineStop)
 	EVT_MENU(7, Emulator::OnMachineReset)
@@ -164,6 +165,17 @@ BEGIN_EVENT_TABLE(Emulator, wxFrame)
 	// end wxGlade
 END_EVENT_TABLE();
 
+void Emulator::OnFileOpen(wxCommandEvent & event)
+{
+	wxFileDialog* openFileDialog = new wxFileDialog(this, _("Open file"),
+			wxT(""), wxT(""),
+			wxT("Snapshot files (*.z80;*.sna)|*.z80;*.sna|All files (*.*)|*.*"),
+			wxOPEN, wxDefaultPosition);
+
+	if (openFileDialog->ShowModal() == wxID_OK) {
+		machine->loadSnapshot(openFileDialog->GetFilename().mb_str().data());
+	}
+}
 
 void Emulator::OnMachineStart(wxCommandEvent &event)
 {
@@ -189,7 +201,15 @@ void Emulator::OnMachineDebug(wxCommandEvent & event)
 
 void Emulator::OnTapeOpen(wxCommandEvent & event)
 {
+	wxFileDialog* openFileDialog = new wxFileDialog(this, _("Open file"),
+			wxT(""), wxT(""),
+			wxT("Tape files (*.tap;*.tzx)|*.tap;*.tzx|All files (*.*)|*.*"),
+			wxOPEN, wxDefaultPosition);
 
+	if (openFileDialog->ShowModal() == wxID_OK) {
+		tapeRecorder->load(openFileDialog->GetFilename().mb_str().data());
+		printf("%s\n", openFileDialog->GetFilename().mb_str().data());
+	}
 }
 
 void Emulator::OnTapePlay(wxCommandEvent & event)
