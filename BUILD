@@ -1,5 +1,6 @@
 == Requirements ==
-This project requires "libspectrum" library.
+- libspectrum-1.0.0
+- wxWidgets-2.8-unicode
 
 == Build commands ==
 cmake .
