@@ -115,11 +115,6 @@ bool Machine::loadSnapshot(const char *filename) {
 	// set current emulation time
 	currentTime = libspectrum_snap_tstates(snap);
 
-	// Spectrum 48k machine specifics
-	ula->setInterruptLength(libspectrum_timings_interrupt_length(LIBSPECTRUM_MACHINE_48));
-	ula->setInterruptPeriod(libspectrum_timings_tstates_per_frame(LIBSPECTRUM_MACHINE_48));
-	setCpuFreq(libspectrum_timings_processor_speed(LIBSPECTRUM_MACHINE_48));
-
 	libspectrum_snap_free(snap);
 	delete buffer;
 

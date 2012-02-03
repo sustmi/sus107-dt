@@ -72,37 +72,23 @@ void RegistersView::uiUpdate()
 
 	Cpu *cpu = debugger->getEmulator()->getMachine()->getCpu();
 
-	str.Printf(wxT("%04x"), cpu->getRegister(regAF));
-	reg_af->ChangeValue(str);
-	str.Printf(wxT("%04x"), cpu->getRegister(regBC));
-	reg_bc->ChangeValue(str);
-	str.Printf(wxT("%04x"), cpu->getRegister(regDE));
-	reg_de->ChangeValue(str);
-	str.Printf(wxT("%04x"), cpu->getRegister(regHL));
-	reg_hl->ChangeValue(str);
+	reg_af->ChangeValue(wxString::Format(wxT("%04x"), cpu->getRegister(regAF)));
+	reg_bc->ChangeValue(wxString::Format(wxT("%04x"), cpu->getRegister(regBC)));
+	reg_de->ChangeValue(wxString::Format(wxT("%04x"), cpu->getRegister(regDE)));
+	reg_hl->ChangeValue(wxString::Format(wxT("%04x"), cpu->getRegister(regHL)));
 
-	str.Printf(wxT("%04x"), cpu->getRegister(regAF_));
-	reg_af2->ChangeValue(str);
-	str.Printf(wxT("%04x"), cpu->getRegister(regBC_));
-	reg_bc2->ChangeValue(str);
-	str.Printf(wxT("%04x"), cpu->getRegister(regDE_));
-	reg_de2->ChangeValue(str);
-	str.Printf(wxT("%04x"), cpu->getRegister(regHL_));
-	reg_hl2->ChangeValue(str);
+	reg_af2->ChangeValue(wxString::Format(wxT("%04x"), cpu->getRegister(regAF_)));
+	reg_bc2->ChangeValue(wxString::Format(wxT("%04x"), cpu->getRegister(regBC_)));
+	reg_de2->ChangeValue(wxString::Format(wxT("%04x"), cpu->getRegister(regDE_)));
+	reg_hl2->ChangeValue(wxString::Format(wxT("%04x"), cpu->getRegister(regHL_)));
 
-	str.Printf(wxT("%04x"), cpu->getRegister(regPC));
-	reg_pc->ChangeValue(str);
-	str.Printf(wxT("%04x"), cpu->getRegister(regSP));
-	reg_sp->ChangeValue(str);
-	str.Printf(wxT("%04x"), cpu->getRegister(regIX));
-	reg_ix->ChangeValue(str);
-	str.Printf(wxT("%04x"), cpu->getRegister(regIY));
-	reg_iy->ChangeValue(str);
+	reg_pc->ChangeValue(wxString::Format(wxT("%04x"), cpu->getRegister(regPC)));
+	reg_sp->ChangeValue(wxString::Format(wxT("%04x"), cpu->getRegister(regSP)));
+	reg_ix->ChangeValue(wxString::Format(wxT("%04x"), cpu->getRegister(regIX)));
+	reg_iy->ChangeValue(wxString::Format(wxT("%04x"), cpu->getRegister(regIY)));
 
-	str.Printf(wxT("%02x"), cpu->getRegister(regI));
-	reg_i->ChangeValue(str);
-	str.Printf(wxT("%02x"), cpu->getRegister(regR) & 0x7f);
-	reg_r->ChangeValue(str);
+	reg_i->ChangeValue(wxString::Format(wxT("%02x"), cpu->getRegister(regI)));
+	reg_r->ChangeValue(wxString::Format(wxT("%02x"), cpu->getRegister(regR)));
 }
 
 void RegistersView::setDebugger(Debugger *debugger)

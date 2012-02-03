@@ -65,8 +65,12 @@ void Emulator::init() {
 
 	ports->connectDevice(ula);
 
-	machine->loadSnapshot("manicminer.z80");
 	machine->loadRom("48.rom");
+
+	// Spectrum 48k machine specifics
+	ula->setInterruptLength(libspectrum_timings_interrupt_length(LIBSPECTRUM_MACHINE_48));
+	ula->setInterruptPeriod(libspectrum_timings_tstates_per_frame(LIBSPECTRUM_MACHINE_48));
+	machine->setCpuFreq(libspectrum_timings_processor_speed(LIBSPECTRUM_MACHINE_48));
 
 	debugger = new Debugger();
 	debugger->setEmulator(this);
@@ -170,10 +174,10 @@ void Emulator::OnFileOpen(wxCommandEvent & event)
 	wxFileDialog* openFileDialog = new wxFileDialog(this, _("Open file"),
 			wxT(""), wxT(""),
 			wxT("Snapshot files (*.z80;*.sna)|*.z80;*.sna|All files (*.*)|*.*"),
-			wxOPEN, wxDefaultPosition);
+			wxFD_OPEN|wxFD_FILE_MUST_EXIST, wxDefaultPosition);
 
 	if (openFileDialog->ShowModal() == wxID_OK) {
-		machine->loadSnapshot(openFileDialog->GetFilename().mb_str().data());
+		machine->loadSnapshot(openFileDialog->GetPath().mb_str().data());
 	}
 }
 
@@ -204,11 +208,10 @@ void Emulator::OnTapeOpen(wxCommandEvent & event)
 	wxFileDialog* openFileDialog = new wxFileDialog(this, _("Open file"),
 			wxT(""), wxT(""),
 			wxT("Tape files (*.tap;*.tzx)|*.tap;*.tzx|All files (*.*)|*.*"),
-			wxOPEN, wxDefaultPosition);
+			wxFD_OPEN|wxFD_FILE_MUST_EXIST, wxDefaultPosition);
 
 	if (openFileDialog->ShowModal() == wxID_OK) {
-		tapeRecorder->load(openFileDialog->GetFilename().mb_str().data());
-		printf("%s\n", openFileDialog->GetFilename().mb_str().data());
+		tapeRecorder->load(openFileDialog->GetPath().mb_str().data());
 	}
 }
 
@@ -267,7 +270,6 @@ void Emulator::OnPaint(wxPaintEvent &event)
 
 void Emulator::OnKeyDown(wxKeyEvent &event) {
 	int keyCode = event.GetKeyCode();
-	printf("pressed = %c (%d)\n", keyCode, keyCode);
 	std::map<int, KeyboardKeys>::iterator it = keyboardMapping.find(keyCode);
 	if (it != keyboardMapping.end()) {
 		keyboard->keyPressed(it->second);
@@ -276,7 +278,6 @@ void Emulator::OnKeyDown(wxKeyEvent &event) {
 
 void Emulator::OnKeyUp(wxKeyEvent &event) {
 	int keyCode = event.GetKeyCode();
-	printf("released = %c (%d)\n", keyCode, keyCode);
 	std::map<int, KeyboardKeys>::iterator it = keyboardMapping.find(keyCode);
 	if (it != keyboardMapping.end()) {
 		keyboard->keyReleased(it->second);
