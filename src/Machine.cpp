@@ -29,6 +29,10 @@ void Machine::attach(Memory *memory, Cpu *cpu, Ula *ula) {
 	this->cpu = cpu;
 	this->ula = ula;
 }
+Cpu *Machine::getCpu()
+{
+	return cpu;
+}
 
 bool Machine::loadRom(const char *filename) {
 	FILE *f = fopen(filename, "rb");
@@ -146,6 +150,7 @@ void Machine::stepInstruction() {
 void Machine::setCpuFreq(uint64_t cpuFreq) {
     this->cpuFreq = cpuFreq;
 }
+
 uint64_t Machine::getCpuFreq() const {
     return cpuFreq;
 }
@@ -156,22 +161,6 @@ Z80EX_WORD Machine::getPC() {
 
 int Machine::dasm(char *output, int output_size, unsigned  flags, int *t_states, int *t_states2, Z80EX_WORD addr) {
 	return z80ex_dasm(output, output_size, flags, t_states, t_states2, ::dasm_readbyte, addr, this);
-}
-
-void Machine::start() {
-	if (!running) {
-
-		running = true;
-	}
-}
-
-void Machine::stop() {
-	if (running) {
-
-	}
-}
-
-void Machine::onTick() {
 }
 
 Z80EX_BYTE Machine::dasm_readbyte(Z80EX_WORD addr) {

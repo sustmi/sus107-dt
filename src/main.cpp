@@ -16,6 +16,7 @@ bool Application::OnInit()
 {
 	wxInitAllImageHandlers();
 	Emulator* emulator = new Emulator(NULL, wxID_ANY, wxEmptyString);
+	emulator->init();
 	SetTopWindow(emulator);
 	emulator->Show();
 	return true;

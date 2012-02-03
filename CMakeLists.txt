@@ -8,6 +8,9 @@ include( "${wxWidgets_USE_FILE}" )
 add_executable(sus107-dt
 	src/main.cpp
 	src/Emulator.cpp
+	src/Debugger.cpp
+	src/DebuggerView.cpp
+	src/RegistersView.cpp
 	src/Machine.cpp
 	src/Cpu.cpp
 	src/Ula.cpp
@@ -20,7 +23,6 @@ add_executable(sus107-dt
 )
 target_link_libraries (sus107-dt
 	spectrum
-	opencv_core opencv_imgproc opencv_highgui opencv_ml opencv_video opencv_features2d opencv_calib3d opencv_objdetect opencv_contrib opencv_legacy opencv_flann
 	${wxWidgets_LIBRARIES}
 )
 

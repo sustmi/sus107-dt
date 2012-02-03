@@ -27,6 +27,7 @@ public:
 	virtual ~Machine();
 
 	void attach(Memory *memory, Cpu *cpu, Ula *ula);
+	Cpu *getCpu();
 
 	void step();
 	void stepInstruction();
@@ -36,10 +37,6 @@ public:
 
 	uint64_t getCurrentTime() { return currentTime; }
 	//void addEvent(int event);
-
-	void start();
-	void stop();
-	void onTick();
 
 	int dasm(char *output, int output_size, unsigned flags, int *t_states, int *t_states2, Z80EX_WORD addr);
 

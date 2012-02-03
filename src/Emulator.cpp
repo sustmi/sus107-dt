@@ -3,6 +3,7 @@
 #include "Emulator.h"
 
 #include "Machine.h"
+#include "Debugger.h"
 
 // begin wxGlade: ::extracode
 
@@ -18,6 +19,7 @@ Emulator::Emulator(wxWindow* parent, int id, const wxString& title, const wxPoin
 	wxglade_tmp_menu_1->Append(1, wxT("Start"), wxEmptyString, wxITEM_NORMAL);
 	wxglade_tmp_menu_1->Append(2, wxT("Stop"), wxEmptyString, wxITEM_NORMAL);
 	wxglade_tmp_menu_1->Append(7, wxT("Reset"), wxEmptyString, wxITEM_NORMAL);
+	wxglade_tmp_menu_1->Append(8, wxT("Debug"), wxEmptyString, wxITEM_NORMAL);
 	menubar->Append(wxglade_tmp_menu_1, wxT("Machine"));
 	wxMenu* wxglade_tmp_menu_2 = new wxMenu();
 	wxglade_tmp_menu_2->Append(3, wxT("Open"), wxEmptyString, wxITEM_NORMAL);
@@ -32,7 +34,16 @@ Emulator::Emulator(wxWindow* parent, int id, const wxString& title, const wxPoin
 	do_layout();
 	// end wxGlade
 
-	// main
+	Connect(wxEVT_TIMER, wxCommandEventHandler(Emulator::OnTimer));
+	panel->Connect(wxEVT_PAINT, wxPaintEventHandler(Emulator::OnPaint), NULL, this);
+	//Connect(wxEVT_PAINT, wxPaintEventHandler(Emulator::OnPaint));
+	panel->Connect(wxEVT_KEY_DOWN, wxKeyEventHandler(Emulator::OnKeyDown), NULL, this);
+	panel->Connect(wxEVT_KEY_UP, wxKeyEventHandler(Emulator::OnKeyUp), NULL, this);
+}
+
+void Emulator::init() {
+	running = false;
+
 	Memory *memory = new Memory();
 	cpu = new Cpu();
 	ula = new Ula();
@@ -54,19 +65,15 @@ Emulator::Emulator(wxWindow* parent, int id, const wxString& title, const wxPoin
 	machine->loadSnapshot("manicminer.z80");
 	machine->loadRom("48.rom");
 
+	debugger = new Debugger();
+	debugger->setEmulator(this);
+
 	tapeRecorder->load("manicminer.tzx");
 	//tapeRecorder->play();
-
 
 	timer = new wxTimer(this, 1);
 	stopWatch = new wxStopWatch();
 	stopWatch->Pause();
-
-	Connect(wxEVT_TIMER, wxCommandEventHandler(Emulator::OnTimer));
-	panel->Connect(wxEVT_PAINT, wxPaintEventHandler(Emulator::OnPaint), NULL, this);
-	//Connect(wxEVT_PAINT, wxPaintEventHandler(Emulator::OnPaint));
-	panel->Connect(wxEVT_KEY_DOWN, wxKeyEventHandler(Emulator::OnKeyDown), NULL, this);
-	panel->Connect(wxEVT_KEY_UP, wxKeyEventHandler(Emulator::OnKeyUp), NULL, this);
 
 	keyboardMapping['A'] = KEY_A;
 	keyboardMapping['B'] = KEY_B;
@@ -110,11 +117,46 @@ Emulator::Emulator(wxWindow* parent, int id, const wxString& title, const wxPoin
 	keyboardMapping[WXK_CONTROL] = KEY_SYMBOL_SHIFT;
 }
 
+bool Emulator::isRunning()
+{
+	return running;
+}
+
+Machine *Emulator::getMachine() const
+{
+    return machine;
+}
+
+void Emulator::start()
+{
+	if (!running) {
+		running = true;
+
+		timer->Start(20);
+		stopWatch->Resume();
+		debugger->uiUpdate();
+		printf("start\n");
+	}
+}
+
+void Emulator::stop()
+{
+	if (running) {
+		running = false;
+
+		timer->Stop();
+		stopWatch->Pause();
+		debugger->uiUpdate();
+		printf("stop\n");
+	}
+}
+
 BEGIN_EVENT_TABLE(Emulator, wxFrame)
 	// begin wxGlade: Emulator::event_table
 	EVT_MENU(1, Emulator::OnMachineStart)
 	EVT_MENU(2, Emulator::OnMachineStop)
 	EVT_MENU(7, Emulator::OnMachineReset)
+	EVT_MENU(8, Emulator::OnMachineDebug)
 	EVT_MENU(3, Emulator::OnTapeOpen)
 	EVT_MENU(4, Emulator::OnTapePlay)
 	EVT_MENU(5, Emulator::OnTapeStop)
@@ -125,16 +167,12 @@ END_EVENT_TABLE();
 
 void Emulator::OnMachineStart(wxCommandEvent &event)
 {
-	timer->Start(20);
-	stopWatch->Resume();
-	printf("start\n");
+	start();
 }
 
 void Emulator::OnMachineStop(wxCommandEvent &event)
 {
-	timer->Stop();
-	stopWatch->Pause();
-	printf("stop\n");
+	stop();
 }
 
 void Emulator::OnMachineReset(wxCommandEvent & event)
@@ -142,6 +180,11 @@ void Emulator::OnMachineReset(wxCommandEvent & event)
 	//cpu->setNmiLineState(nmi = !nmi);
 	//printf("%d\n", nmi);
 	cpu->reset();
+}
+
+void Emulator::OnMachineDebug(wxCommandEvent & event)
+{
+	debugger->uiShowMain();
 }
 
 void Emulator::OnTapeOpen(wxCommandEvent & event)
@@ -241,7 +284,7 @@ void Emulator::do_layout()
 	wxBoxSizer* sizer = new wxBoxSizer(wxVERTICAL);
 	sizer->Add(panel, 1, wxEXPAND, 0);
 	SetSizer(sizer);
-	//Layout();
+	Layout();
 	// end wxGlade
 }
 

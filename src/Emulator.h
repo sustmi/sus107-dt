@@ -7,6 +7,8 @@
 #define EMULATOR_H
 
 #include "Machine.h"
+#include "Debugger.h"
+
 #include <map>
 
 // begin wxGlade: ::dependencies
@@ -23,6 +25,13 @@ public:
 	// end wxGlade
 
 	Emulator(wxWindow* parent, int id, const wxString& title, const wxPoint& pos=wxDefaultPosition, const wxSize& size=wxDefaultSize, long style=wxDEFAULT_FRAME_STYLE);
+	void init();
+
+	void start();
+	void stop();
+
+	bool isRunning();
+    Machine *getMachine() const;
 
 private:
 	// begin wxGlade: Emulator::methods
@@ -30,8 +39,12 @@ private:
 	void do_layout();
 	// end wxGlade
 
+	bool running;
+
 	wxTimer *timer;
 	wxStopWatch *stopWatch;
+
+	Debugger *debugger;
 
 	Machine *machine;
 	Cpu *cpu;
@@ -51,6 +64,7 @@ protected:
 	virtual void OnMachineStart(wxCommandEvent &event); // wxGlade: <event_handler>
 	virtual void OnMachineStop(wxCommandEvent &event); // wxGlade: <event_handler>
 	virtual void OnMachineReset(wxCommandEvent &event); // wxGlade: <event_handler>
+	virtual void OnMachineDebug(wxCommandEvent &event); // wxGlade: <event_handler>
 	virtual void OnTapeOpen(wxCommandEvent &event); // wxGlade: <event_handler>
 	virtual void OnTapePlay(wxCommandEvent &event); // wxGlade: <event_handler>
 	virtual void OnTapeStop(wxCommandEvent &event); // wxGlade: <event_handler>
