@@ -12,15 +12,14 @@ DebuggerView::DebuggerView(wxWindow* parent, int id, const wxString& title, cons
 {
 	// begin wxGlade: DebuggerView::DebuggerView
 	notebook = new wxNotebook(this, wxID_ANY, wxDefaultPosition, wxDefaultSize, 0);
-	notebook_pane_code = new wxPanel(notebook, wxID_ANY);
+	notebook_pane_hex = new wxPanel(notebook, wxID_ANY);
 	debugger_menubar = new wxMenuBar();
 	wxMenu* wxglade_tmp_menu_1 = new wxMenu();
 	wxglade_tmp_menu_1->Append(wxID_ANY, wxT("Registers"), wxEmptyString, wxITEM_NORMAL);
 	debugger_menubar->Append(wxglade_tmp_menu_1, wxT("View"));
 	SetMenuBar(debugger_menubar);
-	notebook_pane_hex = new wxPanel(notebook, wxID_ANY);
-	code_grid = new wxGrid(notebook_pane_code, wxID_ANY);
-	code_slider = new wxSlider(notebook_pane_code, wxID_ANY, 0, 0, 65535, wxDefaultPosition, wxDefaultSize, wxSL_VERTICAL|wxSL_LEFT|wxSL_TOP);
+	hex_view = new HexEditorCtrl(notebook_pane_hex, wxID_ANY);
+	debugger_code_view = new DebuggerCodeGui(notebook, wxID_ANY);
 	button_step = new wxButton(this, 201, wxT("Step"));
 	button_continue = new wxButton(this, 202, wxT("Continue"));
 	button_break = new wxButton(this, 203, wxT("Break"));
@@ -29,19 +28,18 @@ DebuggerView::DebuggerView(wxWindow* parent, int id, const wxString& title, cons
 	do_layout();
 	// end wxGlade
 
-	address = 0;
+	//hex_view->Connect(wxEVT_STC_UPDATEUI, (wxObjectEventFunction)(wxEventFunction)wxStaticCastEvent(wxStyledTextEventFunction, &DebuggerView::OnHexViewModified) , NULL, this);
 }
 
 void DebuggerView::setDebugger(Debugger *debugger)
 {
     this->debugger = debugger;
+    debugger_code_view->setDebugger(debugger);
 }
 
 BEGIN_EVENT_TABLE(DebuggerView, wxFrame)
 	// begin wxGlade: DebuggerView::event_table
 	EVT_MENU(wxID_ANY, DebuggerView::OnViewRegisters)
-	EVT_COMMAND_SCROLL_ENDSCROLL(wxID_ANY, DebuggerView::OnCodeSliderEndScroll)
-	EVT_COMMAND_SCROLL_THUMBTRACK(wxID_ANY, DebuggerView::OnCodeSliderEndScroll)
 	EVT_BUTTON(201, DebuggerView::OnDebuggerStep)
 	EVT_BUTTON(202, DebuggerView::OnDebuggerContinue)
 	EVT_BUTTON(203, DebuggerView::OnDebuggerBreak)
@@ -60,27 +58,15 @@ void DebuggerView::uiUpdate()
 		button_break->Disable();
 	}
 
-	code_slider->SetValue(address);
-
-	char buf[1024];
-	int dummy;
-	int addr = address;
-
-	for (int i = 0; i < code_grid->GetRows(); i++) {
-		int len = debugger->dasm(buf, 1024, 0, &dummy, &dummy, addr);
-
-		code_grid->SetCellValue(i, 0, wxString::Format(wxT("%04x"), addr));
-		code_grid->SetCellValue(i, 1, wxString::Format(wxT("%s"), wxString::From8BitData(buf).c_str()));
-
-		addr += len;
-	}
+	debugger_code_view->uiUpdate();
 }
 
 void DebuggerView::OnDebuggerStep(wxCommandEvent &event)
 {
 	debugger->getEmulator()->getMachine()->stepInstruction();
-	address = debugger->getEmulator()->getMachine()->getPC();
 	debugger->uiUpdate();
+
+	debugger_code_view->gotoAddress(debugger->getEmulator()->getMachine()->getPC());
 }
 
 
@@ -93,8 +79,9 @@ void DebuggerView::OnDebuggerContinue(wxCommandEvent &event)
 void DebuggerView::OnDebuggerBreak(wxCommandEvent &event)
 {
 	debugger->getEmulator()->stop();
-	address = debugger->getEmulator()->getMachine()->getCpu()->getRegister(regPC);
 	debugger->uiUpdate();
+
+	debugger_code_view->gotoAddress(debugger->getEmulator()->getMachine()->getPC());
 }
 
 void DebuggerView::OnViewRegisters(wxCommandEvent &event)
@@ -102,12 +89,15 @@ void DebuggerView::OnViewRegisters(wxCommandEvent &event)
 	debugger->uiShowRegisters();
 }
 
-void DebuggerView::OnCodeSliderEndScroll(wxScrollEvent & event)
+void DebuggerView::OnHexViewModified(wxStyledTextEvent &event)
 {
-	address = code_slider->GetValue();
-	uiUpdate();
-}
+	printf("store: %d -%s-\n", event.GetPosition(), event.GetText().mb_str().data());
 
+	/*if (hex_view->GetCurrentPos() % 3 == 2) {
+		hex_view->CharRight();
+		//hex_view->Get
+	}*/
+}
 
 // wxGlade: add DebuggerView event handlers
 
@@ -116,32 +106,32 @@ void DebuggerView::set_properties()
 {
 	// begin wxGlade: DebuggerView::set_properties
 	SetTitle(wxT("Debugger"));
-	code_grid->CreateGrid(16, 2);
-	code_grid->SetRowLabelSize(0);
-	code_grid->EnableEditing(false);
-	code_grid->EnableGridLines(false);
-	code_grid->EnableDragColSize(false);
-	code_grid->EnableDragRowSize(false);
-	code_grid->EnableDragGridSize(false);
-	code_grid->SetColLabelValue(0, wxT("Address"));
-	code_grid->SetColSize(0, 70);
-	code_grid->SetColLabelValue(1, wxT("Instruction"));
-	code_grid->SetColSize(1, 200);
 	// end wxGlade
-}
 
+	char buf[65536];
+	for (int i = 0; i < 65536; i++) {
+		buf[i] = (i % ('z' - 'a')) + 'a';
+	}
+
+	hex_view->ReadFromBuffer(0, 65536, buf);
+	//hex_view->ReadFromBuffer(16, 62, "qwertzuioplkjhgfdsayxcvbnm0123456789QWERTZUIOPLKJHGFDSAYXCVBNM");
+	//hex_view->Select(5, 8); // data selection
+	printf("%s\n", hex_view->GetOffsetFormatString().mb_str().data());
+	printf("%d\n", hex_view->GetByteCount());
+	printf("%d\n", hex_view->GetLastPosition());
+
+}
 
 void DebuggerView::do_layout()
 {
 	// begin wxGlade: DebuggerView::do_layout
 	wxBoxSizer* debugger_panes = new wxBoxSizer(wxVERTICAL);
 	wxBoxSizer* buttons = new wxBoxSizer(wxHORIZONTAL);
-	wxBoxSizer* code_sizer = new wxBoxSizer(wxHORIZONTAL);
-	code_sizer->Add(code_grid, 2, wxEXPAND, 0);
-	code_sizer->Add(code_slider, 0, wxEXPAND, 0);
-	notebook_pane_code->SetSizer(code_sizer);
+	wxBoxSizer* sizer_1 = new wxBoxSizer(wxHORIZONTAL);
+	sizer_1->Add(hex_view, 1, wxEXPAND, 0);
+	notebook_pane_hex->SetSizer(sizer_1);
 	notebook->AddPage(notebook_pane_hex, wxT("Hex"));
-	notebook->AddPage(notebook_pane_code, wxT("Code"));
+	notebook->AddPage(debugger_code_view, wxT("Code"));
 	debugger_panes->Add(notebook, 1, wxEXPAND, 0);
 	buttons->Add(button_step, 0, wxADJUST_MINSIZE, 0);
 	buttons->Add(button_continue, 0, wxADJUST_MINSIZE, 0);

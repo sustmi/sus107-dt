@@ -2,15 +2,20 @@
 
 #include <wx/wx.h>
 #include <wx/image.h>
+#include <wx/stc/stc.h>
 
 #ifndef DEBUGGERVIEW_H
 #define DEBUGGERVIEW_H
+
+#include "widgets/wxHexCtrl/wxHexCtrl.h"
+#include "widgets/HexEditorCtrl/HexEditorCtrl.h"
+#include "widgets/MadEdit/MadEdit.h"
 
 #include "Debugger.h"
 
 // begin wxGlade: ::dependencies
 #include <wx/notebook.h>
-#include <wx/grid.h>
+#include "DebuggerCodeGui.h"
 // end wxGlade
 
 // begin wxGlade: ::extracode
@@ -18,6 +23,7 @@
 // end wxGlade
 
 class Debugger;
+class DebuggerCodeGui;
 
 class DebuggerView: public wxFrame {
 public:
@@ -34,15 +40,13 @@ private:
 	// end wxGlade
 
 	Debugger *debugger;
-	int address;
 
 protected:
 	// begin wxGlade: DebuggerView::attributes
 	wxMenuBar* debugger_menubar;
+	HexEditorCtrl* hex_view;
 	wxPanel* notebook_pane_hex;
-	wxGrid* code_grid;
-	wxSlider* code_slider;
-	wxPanel* notebook_pane_code;
+	DebuggerCodeGui* debugger_code_view;
 	wxNotebook* notebook;
 	wxButton* button_step;
 	wxButton* button_continue;
@@ -56,7 +60,7 @@ public:
 	virtual void OnDebuggerContinue(wxCommandEvent &event); // wxGlade: <event_handler>
 	virtual void OnDebuggerBreak(wxCommandEvent &event); // wxGlade: <event_handler>
 	virtual void OnViewRegisters(wxCommandEvent &event); // wxGlade: <event_handler>
-	virtual void OnCodeSliderEndScroll(wxScrollEvent &event); // wxGlade: <event_handler>
+	virtual void OnHexViewModified(wxStyledTextEvent &event); // wxGlade: <event_handler>
     void setDebugger(Debugger *debugger);
 }; // wxGlade: end class
 
