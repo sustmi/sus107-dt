@@ -9,46 +9,28 @@
 
 Debugger::Debugger() {
 	// TODO Auto-generated constructor stub
-	debuggerView = NULL;
-	registersView = NULL;
 }
 
 Debugger::~Debugger() {
 	// TODO Auto-generated destructor stub
 }
 
-void Debugger::uiShowMain()
+void Debugger::addListener(DebuggerListener *listener)
 {
-	if (!debuggerView) {
-		debuggerView = new DebuggerView(emulator, wxID_ANY, wxEmptyString);
-	}
-	debuggerView->setDebugger(this);
-	debuggerView->Show(true);
-	debuggerView->uiUpdate();
+	listeners.insert(listener);
 }
 
-void Debugger::uiShowRegisters()
+void Debugger::removeListener(DebuggerListener *listener)
 {
-	if (!debuggerView) {
-		return;
-	}
-
-	if (!registersView) {
-		registersView = new RegistersView(debuggerView, wxID_ANY, wxEmptyString);
-	}
-	registersView->setDebugger(this);
-	registersView->Show(true);
-	registersView->uiUpdate();
+	listeners.erase(listener);
 }
 
-void Debugger::uiUpdate()
+void Debugger::notifyListeners(DebuggerEvent event)
 {
-	if (debuggerView) {
-		debuggerView->uiUpdate();
-	}
-	if (registersView) {
-		registersView->uiUpdate();
-	}
+	std::set<DebuggerListener*>::iterator it;
+		for (it = listeners.begin(); it != listeners.end(); it++) {
+			(*it)->debuggerEvent(event);
+		}
 }
 
 Emulator *Debugger::getEmulator() const
@@ -59,6 +41,50 @@ Emulator *Debugger::getEmulator() const
 void Debugger::setEmulator(Emulator *emulator)
 {
     this->emulator = emulator;
+}
+
+void Debugger::stepInstruction()
+{
+	emulator->getMachine()->stepInstruction();
+	notifyListeners(DEBUGGER_EVENT_EMULATION_STEP);
+}
+
+void Debugger::emulationContinue()
+{
+	emulator->start();
+}
+
+void Debugger::emulationBreak()
+{
+	emulator->stop();
+}
+
+void Debugger::setCpuRegister(Z80_REG_T reg, Z80EX_WORD value)
+{
+	emulator->getMachine()->getCpu()->setRegister(reg, value);
+	notifyListeners(DEBUGGER_EVENT_REGISTERS_CHANGED);
+}
+
+Z80EX_WORD Debugger::getCpuRegister(Z80_REG_T reg)
+{
+	return emulator->getMachine()->getCpu()->getRegister(reg);
+}
+
+void Debugger::addBreakpoint(uint16_t address)
+{
+	if (breakpoints.insert(address).second) {
+		notifyListeners(DEBUGGER_EVENT_BREAKPOINTS_CHANGED);
+	}
+}
+void Debugger::removeBreakpoint(uint16_t address)
+{
+	if (breakpoints.erase(address)) {
+		notifyListeners(DEBUGGER_EVENT_BREAKPOINTS_CHANGED);
+	}
+}
+bool Debugger::isBreakpoint(uint16_t address)
+{
+	return breakpoints.count(address) > 0;
 }
 
 int Debugger::dasm(char *output, int output_size, unsigned  flags, int *t_states, int *t_states2, Z80EX_WORD addr) {

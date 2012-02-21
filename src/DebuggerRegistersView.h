@@ -7,6 +7,7 @@
 #define REGISTERSVIEW_H
 
 #include "Debugger.h"
+#include "DebuggerListener.h"
 
 // begin wxGlade: ::dependencies
 // end wxGlade
@@ -17,16 +18,19 @@
 
 class Debugger;
 
-class RegistersView: public wxFrame {
+class DebuggerRegistersView: public wxFrame, public DebuggerListener {
 public:
-	// begin wxGlade: RegistersView::ids
+	// begin wxGlade: DebuggerRegistersView::ids
 	// end wxGlade
 
-	RegistersView(wxWindow* parent, int id, const wxString& title, const wxPoint& pos=wxDefaultPosition, const wxSize& size=wxDefaultSize, long style=wxDEFAULT_FRAME_STYLE);
+	DebuggerRegistersView(wxWindow* parent, int id, const wxString& title, const wxPoint& pos=wxDefaultPosition, const wxSize& size=wxDefaultSize, long style=wxDEFAULT_FRAME_STYLE);
+	~DebuggerRegistersView();
+
 	void uiUpdate();
+	void debuggerEvent(DebuggerEvent event);
 
 private:
-	// begin wxGlade: RegistersView::methods
+	// begin wxGlade: DebuggerRegistersView::methods
 	void set_properties();
 	void do_layout();
 	// end wxGlade
@@ -34,7 +38,7 @@ private:
 	Debugger *debugger;
 
 protected:
-	// begin wxGlade: RegistersView::attributes
+	// begin wxGlade: DebuggerRegistersView::attributes
 	wxStaticText* label_af;
 	wxTextCtrl* reg_af;
 	wxStaticText* label_bc;

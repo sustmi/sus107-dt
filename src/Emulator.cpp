@@ -138,7 +138,7 @@ void Emulator::start()
 
 		timer->Start(20);
 		stopWatch->Resume();
-		debugger->uiUpdate();
+		debugger->notifyListeners(DEBUGGER_EVENT_EMULATION_START);
 		printf("start\n");
 	}
 }
@@ -150,7 +150,7 @@ void Emulator::stop()
 
 		timer->Stop();
 		stopWatch->Pause();
-		debugger->uiUpdate();
+		debugger->notifyListeners(DEBUGGER_EVENT_EMULATION_STOP);
 		printf("stop\n");
 	}
 }
@@ -200,7 +200,11 @@ void Emulator::OnMachineReset(wxCommandEvent & event)
 
 void Emulator::OnMachineDebug(wxCommandEvent & event)
 {
-	debugger->uiShowMain();
+	DebuggerView *debuggerView = new DebuggerView(this, wxID_ANY, wxEmptyString);
+	debuggerView->setDebugger(debugger);
+
+	debuggerView->Show(true);
+	debuggerView->uiUpdate();
 }
 
 void Emulator::OnTapeOpen(wxCommandEvent & event)
@@ -233,6 +237,14 @@ void Emulator::OnTapeRewind(wxCommandEvent & event)
 void Emulator::OnTimer(wxCommandEvent &event)
 {
 	do {
+		uint16_t pc = machine->getCpu()->getRegister(regPC);
+		if (debugger->isBreakpoint(pc)) {
+			stop();
+			// TODO: zajistit, aby stopky neměly čas o jednu dávku v budoucnu
+			// a po opětovném startu nedošlo k přeskočení určitého času
+			break;
+		}
+
 		machine->step();
 	} while (machine->getCurrentTime() < ((stopWatch->Time() / 1000.0) * machine->getCpuFreq()));
 

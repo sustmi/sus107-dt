@@ -12,6 +12,8 @@
 #include "widgets/MadEdit/MadEdit.h"
 
 #include "Debugger.h"
+#include "DebuggerListener.h"
+#include "DebuggerRegistersView.h"
 
 // begin wxGlade: ::dependencies
 #include <wx/notebook.h>
@@ -25,13 +27,16 @@
 class Debugger;
 class DebuggerCodeGui;
 
-class DebuggerView: public wxFrame {
+class DebuggerView: public wxFrame, public DebuggerListener {
 public:
 	// begin wxGlade: DebuggerView::ids
 	// end wxGlade
 
 	DebuggerView(wxWindow* parent, int id, const wxString& title, const wxPoint& pos=wxDefaultPosition, const wxSize& size=wxDefaultSize, long style=wxDEFAULT_FRAME_STYLE);
+	~DebuggerView();
+
 	void uiUpdate();
+	void debuggerEvent(DebuggerEvent event);
 
 private:
 	// begin wxGlade: DebuggerView::methods
@@ -61,6 +66,7 @@ public:
 	virtual void OnDebuggerBreak(wxCommandEvent &event); // wxGlade: <event_handler>
 	virtual void OnViewRegisters(wxCommandEvent &event); // wxGlade: <event_handler>
 	virtual void OnHexViewModified(wxStyledTextEvent &event); // wxGlade: <event_handler>
+	virtual void OnDebuggerNotebookPageChanged(wxNotebookEvent &event); // wxGlade: <event_handler>
     void setDebugger(Debugger *debugger);
 }; // wxGlade: end class
 

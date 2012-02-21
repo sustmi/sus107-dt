@@ -18,22 +18,35 @@ DebuggerCodeGui::DebuggerCodeGui(wxWindow* parent, int id, const wxPoint& pos, c
 	do_layout();
 	// end wxGlade
 
+	debugger = NULL;
+
+	rowContextMenu = new wxMenu();
+	rowContextMenu->Append(wxID_ANY, wxT("Toggle breakpoint"), wxEmptyString, wxITEM_NORMAL);
+
 	address = 0;
 }
 
+DebuggerCodeGui::~DebuggerCodeGui()
+{
+	if (debugger) {
+		debugger->removeListener(this);
+	}
+}
 
 BEGIN_EVENT_TABLE(DebuggerCodeGui, wxPanel)
 	// begin wxGlade: DebuggerCodeGui::event_table
+	EVT_GRID_CMD_CELL_RIGHT_CLICK(wxID_ANY, DebuggerCodeGui::OnCellRightClick)
 	EVT_GRID_CMD_SELECT_CELL(wxID_ANY, DebuggerCodeGui::OnSelectCell)
+	EVT_GRID_CMD_CELL_CHANGE(wxID_ANY, DebuggerCodeGui::OnCellChange)
 	EVT_COMMAND_SCROLL_ENDSCROLL(wxID_ANY, DebuggerCodeGui::OnCodeSliderEndScroll)
 	EVT_COMMAND_SCROLL_THUMBTRACK(wxID_ANY, DebuggerCodeGui::OnCodeSliderEndScroll)
 	// end wxGlade
+	EVT_MENU(wxID_ANY, DebuggerCodeGui::OnContextToggleBreakpoint)
 END_EVENT_TABLE();
 
 
 void DebuggerCodeGui::OnSelectCell(wxGridEvent &event)
 {
-	printf("%d\n", event.GetRow());
 	//code_grid->SelectRow(event.GetRow());
 	if (!event.IsSelection()) {
 		code_grid->SelectRow(event.GetRow());
@@ -47,15 +60,74 @@ void DebuggerCodeGui::OnCodeSliderEndScroll(wxScrollEvent &event)
 	uiUpdate();
 }
 
+void DebuggerCodeGui::OnCellChange(wxGridEvent &event)
+{
+	if (event.GetCol() == 1) { // data
+		int row = event.GetRow();
+		int addr = rowToAddressMap[row];
+
+		// TODO: naparsovat string
+		char data[10] = { 0 };
+		int len = 4;
+
+		for (int i = 0; i < len; i++) {
+			debugger->getEmulator()->getMachine()->getMemory()->rawWrite(addr + i, data[i]);
+		}
+	}
+}
+
+void DebuggerCodeGui::OnCellRightClick(wxGridEvent &event)
+{
+	code_grid->SelectRow(event.GetRow(), false);
+	PopupMenu(rowContextMenu, event.GetPosition());
+}
+
+void DebuggerCodeGui::OnContextToggleBreakpoint(wxCommandEvent &event)
+{
+	int row = code_grid->GetSelectedRows().Last();
+	int address = rowToAddressMap[row];
+
+	if (!debugger->isBreakpoint(address)) {
+		debugger->addBreakpoint(address);
+	} else {
+		debugger->removeBreakpoint(address);
+	}
+
+	if (debugger->isBreakpoint(address)) {
+		printf("BP @%04X\n", address);
+	}
+}
+
 // wxGlade: add DebuggerCodeGui event handlers
 
 void DebuggerCodeGui::setDebugger(Debugger *debugger)
 {
     this->debugger = debugger;
+    debugger->addListener(this);
+}
+
+void DebuggerCodeGui::debuggerEvent(DebuggerEvent event)
+{
+	if (event == DEBUGGER_EVENT_REGISTERS_CHANGED ||
+		event == DEBUGGER_EVENT_MEMORY_CHANGED ||
+		event == DEBUGGER_EVENT_EMULATION_START ||
+		event == DEBUGGER_EVENT_EMULATION_STOP ||
+		event == DEBUGGER_EVENT_EMULATION_STEP ||
+		event == DEBUGGER_EVENT_BREAKPOINTS_CHANGED)
+	{
+		uiUpdate();
+	}
+
+	if (event == DEBUGGER_EVENT_EMULATION_STOP ||
+		event == DEBUGGER_EVENT_EMULATION_STEP)
+	{
+		gotoAddress(debugger->getEmulator()->getMachine()->getPC());
+	}
 }
 
 void DebuggerCodeGui::uiUpdate()
 {
+	printf("DebuggerCodeGui::uiUpdate\n");
 	code_slider->SetValue(address);
 
 	char buf[1024];
@@ -65,15 +137,18 @@ void DebuggerCodeGui::uiUpdate()
 	int len;
 	code_grid->DeleteRows(0, code_grid->GetRows());
 	code_grid->AppendRows(65536);
-	addressRowMap.clear();
+	addressToRowMap.clear();
+	rowToAddressMap.clear();
 
-	int i = 0;
+	int row = 0;
 	for (int addr = 0; addr < 65536; addr += len) {
-		addressRowMap[addr] = i;
+		addressToRowMap[addr] = row;
+		rowToAddressMap[row] = addr;
 
 		len = debugger->dasm(buf, 1024, 0, &dummy, &dummy, addr);
 
-		code_grid->SetCellValue(i, 0, wxString::Format(wxT("%04X"), addr));
+		code_grid->SetCellValue(row, 0, debugger->isBreakpoint(addr) ? wxT("BP") : wxT("  "));
+		code_grid->SetCellValue(row, 1, wxString::Format(wxT("%04X"), addr));
 
 		wxString dataStr;
 		for (int j = 0; j < len; j++) {
@@ -82,18 +157,18 @@ void DebuggerCodeGui::uiUpdate()
 				dataStr.Append(wxT(" "));
 			}
 		}
-		code_grid->SetCellValue(i, 1, dataStr);
+		code_grid->SetCellValue(row, 2, dataStr);
 
-		code_grid->SetCellValue(i, 2, wxString::Format(wxT("%s"), wxString::From8BitData(buf).c_str()));
-		i++;
+		code_grid->SetCellValue(row, 3, wxString::Format(wxT("%s"), wxString::From8BitData(buf).c_str()));
+		row++;
 	}
-	code_grid->DeleteRows(i, code_grid->GetRows() - i);
+	code_grid->DeleteRows(row, code_grid->GetRows() - row);
 }
 
 void DebuggerCodeGui::gotoAddress(int address)
 {
-	int row = (*addressRowMap.lower_bound(address)).second;
-	printf("address %d => row = %d\n", address, row);
+	int row = (*addressToRowMap.lower_bound(address)).second;
+	//printf("address %d => row = %d\n", address, row);
 	code_grid->SelectRow(row, false);
 	code_grid->MakeCellVisible(row, 0);
 }
@@ -101,30 +176,35 @@ void DebuggerCodeGui::gotoAddress(int address)
 void DebuggerCodeGui::set_properties()
 {
 	// begin wxGlade: DebuggerCodeGui::set_properties
-	code_grid->CreateGrid(16, 3);
+	code_grid->CreateGrid(1, 4);
 	code_grid->SetRowLabelSize(0);
 	code_grid->EnableGridLines(false);
 	code_grid->EnableDragColSize(false);
 	code_grid->EnableDragRowSize(false);
 	code_grid->SetSelectionMode(wxGrid::wxGridSelectRows);
-	code_grid->SetColLabelValue(0, wxT("Address"));
-	code_grid->SetColSize(0, 70);
-	code_grid->SetColLabelValue(1, wxT("Data"));
-	code_grid->SetColSize(1, 100);
-	code_grid->SetColLabelValue(2, wxT("Instruction"));
-	code_grid->SetColSize(2, 200);
+	code_grid->SetColLabelValue(0, wxT("BP"));
+	code_grid->SetColSize(0, 20);
+	code_grid->SetColLabelValue(1, wxT("Address"));
+	code_grid->SetColSize(1, 70);
+	code_grid->SetColLabelValue(2, wxT("Data"));
+	code_grid->SetColSize(2, 150);
+	code_grid->SetColLabelValue(3, wxT("Instruction"));
+	code_grid->SetColSize(3, 200);
 	// end wxGlade
 
-	wxGridCellAttr *addressColAttr = code_grid->GetOrCreateCellAttr(0, 0);
-	wxGridCellAttr *dataColAttr = code_grid->GetOrCreateCellAttr(0, 1);
-	wxGridCellAttr *codeColAttr = code_grid->GetOrCreateCellAttr(0, 2);
+	wxGridCellAttr *breakpointColAttr = code_grid->GetOrCreateCellAttr(0, 0);
+	wxGridCellAttr *addressColAttr = code_grid->GetOrCreateCellAttr(0, 1);
+	wxGridCellAttr *dataColAttr = code_grid->GetOrCreateCellAttr(0, 2);
+	wxGridCellAttr *codeColAttr = code_grid->GetOrCreateCellAttr(0, 3);
 
+	breakpointColAttr->SetReadOnly(true);
 	addressColAttr->SetReadOnly(true);
 	codeColAttr->SetReadOnly(true);
 
-	code_grid->SetColAttr(0, addressColAttr);
-	code_grid->SetColAttr(1, dataColAttr);
-	code_grid->SetColAttr(2, codeColAttr);
+	code_grid->SetColAttr(0, breakpointColAttr);
+	code_grid->SetColAttr(1, addressColAttr);
+	code_grid->SetColAttr(2, dataColAttr);
+	code_grid->SetColAttr(3, codeColAttr);
 
 	code_grid->SetCellHighlightPenWidth(0);
 	code_grid->SetCellHighlightROPenWidth(0);

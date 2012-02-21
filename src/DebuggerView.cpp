@@ -15,7 +15,7 @@ DebuggerView::DebuggerView(wxWindow* parent, int id, const wxString& title, cons
 	notebook_pane_hex = new wxPanel(notebook, wxID_ANY);
 	debugger_menubar = new wxMenuBar();
 	wxMenu* wxglade_tmp_menu_1 = new wxMenu();
-	wxglade_tmp_menu_1->Append(wxID_ANY, wxT("Registers"), wxEmptyString, wxITEM_NORMAL);
+	wxglade_tmp_menu_1->Append(301, wxT("Registers"), wxEmptyString, wxITEM_NORMAL);
 	debugger_menubar->Append(wxglade_tmp_menu_1, wxT("View"));
 	SetMenuBar(debugger_menubar);
 	hex_view = new HexEditorCtrl(notebook_pane_hex, wxID_ANY);
@@ -28,18 +28,39 @@ DebuggerView::DebuggerView(wxWindow* parent, int id, const wxString& title, cons
 	do_layout();
 	// end wxGlade
 
+	debugger = NULL;
 	//hex_view->Connect(wxEVT_STC_UPDATEUI, (wxObjectEventFunction)(wxEventFunction)wxStaticCastEvent(wxStyledTextEventFunction, &DebuggerView::OnHexViewModified) , NULL, this);
+}
+
+DebuggerView::~DebuggerView()
+{
+	if (debugger) {
+		debugger->removeListener(this);
+	}
+}
+
+void DebuggerView::debuggerEvent(DebuggerEvent event)
+{
+	if (event == DEBUGGER_EVENT_EMULATION_START ||
+		event == DEBUGGER_EVENT_EMULATION_STOP ||
+		event == DEBUGGER_EVENT_EMULATION_STEP)
+	{
+		uiUpdate();
+	}
 }
 
 void DebuggerView::setDebugger(Debugger *debugger)
 {
     this->debugger = debugger;
     debugger_code_view->setDebugger(debugger);
+
+    debugger->addListener(this);
 }
 
 BEGIN_EVENT_TABLE(DebuggerView, wxFrame)
 	// begin wxGlade: DebuggerView::event_table
-	EVT_MENU(wxID_ANY, DebuggerView::OnViewRegisters)
+	EVT_MENU(301, DebuggerView::OnViewRegisters)
+	EVT_NOTEBOOK_PAGE_CHANGED(wxID_ANY, DebuggerView::OnDebuggerNotebookPageChanged)
 	EVT_BUTTON(201, DebuggerView::OnDebuggerStep)
 	EVT_BUTTON(202, DebuggerView::OnDebuggerContinue)
 	EVT_BUTTON(203, DebuggerView::OnDebuggerBreak)
@@ -57,36 +78,30 @@ void DebuggerView::uiUpdate()
 		button_continue->Enable();
 		button_break->Disable();
 	}
-
-	debugger_code_view->uiUpdate();
 }
 
 void DebuggerView::OnDebuggerStep(wxCommandEvent &event)
 {
-	debugger->getEmulator()->getMachine()->stepInstruction();
-	debugger->uiUpdate();
-
-	debugger_code_view->gotoAddress(debugger->getEmulator()->getMachine()->getPC());
+	debugger->stepInstruction();
 }
-
 
 void DebuggerView::OnDebuggerContinue(wxCommandEvent &event)
 {
-	debugger->getEmulator()->start();
+	debugger->emulationContinue();
 }
-
 
 void DebuggerView::OnDebuggerBreak(wxCommandEvent &event)
 {
-	debugger->getEmulator()->stop();
-	debugger->uiUpdate();
-
-	debugger_code_view->gotoAddress(debugger->getEmulator()->getMachine()->getPC());
+	debugger->emulationBreak();
 }
 
 void DebuggerView::OnViewRegisters(wxCommandEvent &event)
 {
-	debugger->uiShowRegisters();
+	DebuggerRegistersView *registersView = new DebuggerRegistersView(this, wxID_ANY, wxEmptyString);
+	registersView->setDebugger(debugger);
+	registersView->Show(true);
+	registersView->uiUpdate();
+	debugger->addListener(registersView);
 }
 
 void DebuggerView::OnHexViewModified(wxStyledTextEvent &event)
@@ -97,6 +112,13 @@ void DebuggerView::OnHexViewModified(wxStyledTextEvent &event)
 		hex_view->CharRight();
 		//hex_view->Get
 	}*/
+}
+
+void DebuggerView::OnDebuggerNotebookPageChanged(wxNotebookEvent & event)
+{
+	if (event.GetSelection() == 1) {
+		debugger_code_view->uiUpdate();
+	}
 }
 
 // wxGlade: add DebuggerView event handlers

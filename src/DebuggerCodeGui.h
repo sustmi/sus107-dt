@@ -19,14 +19,16 @@
 
 class Debugger;
 
-class DebuggerCodeGui: public wxPanel {
+class DebuggerCodeGui: public wxPanel, public DebuggerListener {
 public:
 	// begin wxGlade: DebuggerCodeGui::ids
 	// end wxGlade
 
 	DebuggerCodeGui(wxWindow* parent, int id, const wxPoint& pos=wxDefaultPosition, const wxSize& size=wxDefaultSize, long style=0);
+	~DebuggerCodeGui();
 
 	void uiUpdate();
+	void debuggerEvent(DebuggerEvent event);
 	void gotoAddress(int address);
 
 private:
@@ -35,9 +37,12 @@ private:
 	void do_layout();
 	// end wxGlade
 
+	wxMenu *rowContextMenu;
+
 	Debugger *debugger;
 	int address;
-	std::map<int, int> addressRowMap;
+	std::map<int, int> addressToRowMap;
+	std::map<int, int> rowToAddressMap;
 
 protected:
 	// begin wxGlade: DebuggerCodeGui::attributes
@@ -50,6 +55,9 @@ protected:
 public:
 	virtual void OnSelectCell(wxGridEvent &event); // wxGlade: <event_handler>
 	virtual void OnCodeSliderEndScroll(wxScrollEvent &event); // wxGlade: <event_handler>
+	virtual void OnCellChange(wxGridEvent &event); // wxGlade: <event_handler>
+	virtual void OnCellRightClick(wxGridEvent &event); // wxGlade: <event_handler>
+	virtual void OnContextToggleBreakpoint(wxCommandEvent &event);
     void setDebugger(Debugger *debugger);
 }; // wxGlade: end class
 
