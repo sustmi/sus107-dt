@@ -27,12 +27,11 @@ add_executable(sus107-dt
 	src/util/Timer.cpp
 	src/Keyboard.cpp
 	
-	src/widgets/wxHexCtrl/wxHexCtrl.cpp
-	src/widgets/wxHexCtrl/Tag.cpp
-	src/widgets/wxHexCtrl/TagDialogGui.cpp
-	
 	src/widgets/HexEditorCtrl/HexEditorCtrl.cpp
 	src/widgets/HexEditorCtrl/HexEditorCtrlGui.cpp
+	src/widgets/HexEditorCtrl/wxHexCtrl/wxHexCtrl.cpp
+	src/widgets/HexEditorCtrl/wxHexCtrl/Tag.cpp
+	src/widgets/HexEditorCtrl/wxHexCtrl/TagDialogGui.cpp
 	
 )
 target_link_libraries (sus107-dt
