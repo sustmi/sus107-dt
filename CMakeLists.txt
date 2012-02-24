@@ -15,6 +15,7 @@ add_executable(sus107-dt
 	src/DebuggerView.cpp
 	src/DebuggerRegistersView.cpp
 	src/DebuggerCodeGui.cpp
+	src/DebuggerHexGui.cpp
 	
 	src/Machine.cpp
 	src/Cpu.cpp

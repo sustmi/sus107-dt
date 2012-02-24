@@ -70,6 +70,32 @@ Z80EX_WORD Debugger::getCpuRegister(Z80_REG_T reg)
 	return emulator->getMachine()->getCpu()->getRegister(reg);
 }
 
+void Debugger::readMemory(unsigned char *buffer, int offset, int length)
+{
+	for (int i = 0; i < length; i++) {
+		buffer[i] = this->getEmulator()->getMachine()->getMemory()->rawRead(offset + i);
+	}
+}
+
+unsigned char Debugger::readMemory(int offset)
+{
+	return this->getEmulator()->getMachine()->getMemory()->rawRead(offset);
+}
+
+void Debugger::writeMemory(int offset, unsigned char value)
+{
+	this->getEmulator()->getMachine()->getMemory()->rawWrite(offset, value);
+	notifyListeners(DEBUGGER_EVENT_MEMORY_CHANGED);
+}
+
+void Debugger::writeMemory(unsigned char *buffer, int offset, int length)
+{
+	for (int i = 0; i < length; i++) {
+		this->getEmulator()->getMachine()->getMemory()->rawWrite(offset + i, buffer[i]);
+	}
+	notifyListeners(DEBUGGER_EVENT_MEMORY_CHANGED);
+}
+
 void Debugger::addBreakpoint(uint16_t address)
 {
 	if (breakpoints.insert(address).second) {

@@ -11,7 +11,7 @@
 
 
 Emulator::Emulator(wxWindow* parent, int id, const wxString& title, const wxPoint& pos, const wxSize& size, long style):
-	wxFrame(parent, id, title, pos, size, wxDEFAULT_FRAME_STYLE)
+	wxFrame(parent, id, title, pos, size, wxDEFAULT_FRAME_STYLE & ~wxRESIZE_BORDER)
 {
 	// begin wxGlade: Emulator::Emulator
 	menubar = new wxMenuBar();

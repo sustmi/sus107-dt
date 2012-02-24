@@ -7,13 +7,11 @@
 #ifndef DEBUGGERVIEW_H
 #define DEBUGGERVIEW_H
 
-#include "widgets/wxHexCtrl/wxHexCtrl.h"
-#include "widgets/HexEditorCtrl/HexEditorCtrl.h"
-#include "widgets/MadEdit/MadEdit.h"
 
 #include "Debugger.h"
 #include "DebuggerListener.h"
 #include "DebuggerRegistersView.h"
+#include "DebuggerHexGui.h"
 
 // begin wxGlade: ::dependencies
 #include <wx/notebook.h>
@@ -26,6 +24,7 @@
 
 class Debugger;
 class DebuggerCodeGui;
+class DebuggerHexGui;
 
 class DebuggerView: public wxFrame, public DebuggerListener {
 public:
@@ -49,7 +48,7 @@ private:
 protected:
 	// begin wxGlade: DebuggerView::attributes
 	wxMenuBar* debugger_menubar;
-	HexEditorCtrl* hex_view;
+	DebuggerHexGui* hex_view;
 	wxPanel* notebook_pane_hex;
 	DebuggerCodeGui* debugger_code_view;
 	wxNotebook* notebook;

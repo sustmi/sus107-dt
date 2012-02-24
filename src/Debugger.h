@@ -44,6 +44,13 @@ public:
     void setCpuRegister(Z80_REG_T reg, Z80EX_WORD value);
     Z80EX_WORD getCpuRegister(Z80_REG_T reg);
 
+    // mem
+    void readMemory(unsigned char *buffer, int offset, int length);
+    void writeMemory(unsigned char *buffer, int offset, int length);
+
+    unsigned char readMemory(int offset);
+    void writeMemory(int offset, unsigned char value);
+
     int dasm(char *output, int output_size, unsigned flags, int *t_states, int *t_states2, Z80EX_WORD addr);
     Z80EX_BYTE dasm_readbyte(Z80EX_WORD addr);
 

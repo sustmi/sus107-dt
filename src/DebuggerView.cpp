@@ -18,7 +18,7 @@ DebuggerView::DebuggerView(wxWindow* parent, int id, const wxString& title, cons
 	wxglade_tmp_menu_1->Append(301, wxT("Registers"), wxEmptyString, wxITEM_NORMAL);
 	debugger_menubar->Append(wxglade_tmp_menu_1, wxT("View"));
 	SetMenuBar(debugger_menubar);
-	hex_view = new HexEditorCtrl(notebook_pane_hex, wxID_ANY);
+	hex_view = new DebuggerHexGui(notebook_pane_hex, wxID_ANY);
 	debugger_code_view = new DebuggerCodeGui(notebook, wxID_ANY);
 	button_step = new wxButton(this, 201, wxT("Step"));
 	button_continue = new wxButton(this, 202, wxT("Continue"));
@@ -53,6 +53,7 @@ void DebuggerView::setDebugger(Debugger *debugger)
 {
     this->debugger = debugger;
     debugger_code_view->setDebugger(debugger);
+    hex_view->setDebugger(debugger);
 
     debugger->addListener(this);
 }

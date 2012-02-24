@@ -37,17 +37,18 @@ private:
 	void do_layout();
 	// end wxGlade
 
+	static int parseHex(wxString in, unsigned char *out, int maxLen);
+
 	wxMenu *rowContextMenu;
+	wxMutex cellChangeMutex;
 
 	Debugger *debugger;
-	int address;
 	std::map<int, int> addressToRowMap;
 	std::map<int, int> rowToAddressMap;
 
 protected:
 	// begin wxGlade: DebuggerCodeGui::attributes
 	wxGrid* code_grid;
-	wxSlider* code_slider;
 	// end wxGlade
 
 	DECLARE_EVENT_TABLE();
@@ -58,6 +59,7 @@ public:
 	virtual void OnCellChange(wxGridEvent &event); // wxGlade: <event_handler>
 	virtual void OnCellRightClick(wxGridEvent &event); // wxGlade: <event_handler>
 	virtual void OnContextToggleBreakpoint(wxCommandEvent &event);
+	virtual void OnCodeGridSize(wxSizeEvent &event);
     void setDebugger(Debugger *debugger);
 }; // wxGlade: end class
 
