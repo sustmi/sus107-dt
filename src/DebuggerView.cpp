@@ -139,7 +139,6 @@ void DebuggerView::set_properties()
 	hex_view->ReadFromBuffer(0, 65536, buf);
 	//hex_view->ReadFromBuffer(16, 62, "qwertzuioplkjhgfdsayxcvbnm0123456789QWERTZUIOPLKJHGFDSAYXCVBNM");
 	//hex_view->Select(5, 8); // data selection
-	printf("%s\n", hex_view->GetOffsetFormatString().mb_str().data());
 	printf("%d\n", hex_view->GetByteCount());
 	printf("%d\n", hex_view->GetLastPosition());
 

@@ -28,9 +28,16 @@ public:
 	void OnResize(wxSizeEvent& event);
 	void OnKeyboardChar(wxKeyEvent& event);
 	void OnKeyboardInput(wxKeyEvent& event);
+	void OnMouseWheel(wxMouseEvent& event);
+	void OnMouseRight(wxMouseEvent& event);
+	void OnKeyboardSelector(wxKeyEvent& event);
+	void OnMenuEvent(wxCommandEvent& event);
 
 	void UpdateOffsetScroll();
 	void LoadFromOffset(int64_t position, bool cursor_reset = false, bool paint = true);
+
+	void CopySelection();
+	void PasteFromClipboard();
 
 private:
 	Debugger *debugger;

@@ -20,6 +20,12 @@ DebuggerHexGui::DebuggerHexGui(wxWindow* parent, int id, const wxPoint& pos, con
 	text_ctrl->Connect(wxEVT_CHAR, wxKeyEventHandler(DebuggerHexGui::OnKeyboardChar), NULL, this);
 	hex_ctrl->Connect(wxEVT_KEY_DOWN, wxKeyEventHandler(DebuggerHexGui::OnKeyboardInput), NULL, this);
 	text_ctrl->Connect(wxEVT_KEY_DOWN, wxKeyEventHandler(DebuggerHexGui::OnKeyboardInput), NULL, this);
+	hex_ctrl->Connect(wxEVT_MOUSEWHEEL, wxMouseEventHandler(DebuggerHexGui::OnMouseWheel), NULL, this);
+	text_ctrl->Connect(wxEVT_MOUSEWHEEL, wxMouseEventHandler(DebuggerHexGui::OnMouseWheel), NULL, this);
+	hex_ctrl->Connect(wxEVT_RIGHT_DOWN, wxMouseEventHandler(DebuggerHexGui::OnMouseRight), NULL, this);
+	text_ctrl->Connect(wxEVT_RIGHT_DOWN, wxMouseEventHandler(DebuggerHexGui::OnMouseRight), NULL, this);
+
+	this->Connect(wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler(DebuggerHexGui::OnMenuEvent));
 }
 
 DebuggerHexGui::~DebuggerHexGui() {
@@ -31,6 +37,12 @@ DebuggerHexGui::~DebuggerHexGui() {
 	text_ctrl->Disconnect(wxEVT_CHAR, wxKeyEventHandler(DebuggerHexGui::OnKeyboardChar), NULL, this);
 	hex_ctrl->Disconnect(wxEVT_KEY_DOWN, wxKeyEventHandler(DebuggerHexGui::OnKeyboardInput), NULL, this);
 	text_ctrl->Disconnect(wxEVT_KEY_DOWN, wxKeyEventHandler(DebuggerHexGui::OnKeyboardInput), NULL, this);
+	hex_ctrl->Disconnect(wxEVT_MOUSEWHEEL, wxMouseEventHandler(DebuggerHexGui::OnMouseWheel), NULL, this);
+	text_ctrl->Disconnect(wxEVT_MOUSEWHEEL, wxMouseEventHandler(DebuggerHexGui::OnMouseWheel), NULL, this);
+	hex_ctrl->Disconnect(wxEVT_RIGHT_DOWN, wxMouseEventHandler(DebuggerHexGui::OnMouseRight), NULL, this);
+	text_ctrl->Disconnect(wxEVT_RIGHT_DOWN, wxMouseEventHandler(DebuggerHexGui::OnMouseRight), NULL, this);
+
+	this->Disconnect(wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler(DebuggerHexGui::OnMenuEvent));
 }
 
 void DebuggerHexGui::OnOffsetScroll(wxScrollEvent & event)
@@ -57,8 +69,9 @@ void DebuggerHexGui::debuggerEvent(DebuggerEvent event)
 
 void DebuggerHexGui::uiUpdate()
 {
-	int address = debugger->getCpuRegister(regPC);
-	LoadFromOffset(address, false, true);
+	//int address = debugger->getCpuRegister(regPC);
+	//LoadFromOffset(address, false, true);
+	LoadFromOffset(page_offset, false, true);
 	UpdateOffsetScroll();
 }
 
@@ -127,19 +140,8 @@ void DebuggerHexGui::OnKeyboardChar(wxKeyEvent &event)
 
 void DebuggerHexGui::OnKeyboardInput(wxKeyEvent& event) {
 	wxHexCtrl *myctrl = static_cast<wxHexCtrl*>(event.GetEventObject());
-	//Keyboard Selection Code
-	if (event.GetKeyCode()==WXK_UP || event.GetKeyCode()==WXK_NUMPAD_UP ||
-		event.GetKeyCode()==WXK_DOWN || event.GetKeyCode()==WXK_NUMPAD_DOWN ||
-		event.GetKeyCode()==WXK_LEFT || event.GetKeyCode()==WXK_NUMPAD_LEFT ||
-		event.GetKeyCode()==WXK_RIGHT || event.GetKeyCode()==WXK_NUMPAD_RIGHT ||
-		event.GetKeyCode()==WXK_HOME || event.GetKeyCode()==WXK_NUMPAD_HOME ||
-		event.GetKeyCode()==WXK_END || event.GetKeyCode()==WXK_NUMPAD_END ||
-		event.GetKeyCode()==WXK_PAGEUP || event.GetKeyCode()==WXK_NUMPAD_PAGEUP ||
-		event.GetKeyCode()==WXK_PAGEDOWN || event.GetKeyCode()==WXK_NUMPAD_PAGEDOWN)
-	{
-		//OnKeyboardSelector(event);	//Selection Starter call
-	}
 
+	OnKeyboardSelector(event); // Keyboard Selection Start
 
 	switch (event.GetKeyCode()) {
 		case (WXK_UP):
@@ -273,66 +275,183 @@ void DebuggerHexGui::OnKeyboardInput(wxKeyEvent& event) {
 			break;
 
 		default: {
-			event.Skip();
-			/*if (event.ControlDown())
+			if (event.ControlDown()) {
 				switch (event.GetKeyCode()) {
-				case (0x5a): // CTRL+Z = UNDO
-					if (event.ShiftDown())
-						DoRedo(); // UNDO with shift = REDO
-					else
-						DoUndo();
-					break;
-				case (0x59): // CTRL+Y = REDO
-					DoRedo();
-					break;
-				case (0x53): { // CTRL+S = SAVE
-					FileSave();
-					// TODO (death#1#): File Name star'in * when file changed & saved
+					case (0x41): // CTRL+A = ALL
+						Select(0, 65536);
+						break;
+					case (0x43): // CTRL+C = COPY
+						CopySelection();
+						break;
+					case (0x56): // CTRL+V = PASTE
+						PasteFromClipboard();
+						break;
+					default:
+						event.Skip();
+						break;
 				}
-					break;
-				case (0x41): // CTRL+A = ALL
-					Select(0, FileLength());
-					break;
-				case (0x58): // CTRL+X = CUT
-					wxBell();
-					break;
-				case (0x43): // CTRL+C = COPY
-					CopySelection();
-					break;
-				case (0x56): // CTRL+V = PASTE
-					PasteFromClipboard();
-					break;
-				case (0x46): // CTRL+F = FIND
-					//finddlg();
-					break;
-				case (0x4f): // CTRL+O = OPEN
-					wxBell();
-					break;
-				default:
-					event.Skip(); // ->OnKeyboardChar( event );
-					break;
-				}
-			else
-				event.Skip(); // ->OnKeyboardChar( event );*/
+			} else {
+				event.Skip();
+			}
+			break;
 		}
 
+	}
 
-	}//switch end
 	UpdateOffsetScroll();
-	//OnKeyboardSelector(event);
-	PaintSelection( );
+	OnKeyboardSelector(event); // Keyboard Selection End
+	PaintSelection();
+}
+
+void DebuggerHexGui::OnMouseWheel(wxMouseEvent & event)
+{
+	if (event.GetWheelRotation() > 0) { // Going to UP
+		page_offset -= BytePerLine() * event.GetLinesPerAction(); //offset decreasing
+		if (page_offset <= 0) {
+			page_offset = 0;
+		}
+	} else if (event.GetWheelRotation() < 0) { // Going to BOTTOM
+		page_offset += BytePerLine() * event.GetLinesPerAction(); //offset decreasing
+		if (page_offset + ByteCapacity() >= 65536) {
+			page_offset = 65536 - ByteCapacity();
+		}
+	}
+
+	LoadFromOffset(page_offset, false, true);
+	UpdateOffsetScroll();
+}
+
+void DebuggerHexGui::OnMouseRight(wxMouseEvent & event)
+{
+	wxMenu menu;
+
+	menu.Append(wxID_COPY, wxT("Copy"));
+	//menu.Append(idCopyAs, _("CopyAs"));
+	//menu.Append(idSaveAsDump, _("Save As Dump"));
+	menu.Append(wxID_PASTE, wxT("Paste"));
+
+	/*menu.AppendSeparator();
+	menu.Append(idFillSelection, _("Fill Selecton"));
+	if( BlockSelectOffset == -1 )
+		menu.Append(idBlockSelect, _("Set Selection Block Start"));
+	else
+		menu.Append(idBlockSelect, _("Set Selection Block End"));
+	menu.AppendSeparator();
+	menu.Append(idTagQuick,			 _("Quick Tag"), _("Creates empty tag with Random Color."));
+	menu.Append(idTagAddSelection, _("New Tag") );
+	menu.Append(idTagEdit, 			 _("Tag Edit"));
+
+	menu.Enable( idTagEdit, false );
+	for( unsigned i = 0 ; i < MainTagArray.Count() ; i++ ) {
+		TagElement *TAG = MainTagArray.Item(i);
+		if( TAG->isCover(TagPosition) ) {
+			menu.Enable( idTagEdit, true );
+			break;
+		}
+	}
+
+	menu.Enable( idTagQuick, select->GetState() );
+	menu.Enable( idTagAddSelection, select->GetState() );
+	menu.Enable( wxID_COPY, select->GetState() );
+	menu.Enable( idCopyAs, select->GetState() );
+	menu.Enable( idSaveAsDump, select->GetState() );
+	menu.Enable( idFillSelection, select->GetState() );
+	menu.Enable( wxID_PASTE, not select->GetState() );
+	menu.Enable( wxID_DELETE, select->GetState());
+	menu.Enable( idInjection, not select->GetState());
+	menu.Enable( wxID_CUT, select->GetState());*/
+
+	PopupMenu(&menu);
+}
+
+void DebuggerHexGui::OnKeyboardSelector(wxKeyEvent & event)
+{
+	if (event.GetKeyCode()==WXK_UP || event.GetKeyCode()==WXK_NUMPAD_UP ||
+		event.GetKeyCode()==WXK_DOWN || event.GetKeyCode()==WXK_NUMPAD_DOWN ||
+		event.GetKeyCode()==WXK_LEFT || event.GetKeyCode()==WXK_NUMPAD_LEFT ||
+		event.GetKeyCode()==WXK_RIGHT || event.GetKeyCode()==WXK_NUMPAD_RIGHT ||
+		event.GetKeyCode()==WXK_HOME || event.GetKeyCode()==WXK_NUMPAD_HOME ||
+		event.GetKeyCode()==WXK_END || event.GetKeyCode()==WXK_NUMPAD_END ||
+		event.GetKeyCode()==WXK_PAGEUP || event.GetKeyCode()==WXK_NUMPAD_PAGEUP ||
+		event.GetKeyCode()==WXK_PAGEDOWN || event.GetKeyCode()==WXK_NUMPAD_PAGEDOWN)
+	{
+		if (event.ShiftDown()) {
+			Selector();
+		} else if (select->GetState()) { // Only SetState if there is a selection to decrease OnUpdateUI event overhead!
+			select->SetState(false);
+		}
+	}
+
+
+}
+
+void DebuggerHexGui::OnMenuEvent(wxCommandEvent & event)
+{
+	switch(event.GetId()) {
+		case wxID_COPY:
+			CopySelection();
+			break;
+		case wxID_PASTE:
+			PasteFromClipboard();
+			break;
+		default:
+			event.Skip();
+			break;
+	}
 }
 
 void DebuggerHexGui::LoadFromOffset(int64_t position, bool cursor_reset, bool paint)
 {
 	int len = ByteCapacity();
-	char *buffer = new char[len];
+	if (len > 0) {
+		char *buffer = new char[len];
 
-	debugger->readMemory((unsigned char*)buffer, (int)position, len);
+		debugger->readMemory((unsigned char*)buffer, (int)position, len);
 
-	ReadFromBuffer(position, len, buffer, cursor_reset, paint);
-	delete [] buffer;
+		ReadFromBuffer(position, len, buffer, cursor_reset, paint);
+		delete [] buffer;
+	}
 }
+
+void DebuggerHexGui::CopySelection()
+{
+	printf("copy %d %d %d\n", select->GetStart(), select->GetEnd(), select->GetState());
+
+	if (select->GetState()) {
+		if (wxTheClipboard->Open()) {
+			int length = select->GetSize();
+			unsigned char *buffer = new unsigned char[length];
+			debugger->readMemory(buffer, select->GetStart(), length);
+			wxTheClipboard->SetData(new wxTextDataObject(wxString::From8BitData((char *)buffer, length)));
+			wxTheClipboard->Close();
+		}
+	}
+}
+
+void DebuggerHexGui::PasteFromClipboard()
+{
+	printf("paste %d %d\n", select->GetStart(), select->GetEnd());
+
+	if (select->GetState()) {
+		printf("paste1\n");
+		if (wxTheClipboard->Open()) {
+			printf("paste2\n");
+			if (wxTheClipboard->IsSupported(wxDF_TEXT)) {
+				printf("paste3\n");
+				wxTextDataObject data;
+				wxTheClipboard->GetData(data);
+
+				int length = select->GetSize() < data.GetTextLength() ? select->GetSize() : data.GetTextLength();
+				debugger->writeMemory((unsigned char*)data.GetText().mb_str().data(), select->GetStart(), length);
+			}
+			wxTheClipboard->Close();
+		}
+	}
+}
+
+
+
+
 
 
 
