@@ -46,6 +46,8 @@ private:
 	std::map<int, int> addressToRowMap;
 	std::map<int, int> rowToAddressMap;
 
+	void ToggleBreakpoint(int row);
+
 protected:
 	// begin wxGlade: DebuggerCodeGui::attributes
 	wxGrid* code_grid;
@@ -58,6 +60,7 @@ public:
 	virtual void OnCodeSliderEndScroll(wxScrollEvent &event); // wxGlade: <event_handler>
 	virtual void OnCellChange(wxGridEvent &event); // wxGlade: <event_handler>
 	virtual void OnCellRightClick(wxGridEvent &event); // wxGlade: <event_handler>
+	virtual void OnCellLeftDClick(wxGridEvent &event); // wxGlade: <event_handler>
 	virtual void OnContextToggleBreakpoint(wxCommandEvent &event);
 	virtual void OnCodeGridSize(wxSizeEvent &event);
     void setDebugger(Debugger *debugger);

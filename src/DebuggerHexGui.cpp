@@ -326,40 +326,7 @@ void DebuggerHexGui::OnMouseRight(wxMouseEvent & event)
 	wxMenu menu;
 
 	menu.Append(wxID_COPY, wxT("Copy"));
-	//menu.Append(idCopyAs, _("CopyAs"));
-	//menu.Append(idSaveAsDump, _("Save As Dump"));
 	menu.Append(wxID_PASTE, wxT("Paste"));
-
-	/*menu.AppendSeparator();
-	menu.Append(idFillSelection, _("Fill Selecton"));
-	if( BlockSelectOffset == -1 )
-		menu.Append(idBlockSelect, _("Set Selection Block Start"));
-	else
-		menu.Append(idBlockSelect, _("Set Selection Block End"));
-	menu.AppendSeparator();
-	menu.Append(idTagQuick,			 _("Quick Tag"), _("Creates empty tag with Random Color."));
-	menu.Append(idTagAddSelection, _("New Tag") );
-	menu.Append(idTagEdit, 			 _("Tag Edit"));
-
-	menu.Enable( idTagEdit, false );
-	for( unsigned i = 0 ; i < MainTagArray.Count() ; i++ ) {
-		TagElement *TAG = MainTagArray.Item(i);
-		if( TAG->isCover(TagPosition) ) {
-			menu.Enable( idTagEdit, true );
-			break;
-		}
-	}
-
-	menu.Enable( idTagQuick, select->GetState() );
-	menu.Enable( idTagAddSelection, select->GetState() );
-	menu.Enable( wxID_COPY, select->GetState() );
-	menu.Enable( idCopyAs, select->GetState() );
-	menu.Enable( idSaveAsDump, select->GetState() );
-	menu.Enable( idFillSelection, select->GetState() );
-	menu.Enable( wxID_PASTE, not select->GetState() );
-	menu.Enable( wxID_DELETE, select->GetState());
-	menu.Enable( idInjection, not select->GetState());
-	menu.Enable( wxID_CUT, select->GetState());*/
 
 	PopupMenu(&menu);
 }

@@ -34,6 +34,7 @@ DebuggerCodeGui::~DebuggerCodeGui()
 
 BEGIN_EVENT_TABLE(DebuggerCodeGui, wxPanel)
 	// begin wxGlade: DebuggerCodeGui::event_table
+	EVT_GRID_CMD_CELL_LEFT_DCLICK(wxID_ANY, DebuggerCodeGui::OnCellLeftDClick)
 	EVT_GRID_CMD_CELL_RIGHT_CLICK(wxID_ANY, DebuggerCodeGui::OnCellRightClick)
 	EVT_GRID_CMD_SELECT_CELL(wxID_ANY, DebuggerCodeGui::OnSelectCell)
 	EVT_GRID_CMD_CELL_CHANGE(wxID_ANY, DebuggerCodeGui::OnCellChange)
@@ -89,16 +90,16 @@ void DebuggerCodeGui::OnCellRightClick(wxGridEvent &event)
 	PopupMenu(rowContextMenu, event.GetPosition());
 }
 
+void DebuggerCodeGui::OnCellLeftDClick(wxGridEvent &event)
+{
+	if (event.GetCol() == 0) {
+		ToggleBreakpoint(event.GetRow());
+	}
+}
+
 void DebuggerCodeGui::OnContextToggleBreakpoint(wxCommandEvent &event)
 {
-	int row = code_grid->GetSelectedRows().Last();
-	int address = rowToAddressMap[row];
-
-	if (!debugger->isBreakpoint(address)) {
-		debugger->addBreakpoint(address);
-	} else {
-		debugger->removeBreakpoint(address);
-	}
+	ToggleBreakpoint(code_grid->GetSelectedRows().Last());
 }
 
 void DebuggerCodeGui::OnCodeGridSize(wxSizeEvent & event)
@@ -151,6 +152,16 @@ int DebuggerCodeGui::parseHex(wxString in, unsigned char *out, int maxLen)
 	}
 }
 
+void DebuggerCodeGui::ToggleBreakpoint(int row)
+{
+	int address = rowToAddressMap[row];
+
+	if (!debugger->isBreakpoint(address)) {
+		debugger->addBreakpoint(address);
+	} else {
+		debugger->removeBreakpoint(address);
+	}
+}
 
 void DebuggerCodeGui::setDebugger(Debugger *debugger)
 {
