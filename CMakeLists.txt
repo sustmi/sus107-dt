@@ -12,10 +12,11 @@ add_executable(sus107-dt
 	
 	src/Emulator.cpp
 	src/Debugger.cpp
-	src/DebuggerView.cpp
-	src/DebuggerRegistersView.cpp
-	src/DebuggerCodeGui.cpp
-	src/DebuggerHexGui.cpp
+	
+	src/ui/DebuggerView.cpp
+	src/ui/DebuggerRegistersView.cpp
+	src/ui/DebuggerCodeGui.cpp
+	src/ui/DebuggerHexGui.cpp
 	
 	src/Machine.cpp
 	src/Cpu.cpp
@@ -27,11 +28,12 @@ add_executable(sus107-dt
 	src/util/Timer.cpp
 	src/Keyboard.cpp
 	
-	src/widgets/HexEditorCtrl/HexEditorCtrl.cpp
-	src/widgets/HexEditorCtrl/HexEditorCtrlGui.cpp
-	src/widgets/HexEditorCtrl/wxHexCtrl/wxHexCtrl.cpp
-	src/widgets/HexEditorCtrl/wxHexCtrl/Tag.cpp
-	src/widgets/HexEditorCtrl/wxHexCtrl/TagDialogGui.cpp
+	src/ui/HexDataObject.cpp
+	src/ui/widgets/HexEditorCtrl/HexEditorCtrl.cpp
+	src/ui/widgets/HexEditorCtrl/HexEditorCtrlGui.cpp
+	src/ui/widgets/HexEditorCtrl/wxHexCtrl/wxHexCtrl.cpp
+	src/ui/widgets/HexEditorCtrl/wxHexCtrl/Tag.cpp
+	src/ui/widgets/HexEditorCtrl/wxHexCtrl/TagDialogGui.cpp
 	
 )
 target_link_libraries (sus107-dt

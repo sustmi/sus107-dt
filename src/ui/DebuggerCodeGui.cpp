@@ -262,6 +262,9 @@ void DebuggerCodeGui::set_properties()
 	code_grid->SetColSize(3, 200);
 	// end wxGlade
 
+	code_grid->SetDefaultCellFont(wxFont(8, wxFONTFAMILY_TELETYPE, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_NORMAL, false));
+	code_grid->SetDefaultRowSize(18, true);
+
 	for (int i = 0; i < code_grid->GetCols(); i++) {
 		code_grid->SetColMinimalWidth(i, code_grid->GetColSize(i));
 	}

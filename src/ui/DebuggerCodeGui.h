@@ -15,7 +15,7 @@
 // end wxGlade
 
 #include <map>
-#include "Debugger.h"
+#include "../Debugger.h"
 
 class Debugger;
 

@@ -6,8 +6,8 @@
 #ifndef REGISTERSVIEW_H
 #define REGISTERSVIEW_H
 
-#include "Debugger.h"
-#include "DebuggerListener.h"
+#include "../Debugger.h"
+#include "../DebuggerListener.h"
 
 // begin wxGlade: ::dependencies
 // end wxGlade

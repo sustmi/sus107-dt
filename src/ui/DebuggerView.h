@@ -8,8 +8,8 @@
 #define DEBUGGERVIEW_H
 
 
-#include "Debugger.h"
-#include "DebuggerListener.h"
+#include "../Debugger.h"
+#include "../DebuggerListener.h"
 #include "DebuggerRegistersView.h"
 #include "DebuggerHexGui.h"
 

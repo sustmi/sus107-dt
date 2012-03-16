@@ -47,7 +47,6 @@ DebuggerHexGui::~DebuggerHexGui() {
 
 void DebuggerHexGui::OnOffsetScroll(wxScrollEvent & event)
 {
-	printf("DebuggerHexGui::OnOffsetScroll %d\n", event.GetPosition());
 	LoadFromOffset(event.GetPosition() * BytePerLine());
 }
 
@@ -389,7 +388,8 @@ void DebuggerHexGui::CopySelection()
 			int length = select->GetSize();
 			unsigned char *buffer = new unsigned char[length];
 			debugger->readMemory(buffer, select->GetStart(), length);
-			wxTheClipboard->SetData(new wxTextDataObject(wxString::From8BitData((char *)buffer, length)));
+			wxTextDataObject *data = new wxTextDataObject(wxString::From8BitData((char *)buffer, length));
+			wxTheClipboard->SetData(data);
 			wxTheClipboard->Close();
 		}
 	}
@@ -407,9 +407,10 @@ void DebuggerHexGui::PasteFromClipboard()
 				printf("paste3\n");
 				wxTextDataObject data;
 				wxTheClipboard->GetData(data);
-
+				printf("len = %d\n", data.GetTextLength());
 				int length = select->GetSize() < data.GetTextLength() ? select->GetSize() : data.GetTextLength();
-				debugger->writeMemory((unsigned char*)data.GetText().mb_str().data(), select->GetStart(), length);
+
+				debugger->writeMemory((unsigned char*)data.GetText().To8BitData().data(), select->GetStart(), length);
 			}
 			wxTheClipboard->Close();
 		}

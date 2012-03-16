@@ -9,8 +9,8 @@
 #define DEBUGGERHEXGUI_H_
 
 #include "widgets/HexEditorCtrl/HexEditorCtrl.h"
-#include "Debugger.h"
-#include "DebuggerListener.h"
+#include "../Debugger.h"
+#include "../DebuggerListener.h"
 
 class Debugger;
 class DebuggerListener;

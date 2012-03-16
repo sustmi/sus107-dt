@@ -8,7 +8,7 @@
 
 #include "Machine.h"
 #include "Debugger.h"
-#include "DebuggerView.h"
+#include "ui/DebuggerView.h"
 
 #include <map>
 

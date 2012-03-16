@@ -11,8 +11,8 @@
 #include <set>
 
 #include "DebuggerListener.h"
-#include "DebuggerView.h"
-#include "DebuggerRegistersView.h"
+#include "ui/DebuggerView.h"
+#include "ui/DebuggerRegistersView.h"
 #include "Emulator.h"
 
 class DebuggerView;
