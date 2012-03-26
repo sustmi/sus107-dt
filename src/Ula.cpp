@@ -88,6 +88,25 @@ void Ula::pread(uint16_t port, uint8_t *value) {
 void Ula::pwrite(uint16_t port, uint8_t value) {
 	if ((port & 0x00ff) == 0x00fe) {
 		borderColor = value & 0x07;
+
+		// sound
+		int ear = (value & (1 << 4)) != 0;
+
+		uint64_t time = machine->getCurrentTime();
+
+		SoundEvent lastSoundEvent;
+		if (!soundBuffer.empty()) {
+			lastSoundEvent = soundBuffer.back();
+		} else {
+			lastSoundEvent.time = 0; // HACK
+		}
+
+		if (lastSoundEvent.time < time) {
+			SoundEvent soundEvent;
+			soundEvent.time = time;
+			soundEvent.value = ear ? 1 : -1;
+			soundBuffer.push_back(soundEvent);
+		}
 	}
 
 	cpu->wait(0); // TODO: contended port

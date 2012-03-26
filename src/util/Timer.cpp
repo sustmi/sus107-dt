@@ -16,3 +16,25 @@ Timer::~Timer() {
 	// TODO Auto-generated destructor stub
 }
 
+void Timer::setTime(long miliseconds)
+{
+}
+
+void Timer::setPeriod(long miliseconds)
+{
+}
+
+void Timer::setCallback()
+{
+}
+
+void Timer::start()
+{
+}
+
+void Timer::stop()
+{
+}
+
+
+

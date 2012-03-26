@@ -387,7 +387,9 @@ void DebuggerHexGui::CopySelection()
 		if (wxTheClipboard->Open()) {
 			int length = select->GetSize();
 			unsigned char *buffer = new unsigned char[length];
+			
 			debugger->readMemory(buffer, select->GetStart(), length);
+			
 			wxTextDataObject *data = new wxTextDataObject(wxString::From8BitData((char *)buffer, length));
 			wxTheClipboard->SetData(data);
 			wxTheClipboard->Close();
@@ -400,14 +402,10 @@ void DebuggerHexGui::PasteFromClipboard()
 	printf("paste %d %d\n", select->GetStart(), select->GetEnd());
 
 	if (select->GetState()) {
-		printf("paste1\n");
 		if (wxTheClipboard->Open()) {
-			printf("paste2\n");
 			if (wxTheClipboard->IsSupported(wxDF_TEXT)) {
-				printf("paste3\n");
 				wxTextDataObject data;
 				wxTheClipboard->GetData(data);
-				printf("len = %d\n", data.GetTextLength());
 				int length = select->GetSize() < data.GetTextLength() ? select->GetSize() : data.GetTextLength();
 
 				debugger->writeMemory((unsigned char*)data.GetText().To8BitData().data(), select->GetStart(), length);

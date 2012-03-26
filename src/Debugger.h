@@ -18,6 +18,7 @@
 class DebuggerView;
 class DebuggerRegistersView;
 class Emulator;
+class DebuggerListener;
 
 class Debugger {
 public:

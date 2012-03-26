@@ -37,6 +37,10 @@ Memory *Machine::getMemory()
 {
 	return memory;
 }
+Ula *Machine::getUla()
+{
+	return ula;
+}
 
 bool Machine::loadRom(const char *filename) {
 	FILE *f = fopen(filename, "rb");

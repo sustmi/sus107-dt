@@ -8,6 +8,8 @@
 #ifndef ULA_H_
 #define ULA_H_
 
+#include <deque>
+
 #include "Machine.h"
 #include "Memory.h"
 #include "Cpu.h"
@@ -21,6 +23,11 @@ class Memory;
 class Cpu;
 class TapeRecorder;
 class Keyboard;
+
+struct SoundEvent {
+	uint64_t time;
+	float value;
+};
 
 class Ula : public PortDevice {
 public:
@@ -42,6 +49,8 @@ public:
     void pwrite(uint16_t port, uint8_t value);
 
     void renderScreen(uint32_t *buffer);
+
+    std::deque<SoundEvent> soundBuffer;
 
 private:
     Machine *machine;

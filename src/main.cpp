@@ -2,7 +2,7 @@
 
 #include <wx/wx.h>
 #include <wx/image.h>
-#include "Emulator.h"
+#include "ui/EmulatorView.h"
 
 
 class Application: public wxApp {
@@ -15,7 +15,7 @@ IMPLEMENT_APP(Application)
 bool Application::OnInit()
 {
 	wxInitAllImageHandlers();
-	Emulator* emulator = new Emulator(NULL, wxID_ANY, wxEmptyString);
+	EmulatorView* emulator = new EmulatorView(NULL, wxID_ANY, wxEmptyString);
 	emulator->init();
 	SetTopWindow(emulator);
 	emulator->Show();

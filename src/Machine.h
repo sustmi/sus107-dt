@@ -29,6 +29,7 @@ public:
 	void attach(Memory *memory, Cpu *cpu, Ula *ula);
 	Cpu *getCpu();
 	Memory *getMemory();
+	Ula *getUla();
 
 	void step();
 	void stepInstruction();

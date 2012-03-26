@@ -1,9 +1,14 @@
 cmake_minimum_required (VERSION 2.6)
 project (sus107-dt)
 
-# wxWidgets
+# wxWidgets library
 find_package(wxWidgets COMPONENTS core base adv stc richtext xml REQUIRED)
 include( "${wxWidgets_USE_FILE}" )
+
+# Portaudio library
+set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake_modules" ${CMAKE_MODULE_PATH})
+find_package(Portaudio REQUIRED system window graphics network audio)
+include_directories(${PORTAUDIO_INCLUDE_DIRS})
 
 add_executable(sus107-dt
 	src/main.cpp
@@ -13,6 +18,7 @@ add_executable(sus107-dt
 	src/Emulator.cpp
 	src/Debugger.cpp
 	
+	src/ui/EmulatorView.cpp
 	src/ui/DebuggerView.cpp
 	src/ui/DebuggerRegistersView.cpp
 	src/ui/DebuggerCodeGui.cpp
@@ -35,10 +41,13 @@ add_executable(sus107-dt
 	src/ui/widgets/HexEditorCtrl/wxHexCtrl/Tag.cpp
 	src/ui/widgets/HexEditorCtrl/wxHexCtrl/TagDialogGui.cpp
 	
+	src/Beeper.cpp
 )
+
 target_link_libraries (sus107-dt
 	spectrum
 	${wxWidgets_LIBRARIES}
+	${PORTAUDIO_LIBRARIES}
 )
 
 ## Compiler flags
