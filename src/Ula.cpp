@@ -118,13 +118,13 @@ void Ula::renderScreen(uint32_t *buffer)
 {
 	static uint32_t palette_rgb[16] = {
 		0x000000, // black
-		0x000088, // blue
-		0x880000, // red
-		0x880088, // purple
-		0x008800, // green
-		0x008888, // cyan
-		0x888800, // yellow
-		0x888888, // white
+		0x0000c0, // blue
+		0xc00000, // red
+		0xc000c0, // purple
+		0x00c000, // green
+		0x00c0c0, // cyan
+		0xc0c000, // yellow
+		0xc0c0c0, // white
 		// bright
 		0x000000, // black
 		0x0000ff, // blue
@@ -136,25 +136,28 @@ void Ula::renderScreen(uint32_t *buffer)
 		0xffffff, // white
 	};
 
-	// TODO: border
 	for (int y = 0; y < 288; y++) {
 		for (int x = 0; x < 352; x++) {
 			buffer[y*352 + x] = palette_rgb[borderColor];
 		}
 	}
 
-	// TODO: flash
+	// swap INK and PAPER every 16 half frames
+	int flash_phase = ((machine->getCurrentTime() / this->interruptPeriod) / 16) % 2;
+
 	for (int y = 0; y < 192; y++) {
 		for (int x = 0; x < 256; x++) {
-			uint16_t attr_addr = 0x5800 + ((y/8) << 5) + (x/8);
-			uint16_t brightness_addr = 0x4000 + ((y/64) << 11) + ((y%8) << 8) + (((y/8)%8) << 5) + (x/8);
-
-			uint8_t attr = memory->rawRead(attr_addr);
-			uint8_t brightness = memory->rawRead(brightness_addr);
+			uint16_t painting_addr = 0x4000 + ((y/64) << 11) + ((y%8) << 8) + (((y/8)%8) << 5) + (x/8);
+			uint16_t attribute_addr = 0x5800 + ((y/8) << 5) + (x/8);
+			
+			uint8_t paint = memory->rawRead(painting_addr);
+			uint8_t attr = memory->rawRead(attribute_addr);
 
 			int ink = ((attr & 0x40) >> 3) | (attr & 0x07);
 			int paper = (attr & 0x78) >> 3;
-			int color = (brightness & (0x80 >> (x%8))) ? ink : paper;
+			bool flash = (attr & 0x80) && flash_phase == 1;
+
+			int color = (((paint & (0x80 >> (x%8))) != 0) != flash) ? ink : paper;
 
 			buffer[(y+48)*352 + x+48] = palette_rgb[color];
 		}

@@ -13,16 +13,9 @@ include_directories(${PORTAUDIO_INCLUDE_DIRS})
 add_executable(sus107-dt
 	src/main.cpp
 	
-	src/DebuggerListener.cpp
-	
 	src/Emulator.cpp
 	src/Debugger.cpp
-	
-	src/ui/EmulatorView.cpp
-	src/ui/DebuggerView.cpp
-	src/ui/DebuggerRegistersView.cpp
-	src/ui/DebuggerCodeGui.cpp
-	src/ui/DebuggerHexGui.cpp
+	src/DebuggerListener.cpp
 	
 	src/Machine.cpp
 	src/Cpu.cpp
@@ -33,6 +26,12 @@ add_executable(sus107-dt
 	src/TapeRecorder.cpp
 	src/util/Timer.cpp
 	src/Keyboard.cpp
+	
+	src/ui/EmulatorView.cpp
+	src/ui/DebuggerView.cpp
+	src/ui/DebuggerRegistersView.cpp
+	src/ui/DebuggerCodeGui.cpp
+	src/ui/DebuggerHexGui.cpp
 	
 	src/ui/HexDataObject.cpp
 	src/ui/widgets/HexEditorCtrl/HexEditorCtrl.cpp

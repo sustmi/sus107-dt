@@ -25,7 +25,9 @@ uint8_t Memory::rawRead(uint16_t addr) {
 	return mem[addr];
 }
 void Memory::rawWrite(uint16_t addr, uint8_t value) {
-	mem[addr] = value;
+	if (addr >= 0x4000) { // 0x0000-0x3fff is ROM
+		mem[addr] = value;
+	}
 }
 
 void Memory::writePage(int page, const uint8_t *data, int size) {
