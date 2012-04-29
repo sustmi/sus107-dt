@@ -1,12 +1,22 @@
-/*
- * Speaker.h
- *
- *  Created on: 19.3.2012
- *      Author: Miroslav Sustek <sus107@vsb.cz>
- */
+// Speaker.h
 
-#ifndef BEEPER_H_
-#define BEEPER_H_
+// Copyright (C) 2012  Miroslav Sustek <sus107@vsb.cz>
+
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+
+// You should have received a copy of the GNU General Public License
+// along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+#ifndef SPEAKER_H_
+#define SPEAKER_H_
 
 #include <portaudio.h>
 #include <pthread.h>
@@ -53,4 +63,4 @@ int paCallback(const void *inputBuffer, void *outputBuffer,
 		PaStreamCallbackFlags statusFlags,
 		void *userData);
 
-#endif /* BEEPER_H_ */
+#endif /* SPEAKER_H_ */

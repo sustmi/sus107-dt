@@ -1,9 +1,19 @@
-/*
- * Debugger.cpp
- *
- *  Created on: 3.2.2012
- *      Author: Miroslav Sustek <sus107@vsb.cz>
- */
+// Debugger.cpp
+
+// Copyright (C) 2012  Miroslav Sustek <sus107@vsb.cz>
+
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+
+// You should have received a copy of the GNU General Public License
+// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #include "Debugger.h"
 
@@ -28,9 +38,9 @@ void Debugger::removeListener(DebuggerListener *listener)
 void Debugger::notifyListeners(DebuggerEvent event)
 {
 	std::set<DebuggerListener*>::iterator it;
-		for (it = listeners.begin(); it != listeners.end(); it++) {
-			(*it)->debuggerEvent(event);
-		}
+	for (it = listeners.begin(); it != listeners.end(); it++) {
+		(*it)->debuggerEvent(event);
+	}
 }
 
 Emulator *Debugger::getEmulator() const
@@ -113,8 +123,9 @@ bool Debugger::isBreakpoint(uint16_t address)
 	return breakpoints.count(address) > 0;
 }
 
-int Debugger::dasm(char *output, int output_size, unsigned  flags, int *t_states, int *t_states2, Z80EX_WORD addr) {
-	return z80ex_dasm(output, output_size, flags, t_states, t_states2, ::dasm_readbyte, addr, this);
+int Debugger::disassembly(char *output, int output_size, uint16_t addr) {
+	int dummy;
+	return z80ex_dasm(output, output_size, 0, &dummy, &dummy, ::dasm_readbyte, addr, this);
 }
 
 Z80EX_BYTE Debugger::dasm_readbyte(Z80EX_WORD addr) {

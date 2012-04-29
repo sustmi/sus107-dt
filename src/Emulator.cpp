@@ -1,9 +1,19 @@
-/*
- * Emulator.cpp
- *
- *  Created on: 20.3.2012
- *      Author: Miroslav Sustek <sus107@vsb.cz>
- */
+// Emulator.cpp
+
+// Copyright (C) 2012  Miroslav Sustek <sus107@vsb.cz>
+
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+
+// You should have received a copy of the GNU General Public License
+// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #include "Emulator.h"
 
@@ -48,13 +58,8 @@ void Emulator::init()
 	ula->setInterruptPeriod(libspectrum_timings_tstates_per_frame(LIBSPECTRUM_MACHINE_48));
 	machine->setCpuFreq(libspectrum_timings_processor_speed(LIBSPECTRUM_MACHINE_48));
 
-	timer = new Timer();
-
 	debugger = new Debugger();
 	debugger->setEmulator(this);
-
-	//speaker = new Speaker();
-	//speaker->attach(machine, ula);
 }
 
 void Emulator::start()
@@ -62,7 +67,7 @@ void Emulator::start()
 	if (!running) {
 		running = true;
 		debugger->notifyListeners(DEBUGGER_EVENT_EMULATION_START);
-		timer->start();
+		//timer->start(); TODO! where?
 
 		speaker->start();
 	}
@@ -71,7 +76,7 @@ void Emulator::start()
 void Emulator::stop()
 {
 	if (running) {
-		timer->stop();
+		//timer->stop(); TODO! where?
 		running = false;
 		debugger->notifyListeners(DEBUGGER_EVENT_EMULATION_STOP);
 
@@ -84,7 +89,7 @@ bool Emulator::isRunning()
 	return running;
 }
 
-void Emulator::runUntil(uint64_t time)
+void Emulator::runUntil(uint64_t time_ms)
 {
 	do {
 		uint16_t pc = machine->getCpu()->getRegister(regPC);
@@ -96,7 +101,7 @@ void Emulator::runUntil(uint64_t time)
 		}
 
 		machine->step();
-	} while (machine->getCurrentTime() < ((time * machine->getCpuFreq()) / 1000));
+	} while (machine->getCurrentTime() < ((time_ms * machine->getCpuFreq()) / 1000));
 }
 
 Debugger *Emulator::getDebugger() const

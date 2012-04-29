@@ -24,7 +24,6 @@ add_executable(sus107-dt
 	src/PortDevice.cpp
 	src/Ports.cpp
 	src/TapeRecorder.cpp
-	src/util/Timer.cpp
 	src/Keyboard.cpp
 	src/Joystick.cpp
 	src/Speaker.cpp
