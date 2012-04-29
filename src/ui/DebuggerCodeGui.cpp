@@ -252,13 +252,13 @@ void DebuggerCodeGui::set_properties()
 	code_grid->EnableDragRowSize(false);
 	code_grid->EnableDragGridSize(false);
 	code_grid->SetSelectionMode(wxGrid::wxGridSelectRows);
-	code_grid->SetColLabelValue(0, wxT("BP"));
+	code_grid->SetColLabelValue(0, _("BP"));
 	code_grid->SetColSize(0, 25);
-	code_grid->SetColLabelValue(1, wxT("Address"));
+	code_grid->SetColLabelValue(1, _("Address"));
 	code_grid->SetColSize(1, 70);
-	code_grid->SetColLabelValue(2, wxT("Data"));
+	code_grid->SetColLabelValue(2, _("Data"));
 	code_grid->SetColSize(2, 150);
-	code_grid->SetColLabelValue(3, wxT("Instruction"));
+	code_grid->SetColLabelValue(3, _("Instruction"));
 	code_grid->SetColSize(3, 200);
 	// end wxGlade
 

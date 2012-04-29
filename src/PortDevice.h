@@ -2,7 +2,7 @@
  * PortDevice.h
  *
  *  Created on: 7.1.2012
- *      Author: mirek
+ *      Author: Miroslav Sustek <sus107@vsb.cz>
  */
 
 #ifndef PORTDEVICE_H_
@@ -12,7 +12,6 @@
 
 class PortDevice {
 public:
-	PortDevice();
 	virtual ~PortDevice();
 
 	virtual void pread(uint16_t port, uint8_t *value) = 0;

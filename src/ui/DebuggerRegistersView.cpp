@@ -11,33 +11,33 @@ DebuggerRegistersView::DebuggerRegistersView(wxWindow* parent, int id, const wxS
 	wxFrame(parent, id, title, pos, size, wxDEFAULT_FRAME_STYLE)
 {
 	// begin wxGlade: DebuggerRegistersView::DebuggerRegistersView
-	label_af = new wxStaticText(this, wxID_ANY, wxT("AF"));
+	label_af = new wxStaticText(this, wxID_ANY, _("AF"));
 	reg_af = new wxTextCtrl(this, 101, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxTE_PROCESS_ENTER);
-	label_bc = new wxStaticText(this, wxID_ANY, wxT("BC"));
+	label_bc = new wxStaticText(this, wxID_ANY, _("BC"));
 	reg_bc = new wxTextCtrl(this, 102, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxTE_PROCESS_ENTER);
-	label_de = new wxStaticText(this, wxID_ANY, wxT("DE"));
+	label_de = new wxStaticText(this, wxID_ANY, _("DE"));
 	reg_de = new wxTextCtrl(this, 103, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxTE_PROCESS_ENTER);
-	label_hl = new wxStaticText(this, wxID_ANY, wxT("HL"));
+	label_hl = new wxStaticText(this, wxID_ANY, _("HL"));
 	reg_hl = new wxTextCtrl(this, 104, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxTE_PROCESS_ENTER);
-	label_pc = new wxStaticText(this, wxID_ANY, wxT("PC"));
+	label_pc = new wxStaticText(this, wxID_ANY, _("PC"));
 	reg_pc = new wxTextCtrl(this, 109, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxTE_PROCESS_ENTER);
-	label_sp = new wxStaticText(this, wxID_ANY, wxT("SP"));
+	label_sp = new wxStaticText(this, wxID_ANY, _("SP"));
 	reg_sp = new wxTextCtrl(this, 110, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxTE_PROCESS_ENTER);
-	label_i = new wxStaticText(this, wxID_ANY, wxT("I"));
+	label_i = new wxStaticText(this, wxID_ANY, _("I"));
 	reg_i = new wxTextCtrl(this, 113, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxTE_PROCESS_ENTER);
-	label_af2 = new wxStaticText(this, wxID_ANY, wxT("AF'"));
+	label_af2 = new wxStaticText(this, wxID_ANY, _("AF'"));
 	reg_af2 = new wxTextCtrl(this, 105, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxTE_PROCESS_ENTER);
-	label_bc2 = new wxStaticText(this, wxID_ANY, wxT("BC'"));
+	label_bc2 = new wxStaticText(this, wxID_ANY, _("BC'"));
 	reg_bc2 = new wxTextCtrl(this, 106, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxTE_PROCESS_ENTER);
-	label_de2 = new wxStaticText(this, wxID_ANY, wxT("DE'"));
+	label_de2 = new wxStaticText(this, wxID_ANY, _("DE'"));
 	reg_de2 = new wxTextCtrl(this, 107, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxTE_PROCESS_ENTER);
-	label_hl2 = new wxStaticText(this, wxID_ANY, wxT("HL'"));
+	label_hl2 = new wxStaticText(this, wxID_ANY, _("HL'"));
 	reg_hl2 = new wxTextCtrl(this, 108, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxTE_PROCESS_ENTER);
-	label_ix = new wxStaticText(this, wxID_ANY, wxT("IX"));
+	label_ix = new wxStaticText(this, wxID_ANY, _("IX"));
 	reg_ix = new wxTextCtrl(this, 111, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxTE_PROCESS_ENTER);
-	label_iy = new wxStaticText(this, wxID_ANY, wxT("IY"));
+	label_iy = new wxStaticText(this, wxID_ANY, _("IY"));
 	reg_iy = new wxTextCtrl(this, 112, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxTE_PROCESS_ENTER);
-	label_r = new wxStaticText(this, wxID_ANY, wxT("R"));
+	label_r = new wxStaticText(this, wxID_ANY, _("R"));
 	reg_r = new wxTextCtrl(this, 114, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxTE_PROCESS_ENTER);
 
 	set_properties();
@@ -146,7 +146,7 @@ void DebuggerRegistersView::OnRegEnter(wxCommandEvent &event)
 void DebuggerRegistersView::set_properties()
 {
 	// begin wxGlade: DebuggerRegistersView::set_properties
-	SetTitle(wxT("Registers"));
+	SetTitle(_("Registers"));
 	// end wxGlade
 }
 

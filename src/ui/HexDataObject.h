@@ -2,7 +2,7 @@
  * HexDataObject.h
  *
  *  Created on: 12.3.2012
- *      Author: mirek
+ *      Author: Miroslav Sustek <sus107@vsb.cz>
  */
 
 #ifndef HEXDATAOBJECT_H_

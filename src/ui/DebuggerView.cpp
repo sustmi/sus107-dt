@@ -15,14 +15,14 @@ DebuggerView::DebuggerView(wxWindow* parent, int id, const wxString& title, cons
 	notebook_pane_hex = new wxPanel(notebook, wxID_ANY);
 	debugger_menubar = new wxMenuBar();
 	wxMenu* wxglade_tmp_menu_1 = new wxMenu();
-	wxglade_tmp_menu_1->Append(301, wxT("Registers"), wxEmptyString, wxITEM_NORMAL);
-	debugger_menubar->Append(wxglade_tmp_menu_1, wxT("View"));
+	wxglade_tmp_menu_1->Append(301, _("Registers"), wxEmptyString, wxITEM_NORMAL);
+	debugger_menubar->Append(wxglade_tmp_menu_1, _("View"));
 	SetMenuBar(debugger_menubar);
 	hex_view = new DebuggerHexGui(notebook_pane_hex, wxID_ANY);
 	debugger_code_view = new DebuggerCodeGui(notebook, wxID_ANY);
-	button_step = new wxButton(this, 201, wxT("Step"));
-	button_continue = new wxButton(this, 202, wxT("Continue"));
-	button_break = new wxButton(this, 203, wxT("Break"));
+	button_step = new wxButton(this, 201, _("Step"));
+	button_continue = new wxButton(this, 202, _("Continue"));
+	button_break = new wxButton(this, 203, _("Break"));
 
 	set_properties();
 	do_layout();
@@ -128,7 +128,7 @@ void DebuggerView::OnDebuggerNotebookPageChanged(wxNotebookEvent & event)
 void DebuggerView::set_properties()
 {
 	// begin wxGlade: DebuggerView::set_properties
-	SetTitle(wxT("Debugger"));
+	SetTitle(_("Debugger"));
 	// end wxGlade
 
 	char buf[65536];
@@ -152,8 +152,8 @@ void DebuggerView::do_layout()
 	wxBoxSizer* sizer_1 = new wxBoxSizer(wxHORIZONTAL);
 	sizer_1->Add(hex_view, 1, wxEXPAND, 0);
 	notebook_pane_hex->SetSizer(sizer_1);
-	notebook->AddPage(notebook_pane_hex, wxT("Hex"));
-	notebook->AddPage(debugger_code_view, wxT("Code"));
+	notebook->AddPage(notebook_pane_hex, _("Hex"));
+	notebook->AddPage(debugger_code_view, _("Code"));
 	debugger_panes->Add(notebook, 1, wxEXPAND, 0);
 	buttons->Add(button_step, 0, wxADJUST_MINSIZE, 0);
 	buttons->Add(button_continue, 0, wxADJUST_MINSIZE, 0);

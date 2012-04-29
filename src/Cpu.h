@@ -2,7 +2,7 @@
  * Cpu.h
  *
  *  Created on: 8.12.2011
- *      Author: mirek
+ *      Author: Miroslav Sustek <sus107@vsb.cz>
  */
 
 #ifndef CPU_H_
@@ -32,6 +32,7 @@ public:
 	void setIntLineState(bool state);
 	void setNmiLineState(bool state);
 
+	uint64_t getOpTime();
 	void wait(int tstates);
 
 private:

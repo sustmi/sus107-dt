@@ -2,7 +2,7 @@
  * Ports.cpp
  *
  *  Created on: 7.1.2012
- *      Author: mirek
+ *      Author: Miroslav Sustek <sus107@vsb.cz>
  */
 
 #include <list>

@@ -2,7 +2,7 @@
  * HexDataObject.cpp
  *
  *  Created on: 12.3.2012
- *      Author: mirek
+ *      Author: Miroslav Sustek <sus107@vsb.cz>
  */
 
 #include "HexDataObject.h"

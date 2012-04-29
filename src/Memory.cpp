@@ -2,7 +2,7 @@
  * Memory.cpp
  *
  *  Created on: 9.12.2011
- *      Author: mirek
+ *      Author: Miroslav Sustek <sus107@vsb.cz>
  */
 
 #include <memory.h>

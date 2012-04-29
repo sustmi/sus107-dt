@@ -2,7 +2,7 @@
  * Machine.h
  *
  *  Created on: 8.12.2011
- *      Author: mirek
+ *      Author: Miroslav Sustek <sus107@vsb.cz>
  */
 
 #ifndef MACHINE_H_
@@ -37,11 +37,11 @@ public:
 	bool loadSnapshot(const char *filename);
 	Z80EX_WORD getPC();
 
-	uint64_t getCurrentTime() { return currentTime; }
+	uint64_t getCurrentTime();
 	//void addEvent(int event);
 
 	void setCpuFreq(uint64_t cpuFreq);
-    uint64_t getCpuFreq() const;
+	uint64_t getCpuFreq() const;
 
 private:
 
@@ -54,14 +54,13 @@ private:
 	uint64_t cpuFreq;
 
 	bool interruptRequest;
+	bool inCallback;
 
 	std::priority_queue<int> eventQueue;
 
 	bool running;
 	Timer timer;
 };
-
-Z80EX_BYTE dasm_readbyte(Z80EX_WORD addr, void *user_data);
 
 
 #endif /* MACHINE_H_ */

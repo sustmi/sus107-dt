@@ -2,7 +2,7 @@
  * Cpu.cpp
  *
  *  Created on: 8.12.2011
- *      Author: mirek
+ *      Author: Miroslav Sustek <sus107@vsb.cz>
  */
 
 #include "Cpu.h"
@@ -51,10 +51,8 @@ uint64_t Cpu::step()
 
 	if (z80ex_last_op_type(cpu_context) == 0) {
 		if (nmiState && !nmiStateSampled && z80ex_nmi_possible(cpu_context)) {
-			//printf("nmi\n");
 			tstates = z80ex_nmi(cpu_context);
 		} else if (intState && !intStateSampled && z80ex_int_possible(cpu_context)) {
-			//printf("int\n");
 			tstates = z80ex_int(cpu_context);
 		}
 
@@ -106,6 +104,10 @@ Z80EX_BYTE Cpu::intread() {
 
 void Cpu::wait(int tstates) {
 	z80ex_w_states(cpu_context, tstates);
+}
+
+uint64_t Cpu::getOpTime() {
+	return z80ex_op_tstate(cpu_context);
 }
 
 // wrapper friend functions

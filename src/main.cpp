@@ -2,6 +2,7 @@
 
 #include <wx/wx.h>
 #include <wx/image.h>
+#include <wx/stdpaths.h>
 #include "ui/EmulatorView.h"
 
 
@@ -12,12 +13,51 @@ public:
 
 IMPLEMENT_APP(Application)
 
+
+
+void InitLanguageSupport()
+{
+	wxLocale* locale;
+    long language = wxLANGUAGE_DEFAULT;
+
+	// load language if possible, fall back to english otherwise
+	if(wxLocale::IsAvailable(language)) {
+		locale = new wxLocale( language, wxLOCALE_CONV_ENCODING );
+
+		locale->AddCatalogLookupPathPrefix(wxT("lang"));
+#ifdef __WXGTK__
+		// add locale search paths
+		locale->AddCatalogLookupPathPrefix(wxT("/usr"));
+		locale->AddCatalogLookupPathPrefix(wxT("/usr/local"));
+		wxStandardPaths* paths = (wxStandardPaths*) &wxStandardPaths::Get();
+		wxString prefix = paths->GetInstallPrefix();
+		locale->AddCatalogLookupPathPrefix( prefix );
+#endif
+
+		locale->AddCatalog(wxT("sus107-dt"));
+
+		if(! locale->IsOk() ) {
+			std::cerr << "selected language is wrong" << std::endl;
+			delete locale;
+			locale = new wxLocale( wxLANGUAGE_ENGLISH );
+			language = wxLANGUAGE_ENGLISH;
+		}
+	} else {
+		std::cout << "The selected language is not supported by your system."
+		<< "Try installing support for this language." << std::endl;
+		locale = new wxLocale( wxLANGUAGE_ENGLISH );
+		language = wxLANGUAGE_ENGLISH;
+	}
+
+}
+
 bool Application::OnInit()
 {
 	wxInitAllImageHandlers();
-	EmulatorView* emulator = new EmulatorView(NULL, wxID_ANY, wxEmptyString);
-	emulator->init();
-	SetTopWindow(emulator);
-	emulator->Show();
+	InitLanguageSupport();
+	EmulatorView* emulator_view = new EmulatorView(NULL, wxID_ANY, wxEmptyString);
+	emulator_view->init();
+	SetTopWindow(emulator_view);
+	emulator_view->Show();
 	return true;
 }

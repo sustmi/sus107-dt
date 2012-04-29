@@ -2,7 +2,7 @@
  * Emulator.cpp
  *
  *  Created on: 20.3.2012
- *      Author: mirek
+ *      Author: Miroslav Sustek <sus107@vsb.cz>
  */
 
 #include "Emulator.h"
@@ -26,16 +26,20 @@ void Emulator::init()
 
 	tapeRecorder = new TapeRecorder();
 	keyboard = new Keyboard();
+	joystick = new Joystick();
+	speaker = new Speaker();
 
 	machine = new Machine();
 	machine->attach(memory, cpu, ula);
 
 	memory->attach(machine);
 	cpu->attach(ula, ports);
-	ula->attach(machine, memory, cpu, tapeRecorder, keyboard);
+	ula->attach(machine, memory, cpu, keyboard, tapeRecorder, speaker);
 	tapeRecorder->attach(machine);
+	speaker->attach(machine);
 
 	ports->connectDevice(ula);
+	ports->connectDevice(joystick);
 
 	machine->loadRom("48.rom");
 
@@ -49,7 +53,8 @@ void Emulator::init()
 	debugger = new Debugger();
 	debugger->setEmulator(this);
 
-	//beeper = new Beeper();
+	//speaker = new Speaker();
+	//speaker->attach(machine, ula);
 }
 
 void Emulator::start()
@@ -58,6 +63,8 @@ void Emulator::start()
 		running = true;
 		debugger->notifyListeners(DEBUGGER_EVENT_EMULATION_START);
 		timer->start();
+
+		speaker->start();
 	}
 }
 
@@ -67,6 +74,8 @@ void Emulator::stop()
 		timer->stop();
 		running = false;
 		debugger->notifyListeners(DEBUGGER_EVENT_EMULATION_STOP);
+
+		speaker->stop();
 	}
 }
 
@@ -87,7 +96,7 @@ void Emulator::runUntil(uint64_t time)
 		}
 
 		machine->step();
-	} while (machine->getCurrentTime() < ((time / 1000.0) * machine->getCpuFreq()));
+	} while (machine->getCurrentTime() < ((time * machine->getCpuFreq()) / 1000));
 }
 
 Debugger *Emulator::getDebugger() const
@@ -105,9 +114,19 @@ Keyboard *Emulator::getKeyboard() const
 	return keyboard;
 }
 
+Joystick *Emulator::getJoystick() const
+{
+	return joystick;
+}
+
 TapeRecorder *Emulator::getTapeRecorder() const
 {
 	return tapeRecorder;
+}
+
+Speaker *Emulator::getSpeaker() const
+{
+	return speaker;
 }
 
 void Emulator::renderScreen(uint32_t *buffer)

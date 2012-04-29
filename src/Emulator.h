@@ -2,7 +2,7 @@
  * Emulator.h
  *
  *  Created on: 20.3.2012
- *      Author: mirek
+ *      Author: Miroslav Sustek <sus107@vsb.cz>
  */
 
 #ifndef EMULATOR_H_
@@ -13,11 +13,13 @@
 #include "Ula.h"
 #include "TapeRecorder.h"
 #include "Keyboard.h"
+#include "Joystick.h"
+#include "Speaker.h"
 
 #include "util/Timer.h"
 #include "Debugger.h"
 
-#include "Beeper.h"
+class Debugger;
 
 class Emulator {
 public:
@@ -34,7 +36,9 @@ public:
 	Debugger *getDebugger() const;
 	Machine *getMachine() const;
 	Keyboard *getKeyboard() const;
+	Joystick *getJoystick() const;
 	TapeRecorder *getTapeRecorder() const;
+	Speaker *getSpeaker() const;
 	void renderScreen(uint32_t *buffer);
 
 private:
@@ -47,9 +51,9 @@ private:
 	Cpu *cpu;
 	Ula *ula;
 	TapeRecorder *tapeRecorder;
+	Speaker *speaker;
 	Keyboard *keyboard;
-
-	//Beeper *beeper;
+	Joystick *joystick;
 };
 
 #endif /* EMULATOR_H_ */

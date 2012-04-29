@@ -2,7 +2,7 @@
  * Machine.cpp
  *
  *  Created on: 8.12.2011
- *      Author: mirek
+ *      Author: Miroslav Sustek <sus107@vsb.cz>
  */
 
 #include <stdio.h>
@@ -17,6 +17,7 @@
 
 Machine::Machine() {
 	currentTime = 0;
+	inCallback = false;
 
 	libspectrum_init();
 }
@@ -141,21 +142,34 @@ void Machine::step() {
 
 	cpu->setIntLineState(ula->getIntLineState());
 
+	inCallback = true;
 	currentTime += cpu->step();
+	inCallback = false;
 }
 
 void Machine::stepInstruction() {
 	cpu->setIntLineState(ula->getIntLineState());
 
+	inCallback = true;
 	currentTime += cpu->stepInstruction();
+	inCallback = false;
+}
+
+uint64_t Machine::getCurrentTime()
+{
+	if (inCallback) {
+		return currentTime + cpu->getOpTime();
+	} else {
+		return currentTime;
+	}
 }
 
 void Machine::setCpuFreq(uint64_t cpuFreq) {
-    this->cpuFreq = cpuFreq;
+	this->cpuFreq = cpuFreq;
 }
 
 uint64_t Machine::getCpuFreq() const {
-    return cpuFreq;
+	return cpuFreq;
 }
 
 Z80EX_WORD Machine::getPC() {

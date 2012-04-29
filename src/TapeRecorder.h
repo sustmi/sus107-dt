@@ -2,7 +2,7 @@
  * TapeRecorder.h
  *
  *  Created on: 9.1.2012
- *      Author: mirek
+ *      Author: Miroslav Sustek <sus107@vsb.cz>
  */
 
 #ifndef TAPERECORDER_H_

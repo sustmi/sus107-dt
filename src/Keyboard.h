@@ -2,7 +2,7 @@
  * Keyboard.h
  *
  *  Created on: 18.1.2012
- *      Author: mirek
+ *      Author: Miroslav Sustek <sus107@vsb.cz>
  */
 
 #ifndef KEYBOARD_H_

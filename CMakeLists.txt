@@ -7,7 +7,7 @@ include( "${wxWidgets_USE_FILE}" )
 
 # Portaudio library
 set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake_modules" ${CMAKE_MODULE_PATH})
-find_package(Portaudio REQUIRED system window graphics network audio)
+find_package(Portaudio REQUIRED)
 include_directories(${PORTAUDIO_INCLUDE_DIRS})
 
 add_executable(sus107-dt
@@ -26,6 +26,8 @@ add_executable(sus107-dt
 	src/TapeRecorder.cpp
 	src/util/Timer.cpp
 	src/Keyboard.cpp
+	src/Joystick.cpp
+	src/Speaker.cpp
 	
 	src/ui/EmulatorView.cpp
 	src/ui/DebuggerView.cpp
@@ -39,8 +41,6 @@ add_executable(sus107-dt
 	src/ui/widgets/HexEditorCtrl/wxHexCtrl/wxHexCtrl.cpp
 	src/ui/widgets/HexEditorCtrl/wxHexCtrl/Tag.cpp
 	src/ui/widgets/HexEditorCtrl/wxHexCtrl/TagDialogGui.cpp
-	
-	src/Beeper.cpp
 )
 
 target_link_libraries (sus107-dt

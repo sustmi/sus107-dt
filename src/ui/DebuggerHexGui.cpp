@@ -2,7 +2,7 @@
  * DebuggerHexGui.cpp
  *
  *  Created on: 23.2.2012
- *      Author: mirek
+ *      Author: Miroslav Sustek <sus107@vsb.cz>
  */
 
 #include "DebuggerHexGui.h"

@@ -2,7 +2,7 @@
  * Debugger.cpp
  *
  *  Created on: 3.2.2012
- *      Author: mirek
+ *      Author: Miroslav Sustek <sus107@vsb.cz>
  */
 
 #include "Debugger.h"
@@ -35,12 +35,12 @@ void Debugger::notifyListeners(DebuggerEvent event)
 
 Emulator *Debugger::getEmulator() const
 {
-    return emulator;
+	return emulator;
 }
 
 void Debugger::setEmulator(Emulator *emulator)
 {
-    this->emulator = emulator;
+	this->emulator = emulator;
 }
 
 void Debugger::stepInstruction()

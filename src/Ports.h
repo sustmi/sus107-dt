@@ -2,7 +2,7 @@
  * Ports.h
  *
  *  Created on: 7.1.2012
- *      Author: mirek
+ *      Author: Miroslav Sustek <sus107@vsb.cz>
  */
 
 #ifndef PORTS_H_

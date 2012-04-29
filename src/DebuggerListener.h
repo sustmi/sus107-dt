@@ -2,7 +2,7 @@
  * DebuggerListener.h
  *
  *  Created on: 21.2.2012
- *      Author: mirek
+ *      Author: Miroslav Sustek <sus107@vsb.cz>
  */
 
 #ifndef DEBUGGERLISTENER_H_

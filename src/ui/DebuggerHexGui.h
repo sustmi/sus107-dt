@@ -2,7 +2,7 @@
  * DebuggerHexGui.h
  *
  *  Created on: 23.2.2012
- *      Author: mirek
+ *      Author: Miroslav Sustek <sus107@vsb.cz>
  */
 
 #ifndef DEBUGGERHEXGUI_H_

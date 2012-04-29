@@ -2,19 +2,18 @@
  * TapeRecorder.cpp
  *
  *  Created on: 9.1.2012
- *      Author: mirek
+ *      Author: Miroslav Sustek <sus107@vsb.cz>
  */
 
 #include "TapeRecorder.h"
 
 TapeRecorder::TapeRecorder() {
-	// TODO Auto-generated constructor stub
 	tape = libspectrum_tape_alloc();
 	state = TAPE_RECORDER_STATE_EMPTY;
 }
 
 TapeRecorder::~TapeRecorder() {
-	// TODO Auto-generated destructor stub
+	libspectrum_tape_free(tape);
 }
 
 void TapeRecorder::attach(Machine *machine) {
@@ -75,9 +74,6 @@ int TapeRecorder::getSignal() {
 		libspectrum_dword tstates = 0;
 		int err = libspectrum_tape_get_next_edge(&tstates, &flags, tape);
 		flagsAtPosition += tstates;
-		/*if (flags != 0) {
-			printf("flags = 0x%x (%ld > %ld) ts=%ld\n", flags, position, flagsAtPosition, tstates);
-		}*/
 
 		if (!(flags & LIBSPECTRUM_TAPE_FLAGS_NO_EDGE)) {
 			if (signal == 1) {
