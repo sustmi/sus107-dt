@@ -20,6 +20,7 @@
 DebuggerHexGui::DebuggerHexGui(wxWindow* parent, int id, const wxPoint& pos, const wxSize& size, long style):
 	HexEditorCtrl(parent, id, pos, size, wxTAB_TRAVERSAL)
 {
+	emulator = NULL;
 	debugger = NULL;
 
 	offset_scroll->Enable(true);
@@ -39,6 +40,9 @@ DebuggerHexGui::DebuggerHexGui(wxWindow* parent, int id, const wxPoint& pos, con
 }
 
 DebuggerHexGui::~DebuggerHexGui() {
+	if (emulator) {
+		debugger->removeListener(this);
+	}
 	if (debugger) {
 		debugger->removeListener(this);
 	}
@@ -60,20 +64,27 @@ void DebuggerHexGui::OnOffsetScroll(wxScrollEvent & event)
 	LoadFromOffset(event.GetPosition() * BytePerLine());
 }
 
-void DebuggerHexGui::setDebugger(Debugger *debugger)
+void DebuggerHexGui::attach(Emulator *emulator, Debugger *debugger)
 {
+	this->emulator = emulator;
 	this->debugger = debugger;
+	emulator->addListener(this);
 	debugger->addListener(this);
+}
+
+void DebuggerHexGui::emulatorEvent(EmulatorEvent event)
+{
+	if (event == EMULATOR_EVENT_MEMORY_CHANGED ||
+		event == EMULATOR_EVENT_EMULATION_STEP ||
+		event == EMULATOR_EVENT_EMULATION_STOP)
+	{
+		uiUpdate();
+	}
 }
 
 void DebuggerHexGui::debuggerEvent(DebuggerEvent event)
 {
-	if (event == DEBUGGER_EVENT_MEMORY_CHANGED ||
-		event == DEBUGGER_EVENT_EMULATION_STEP ||
-		event == DEBUGGER_EVENT_EMULATION_STOP)
-	{
-		uiUpdate();
-	}
+	// nothing ?
 }
 
 void DebuggerHexGui::uiUpdate()

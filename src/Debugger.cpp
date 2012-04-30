@@ -56,7 +56,7 @@ void Debugger::setEmulator(Emulator *emulator)
 void Debugger::stepInstruction()
 {
 	emulator->getMachine()->stepInstruction();
-	notifyListeners(DEBUGGER_EVENT_EMULATION_STEP);
+	emulator->notifyListeners(EMULATOR_EVENT_EMULATION_STEP);
 }
 
 void Debugger::emulationContinue()
@@ -72,7 +72,7 @@ void Debugger::emulationBreak()
 void Debugger::setCpuRegister(Z80_REG_T reg, Z80EX_WORD value)
 {
 	emulator->getMachine()->getCpu()->setRegister(reg, value);
-	notifyListeners(DEBUGGER_EVENT_REGISTERS_CHANGED);
+	emulator->notifyListeners(EMULATOR_EVENT_REGISTERS_CHANGED);
 }
 
 Z80EX_WORD Debugger::getCpuRegister(Z80_REG_T reg)
@@ -95,7 +95,7 @@ unsigned char Debugger::readMemory(int offset)
 void Debugger::writeMemory(int offset, unsigned char value)
 {
 	this->getEmulator()->getMachine()->getMemory()->rawWrite(offset, value);
-	notifyListeners(DEBUGGER_EVENT_MEMORY_CHANGED);
+	emulator->notifyListeners(EMULATOR_EVENT_MEMORY_CHANGED);
 }
 
 void Debugger::writeMemory(unsigned char *buffer, int offset, int length)
@@ -103,7 +103,7 @@ void Debugger::writeMemory(unsigned char *buffer, int offset, int length)
 	for (int i = 0; i < length; i++) {
 		this->getEmulator()->getMachine()->getMemory()->rawWrite(offset + i, buffer[i]);
 	}
-	notifyListeners(DEBUGGER_EVENT_MEMORY_CHANGED);
+	emulator->notifyListeners(EMULATOR_EVENT_MEMORY_CHANGED);
 }
 
 void Debugger::addBreakpoint(uint16_t address)

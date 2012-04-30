@@ -1,4 +1,4 @@
-// DebuggerListener.h
+// EmulatorListener.cpp
 
 // Copyright (C) 2012  Miroslav Sustek <sus107@vsb.cz>
 
@@ -15,19 +15,14 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef DEBUGGERLISTENER_H_
-#define DEBUGGERLISTENER_H_
+#include "EmulatorListener.h"
 
-enum DebuggerEvent {
-	DEBUGGER_EVENT_BREAKPOINTS_CHANGED,
-};
+EmulatorListener::EmulatorListener() {
+	// TODO Auto-generated constructor stub
 
-class DebuggerListener {
-public:
-	DebuggerListener();
-	virtual ~DebuggerListener();
+}
 
-	virtual void debuggerEvent(DebuggerEvent event) = 0;
-};
+EmulatorListener::~EmulatorListener() {
+	// TODO Auto-generated destructor stub
+}
 
-#endif /* DEBUGGERLISTENER_H_ */

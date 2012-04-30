@@ -43,7 +43,7 @@ class Debugger;
 class DebuggerCodeGui;
 class DebuggerHexGui;
 
-class DebuggerView: public wxFrame, public DebuggerListener {
+class DebuggerView: public wxFrame, public EmulatorListener, public DebuggerListener {
 public:
 	// begin wxGlade: DebuggerView::ids
 	// end wxGlade
@@ -52,6 +52,7 @@ public:
 	~DebuggerView();
 
 	void uiUpdate();
+	void emulatorEvent(EmulatorEvent event);
 	void debuggerEvent(DebuggerEvent event);
 
 private:
@@ -60,6 +61,7 @@ private:
 	void do_layout();
 	// end wxGlade
 
+	Emulator *emulator;
 	Debugger *debugger;
 
 protected:
@@ -83,7 +85,7 @@ public:
 	virtual void OnViewRegisters(wxCommandEvent &event); // wxGlade: <event_handler>
 	virtual void OnHexViewModified(wxStyledTextEvent &event); // wxGlade: <event_handler>
 	virtual void OnDebuggerNotebookPageChanged(wxNotebookEvent &event); // wxGlade: <event_handler>
-    void setDebugger(Debugger *debugger);
+	void attach(Emulator *emulator, Debugger *debugger);
 }; // wxGlade: end class
 
 

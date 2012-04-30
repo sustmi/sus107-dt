@@ -115,19 +115,27 @@ void DebuggerRegistersView::uiUpdate()
 	reg_r->ChangeValue(wxString::Format(wxT("%02X"), debugger->getCpuRegister(regR)));
 }
 
-void DebuggerRegistersView::debuggerEvent(DebuggerEvent event)
+void DebuggerRegistersView::emulatorEvent(EmulatorEvent event)
 {
-	if (event == DEBUGGER_EVENT_REGISTERS_CHANGED ||
-		event == DEBUGGER_EVENT_EMULATION_STEP ||
-		event == DEBUGGER_EVENT_EMULATION_STOP)
+	if (event == EMULATOR_EVENT_REGISTERS_CHANGED ||
+		event == EMULATOR_EVENT_EMULATION_STEP ||
+		event == EMULATOR_EVENT_EMULATION_STOP)
 	{
 		uiUpdate();
 	}
 }
 
-void DebuggerRegistersView::setDebugger(Debugger *debugger)
+void DebuggerRegistersView::debuggerEvent(DebuggerEvent event)
 {
+	// nothing ?
+}
+
+void DebuggerRegistersView::attach(Emulator *emulator, Debugger *debugger)
+{
+    this->emulator = emulator;
     this->debugger = debugger;
+    emulator->addListener(this);
+    debugger->addListener(this);
 }
 
 void DebuggerRegistersView::OnRegEnter(wxCommandEvent &event)

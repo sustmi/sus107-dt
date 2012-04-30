@@ -25,6 +25,24 @@ Emulator::~Emulator() {
 	// TODO Auto-generated destructor stub
 }
 
+void Emulator::addListener(EmulatorListener *listener)
+{
+	listeners.insert(listener);
+}
+
+void Emulator::removeListener(EmulatorListener *listener)
+{
+	listeners.erase(listener);
+}
+
+void Emulator::notifyListeners(EmulatorEvent event)
+{
+	std::set<EmulatorListener*>::iterator it;
+	for (it = listeners.begin(); it != listeners.end(); it++) {
+		(*it)->emulatorEvent(event);
+	}
+}
+
 void Emulator::init()
 {
 	running = false;
@@ -58,6 +76,9 @@ void Emulator::init()
 	ula->setInterruptPeriod(libspectrum_timings_tstates_per_frame(LIBSPECTRUM_MACHINE_48));
 	machine->setCpuFreq(libspectrum_timings_processor_speed(LIBSPECTRUM_MACHINE_48));
 
+	clock = new Clock();
+	clock->attach(this);
+
 	debugger = new Debugger();
 	debugger->setEmulator(this);
 }
@@ -66,9 +87,10 @@ void Emulator::start()
 {
 	if (!running) {
 		running = true;
-		debugger->notifyListeners(DEBUGGER_EVENT_EMULATION_START);
-		//timer->start(); TODO! where?
+		notifyListeners(EMULATOR_EVENT_EMULATION_START);
 
+		// make stopwatch start with current emulation time
+		clock->start(20, 1000 * machine->getCurrentTime() / machine->getCpuFreq());
 		speaker->start();
 	}
 }
@@ -76,9 +98,9 @@ void Emulator::start()
 void Emulator::stop()
 {
 	if (running) {
-		//timer->stop(); TODO! where?
+		clock->stop();
 		running = false;
-		debugger->notifyListeners(DEBUGGER_EVENT_EMULATION_STOP);
+		notifyListeners(EMULATOR_EVENT_EMULATION_STOP);
 
 		speaker->stop();
 	}

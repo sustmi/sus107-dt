@@ -129,10 +129,7 @@ void EmulatorView::start()
 {
 	if (!emulator->isRunning()) {
 		emulator->start();
-
 		timer->Start(20);
-		// make stopwatch start with current emulation time
-		stopWatch->Start(1000 * emulator->getMachine()->getCurrentTime() / emulator->getMachine()->getCpuFreq());
 
 #ifdef wxUSE_JOYSTICK
 		joystickTimer->Start(10);
@@ -146,7 +143,6 @@ void EmulatorView::stop()
 		emulator->stop();
 
 		timer->Stop();
-		stopWatch->Pause();
 
 #ifdef wxUSE_JOYSTICK
 		joystickTimer->Stop();
@@ -202,7 +198,7 @@ void EmulatorView::OnMachineReset(wxCommandEvent & event)
 void EmulatorView::OnMachineDebug(wxCommandEvent & event)
 {
 	DebuggerView *debuggerView = new DebuggerView(this, wxID_ANY, wxEmptyString);
-	debuggerView->setDebugger(emulator->getDebugger());
+	debuggerView->attach(emulator, emulator->getDebugger());
 
 	debuggerView->Show(true);
 	debuggerView->uiUpdate();
@@ -237,7 +233,6 @@ void EmulatorView::OnTapeRewind(wxCommandEvent & event)
 
 void EmulatorView::OnTimer(wxTimerEvent &event)
 {
-	emulator->runUntil(stopWatch->Time());
 	// render screen
 	panel->Refresh();
 }

@@ -33,10 +33,14 @@
 
 #include <map>
 #include "../Debugger.h"
+#include "../EmulatorListener.h"
+#include "../DebuggerListener.h"
 
 class Debugger;
+class EmulatorListener;
+class DebuggerListener;
 
-class DebuggerCodeGui: public wxPanel, public DebuggerListener {
+class DebuggerCodeGui: public wxPanel, public EmulatorListener, public DebuggerListener {
 public:
 	// begin wxGlade: DebuggerCodeGui::ids
 	// end wxGlade
@@ -45,6 +49,7 @@ public:
 	~DebuggerCodeGui();
 
 	void uiUpdate();
+	void emulatorEvent(EmulatorEvent event);
 	void debuggerEvent(DebuggerEvent event);
 	void gotoAddress(int address);
 
@@ -59,6 +64,7 @@ private:
 	wxMenu *rowContextMenu;
 	wxMutex cellChangeMutex;
 
+	Emulator *emulator;
 	Debugger *debugger;
 	std::map<int, int> addressToRowMap;
 	std::map<int, int> rowToAddressMap;
@@ -80,7 +86,7 @@ public:
 	virtual void OnCellLeftDClick(wxGridEvent &event); // wxGlade: <event_handler>
 	virtual void OnContextToggleBreakpoint(wxCommandEvent &event);
 	virtual void OnCodeGridSize(wxSizeEvent &event);
-    void setDebugger(Debugger *debugger);
+	void attach(Emulator *emulator, Debugger *debugger);
 }; // wxGlade: end class
 
 

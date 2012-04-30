@@ -25,15 +25,30 @@
 #include "Keyboard.h"
 #include "Joystick.h"
 #include "Speaker.h"
+#include "Clock.h"
 
 #include "Debugger.h"
+#include "EmulatorListener.h"
 
+class Machine;
+class Cpu;
+class Ula;
+class TapeRecorder;
+class Keyboard;
+class Joystick;
+class Speaker;
+class Clock;
 class Debugger;
+class EmulatorListener;
 
 class Emulator {
 public:
 	Emulator();
 	virtual ~Emulator();
+
+	void addListener(EmulatorListener *listener);
+	void removeListener(EmulatorListener *listener);
+	void notifyListeners(EmulatorEvent event);
 
 	void init();
 	void start();
@@ -51,6 +66,8 @@ public:
 	void renderScreen(uint32_t *buffer);
 
 private:
+	std::set<EmulatorListener*> listeners;
+
 	bool running;
 
 	Debugger *debugger;
@@ -62,6 +79,7 @@ private:
 	Speaker *speaker;
 	Keyboard *keyboard;
 	Joystick *joystick;
+	Clock *clock;
 };
 
 #endif /* EMULATOR_H_ */

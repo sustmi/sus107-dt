@@ -1,4 +1,4 @@
-// DebuggerListener.h
+// EmulatorListener.h
 
 // Copyright (C) 2012  Miroslav Sustek <sus107@vsb.cz>
 
@@ -15,19 +15,24 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef DEBUGGERLISTENER_H_
-#define DEBUGGERLISTENER_H_
+#ifndef EMULATORLISTENER_H_
+#define EMULATORLISTENER_H_
 
-enum DebuggerEvent {
-	DEBUGGER_EVENT_BREAKPOINTS_CHANGED,
+enum EmulatorEvent {
+	EMULATOR_EVENT_VIDEO_FRAME,
+	EMULATOR_EVENT_EMULATION_START,
+	EMULATOR_EVENT_EMULATION_STOP,
+	EMULATOR_EVENT_EMULATION_STEP,
+	EMULATOR_EVENT_REGISTERS_CHANGED,
+	EMULATOR_EVENT_MEMORY_CHANGED,
 };
 
-class DebuggerListener {
+class EmulatorListener {
 public:
-	DebuggerListener();
-	virtual ~DebuggerListener();
+	EmulatorListener();
+	virtual ~EmulatorListener();
 
-	virtual void debuggerEvent(DebuggerEvent event) = 0;
+	virtual void emulatorEvent(EmulatorEvent event) = 0;
 };
 
-#endif /* DEBUGGERLISTENER_H_ */
+#endif /* EMULATORLISTENER_H_ */

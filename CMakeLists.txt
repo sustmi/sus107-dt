@@ -14,6 +14,7 @@ add_executable(sus107-dt
 	src/main.cpp
 	
 	src/Emulator.cpp
+	src/EmulatorListener.cpp
 	src/Debugger.cpp
 	src/DebuggerListener.cpp
 	
@@ -27,6 +28,7 @@ add_executable(sus107-dt
 	src/Keyboard.cpp
 	src/Joystick.cpp
 	src/Speaker.cpp
+	src/Clock.cpp
 	
 	src/ui/EmulatorView.cpp
 	src/ui/DebuggerView.cpp

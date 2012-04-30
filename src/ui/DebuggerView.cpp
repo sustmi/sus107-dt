@@ -56,22 +56,29 @@ DebuggerView::~DebuggerView()
 	}
 }
 
-void DebuggerView::debuggerEvent(DebuggerEvent event)
+void DebuggerView::emulatorEvent(EmulatorEvent event)
 {
-	if (event == DEBUGGER_EVENT_EMULATION_START ||
-		event == DEBUGGER_EVENT_EMULATION_STOP ||
-		event == DEBUGGER_EVENT_EMULATION_STEP)
+	if (event == EMULATOR_EVENT_EMULATION_START ||
+		event == EMULATOR_EVENT_EMULATION_STOP ||
+		event == EMULATOR_EVENT_EMULATION_STEP)
 	{
 		uiUpdate();
 	}
 }
 
-void DebuggerView::setDebugger(Debugger *debugger)
+void DebuggerView::debuggerEvent(DebuggerEvent event)
 {
-    this->debugger = debugger;
-    debugger_code_view->setDebugger(debugger);
-    hex_view->setDebugger(debugger);
+	// nothing ?
+}
 
+void DebuggerView::attach(Emulator *emulator, Debugger *debugger)
+{
+    this->emulator = emulator;
+    this->debugger = debugger;
+    debugger_code_view->attach(emulator, debugger);
+    hex_view->attach(emulator, debugger);
+
+    emulator->addListener(this);
     debugger->addListener(this);
 }
 
@@ -116,7 +123,7 @@ void DebuggerView::OnDebuggerBreak(wxCommandEvent &event)
 void DebuggerView::OnViewRegisters(wxCommandEvent &event)
 {
 	DebuggerRegistersView *registersView = new DebuggerRegistersView(this, wxID_ANY, wxEmptyString);
-	registersView->setDebugger(debugger);
+	registersView->attach(emulator, debugger);
 	registersView->Show(true);
 	registersView->uiUpdate();
 	debugger->addListener(registersView);

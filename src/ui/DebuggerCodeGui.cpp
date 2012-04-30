@@ -34,6 +34,7 @@ DebuggerCodeGui::DebuggerCodeGui(wxWindow* parent, int id, const wxPoint& pos, c
 	do_layout();
 	// end wxGlade
 
+	emulator = NULL;
 	debugger = NULL;
 
 	code_grid->Connect(wxEVT_SIZE, wxSizeEventHandler(DebuggerCodeGui::OnCodeGridSize), NULL, this);
@@ -44,6 +45,9 @@ DebuggerCodeGui::DebuggerCodeGui(wxWindow* parent, int id, const wxPoint& pos, c
 
 DebuggerCodeGui::~DebuggerCodeGui()
 {
+	if (emulator) {
+		emulator->removeListener(this);
+	}
 	if (debugger) {
 		debugger->removeListener(this);
 	}
@@ -180,29 +184,38 @@ void DebuggerCodeGui::ToggleBreakpoint(int row)
 	}
 }
 
-void DebuggerCodeGui::setDebugger(Debugger *debugger)
+void DebuggerCodeGui::attach(Emulator *emulator, Debugger *debugger)
 {
-    this->debugger = debugger;
+	this->emulator = emulator;
+	this->debugger = debugger;
+	emulator->addListener(this);
     debugger->addListener(this);
 }
 
-void DebuggerCodeGui::debuggerEvent(DebuggerEvent event)
+void DebuggerCodeGui::emulatorEvent(EmulatorEvent event)
 {
-	if (event == DEBUGGER_EVENT_REGISTERS_CHANGED ||
-		event == DEBUGGER_EVENT_MEMORY_CHANGED ||
-		event == DEBUGGER_EVENT_EMULATION_START ||
-		event == DEBUGGER_EVENT_EMULATION_STOP ||
-		event == DEBUGGER_EVENT_EMULATION_STEP ||
-		event == DEBUGGER_EVENT_BREAKPOINTS_CHANGED)
+	if (event == EMULATOR_EVENT_REGISTERS_CHANGED ||
+		event == EMULATOR_EVENT_MEMORY_CHANGED ||
+		event == EMULATOR_EVENT_EMULATION_START ||
+		event == EMULATOR_EVENT_EMULATION_STOP ||
+		event == EMULATOR_EVENT_EMULATION_STEP)
 	{
 		uiUpdate();
 	}
 
-	if (event == DEBUGGER_EVENT_EMULATION_STOP ||
-		event == DEBUGGER_EVENT_EMULATION_STEP ||
-		event == DEBUGGER_EVENT_REGISTERS_CHANGED)
+	if (event == EMULATOR_EVENT_EMULATION_STOP ||
+		event == EMULATOR_EVENT_EMULATION_STEP ||
+		event == EMULATOR_EVENT_REGISTERS_CHANGED)
 	{
 		gotoAddress(debugger->getEmulator()->getMachine()->getPC());
+	}
+}
+
+void DebuggerCodeGui::debuggerEvent(DebuggerEvent event)
+{
+	if (event == DEBUGGER_EVENT_BREAKPOINTS_CHANGED)
+	{
+		uiUpdate();
 	}
 }
 

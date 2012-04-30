@@ -19,19 +19,24 @@
 #define DEBUGGERHEXGUI_H_
 
 #include "widgets/HexEditorCtrl/HexEditorCtrl.h"
+#include "../Emulator.h"
+#include "../EmulatorListener.h"
 #include "../Debugger.h"
 #include "../DebuggerListener.h"
 
+class Emulator;
+class EmulatorListener;
 class Debugger;
 class DebuggerListener;
 
-class DebuggerHexGui: public HexEditorCtrl, public DebuggerListener {
+class DebuggerHexGui: public HexEditorCtrl, public EmulatorListener, public DebuggerListener {
 public:
 	DebuggerHexGui( wxWindow* parent, wxWindowID id = ID_DEFAULT, const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( -1,-1 ), long style = wxTAB_TRAVERSAL );
 	~DebuggerHexGui();
 
 	void uiUpdate();
-	void setDebugger(Debugger *debugger);
+	void attach(Emulator *emulator, Debugger *debugger);
+	void emulatorEvent(EmulatorEvent event);
 	void debuggerEvent(DebuggerEvent event);
 
 	void OnOffsetScroll(wxScrollEvent& event);
@@ -50,6 +55,7 @@ public:
 	void PasteFromClipboard();
 
 private:
+	Emulator *emulator;
 	Debugger *debugger;
 };
 

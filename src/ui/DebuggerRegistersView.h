@@ -23,6 +23,9 @@
 #ifndef REGISTERSVIEW_H
 #define REGISTERSVIEW_H
 
+
+#include "../Emulator.h"
+#include "../EmulatorListener.h"
 #include "../Debugger.h"
 #include "../DebuggerListener.h"
 
@@ -35,7 +38,7 @@
 
 class Debugger;
 
-class DebuggerRegistersView: public wxFrame, public DebuggerListener {
+class DebuggerRegistersView: public wxFrame, public EmulatorListener, public DebuggerListener {
 public:
 	// begin wxGlade: DebuggerRegistersView::ids
 	// end wxGlade
@@ -44,6 +47,7 @@ public:
 	~DebuggerRegistersView();
 
 	void uiUpdate();
+	void emulatorEvent(EmulatorEvent event);
 	void debuggerEvent(DebuggerEvent event);
 
 private:
@@ -52,6 +56,7 @@ private:
 	void do_layout();
 	// end wxGlade
 
+	Emulator *emulator;
 	Debugger *debugger;
 
 protected:
@@ -90,7 +95,7 @@ protected:
 
 public:
 	virtual void OnRegEnter(wxCommandEvent &event); // wxGlade: <event_handler>
-    void setDebugger(Debugger *debugger);
+    void attach(Emulator *emulator, Debugger *debugger);
 }; // wxGlade: end class
 
 
