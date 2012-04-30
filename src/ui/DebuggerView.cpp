@@ -146,6 +146,7 @@ void DebuggerView::set_properties()
 {
 	// begin wxGlade: DebuggerView::set_properties
 	SetTitle(_("Debugger"));
+	SetSize(wxSize(430, 480));
 	// end wxGlade
 
 	char buf[65536];
@@ -177,7 +178,6 @@ void DebuggerView::do_layout()
 	buttons->Add(button_break, 0, wxADJUST_MINSIZE, 0);
 	debugger_panes->Add(buttons, 0, wxALIGN_BOTTOM|wxALIGN_CENTER_HORIZONTAL|wxADJUST_MINSIZE, 0);
 	SetSizer(debugger_panes);
-	debugger_panes->Fit(this);
 	Layout();
 	// end wxGlade
 }

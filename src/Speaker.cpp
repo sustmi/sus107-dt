@@ -72,6 +72,10 @@ void Speaker::start()
 void Speaker::stop()
 {
 	Pa_StopStream(stream);
+
+	pthread_mutex_lock(&mutex);
+	soundBuffer.clear();
+	pthread_mutex_unlock(&mutex);
 }
 
 void Speaker::setSignal(double level) {
@@ -95,7 +99,7 @@ void Speaker::setSignal(double level) {
 		}
 	}
 
-	pthread_mutex_lock(&mutex);
+	pthread_mutex_unlock(&mutex);
 }
 
 int Speaker::paCallback(const void *inputBuffer, void *outputBuffer,
