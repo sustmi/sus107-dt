@@ -41,7 +41,7 @@ DebuggerHexGui::DebuggerHexGui(wxWindow* parent, int id, const wxPoint& pos, con
 
 DebuggerHexGui::~DebuggerHexGui() {
 	if (emulator) {
-		debugger->removeListener(this);
+		emulator->removeListener(this);
 	}
 	if (debugger) {
 		debugger->removeListener(this);

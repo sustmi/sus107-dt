@@ -45,12 +45,16 @@ DebuggerView::DebuggerView(wxWindow* parent, int id, const wxString& title, cons
 	do_layout();
 	// end wxGlade
 
+	emulator = NULL;
 	debugger = NULL;
 	//hex_view->Connect(wxEVT_STC_UPDATEUI, (wxObjectEventFunction)(wxEventFunction)wxStaticCastEvent(wxStyledTextEventFunction, &DebuggerView::OnHexViewModified) , NULL, this);
 }
 
 DebuggerView::~DebuggerView()
 {
+	if (emulator) {
+		emulator->removeListener(this);
+	}
 	if (debugger) {
 		debugger->removeListener(this);
 	}

@@ -30,6 +30,8 @@ public:
 
 	void attach(Machine *machine);
 
+	uint8_t read(uint16_t addr);
+	void write(uint16_t addr, uint8_t value);
 	uint8_t rawRead(uint16_t addr);
 	void rawWrite(uint16_t addr, uint8_t value);
 

@@ -74,11 +74,11 @@ void Ula::setLastInterruptTime(uint64_t lastInterruptTime)
 
 uint8_t Ula::mread(uint16_t addr) {
 	contendedMemoryDelay(addr);
-	return memory->rawRead(addr);
+	return memory->read(addr);
 }
 void Ula::mwrite(uint16_t addr, uint8_t value) {
 	contendedMemoryDelay(addr);
-	memory->rawWrite(addr, value);
+	memory->write(addr, value);
 }
 
 void Ula::contendedMemoryDelay(uint16_t addr)
@@ -200,8 +200,8 @@ void Ula::renderScreen(uint32_t *buffer)
 			uint16_t painting_addr = 0x4000 + (third << 11) + (line << 8) + (row_in_third << 5) + column;
 			uint16_t attribute_addr = 0x5800 + (row << 5) + column;
 			
-			uint8_t paint = memory->rawRead(painting_addr);
-			uint8_t attr = memory->rawRead(attribute_addr);
+			uint8_t paint = memory->read(painting_addr);
+			uint8_t attr = memory->read(attribute_addr);
 
 			int ink = ((attr & 0x40) >> 3) | (attr & 0x07);
 			int paper = (attr & 0x78) >> 3;
