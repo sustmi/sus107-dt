@@ -20,6 +20,9 @@
 #include <wx/wx.h>
 #include <wx/image.h>
 #include <wx/stdpaths.h>
+
+#include "ui/icons.h"
+
 #include "ui/EmulatorView.h"
 
 
@@ -72,6 +75,7 @@ bool Application::OnInit()
 {
 	wxInitAllImageHandlers();
 	InitLanguageSupport();
+	initialize_images();
 	EmulatorView* emulator_view = new EmulatorView(NULL, wxID_ANY, wxEmptyString);
 	emulator_view->init();
 	SetTopWindow(emulator_view);

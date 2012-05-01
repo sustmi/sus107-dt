@@ -35,11 +35,15 @@ DebuggerView::DebuggerView(wxWindow* parent, int id, const wxString& title, cons
 	wxglade_tmp_menu_1->Append(301, _("Registers"), wxEmptyString, wxITEM_NORMAL);
 	debugger_menubar->Append(wxglade_tmp_menu_1, _("View"));
 	SetMenuBar(debugger_menubar);
-	hex_view = new DebuggerHexGui(notebook_pane_hex, wxID_ANY);
+	debugger_view_toolbar = new wxToolBar(this, -1);
+	SetToolBar(debugger_view_toolbar);
+	debugger_view_toolbar->SetToolBitmapSize(wxSize(24, 24));
+	debugger_view_toolbar->AddTool(DEBUGGER_TOOL_CONTINUE, _("Continue"), (*_img_media_playback_start_4), wxNullBitmap, wxITEM_NORMAL, _("Continue program execution"), wxEmptyString);
+	debugger_view_toolbar->AddTool(DEBUGGER_TOOL_BREAK, _("Break"), (*_img_media_playback_pause_4), wxNullBitmap, wxITEM_NORMAL, _("Break program"), wxEmptyString);
+	debugger_view_toolbar->AddTool(DEBUGGER_TOOL_STEP, _("Step"), (*_img_debug_step_into_instruction), wxNullBitmap, wxITEM_NORMAL, _("Step instruction"), wxEmptyString);
+	debugger_view_toolbar->Realize();
 	debugger_code_view = new DebuggerCodeGui(notebook, wxID_ANY);
-	button_step = new wxButton(this, 201, _("Step"));
-	button_continue = new wxButton(this, 202, _("Continue"));
-	button_break = new wxButton(this, 203, _("Break"));
+	hex_view = new DebuggerHexGui(notebook_pane_hex, wxID_ANY);
 
 	set_properties();
 	do_layout();
@@ -89,24 +93,26 @@ void DebuggerView::attach(Emulator *emulator, Debugger *debugger)
 BEGIN_EVENT_TABLE(DebuggerView, wxFrame)
 	// begin wxGlade: DebuggerView::event_table
 	EVT_MENU(301, DebuggerView::OnViewRegisters)
+	EVT_TOOL(DEBUGGER_TOOL_CONTINUE, DebuggerView::OnDebuggerContinue)
+	EVT_TOOL(DEBUGGER_TOOL_BREAK, DebuggerView::OnDebuggerBreak)
+	EVT_TOOL(DEBUGGER_TOOL_STEP, DebuggerView::OnDebuggerStep)
 	EVT_NOTEBOOK_PAGE_CHANGED(wxID_ANY, DebuggerView::OnDebuggerNotebookPageChanged)
-	EVT_BUTTON(201, DebuggerView::OnDebuggerStep)
-	EVT_BUTTON(202, DebuggerView::OnDebuggerContinue)
-	EVT_BUTTON(203, DebuggerView::OnDebuggerBreak)
 	// end wxGlade
 END_EVENT_TABLE();
 
 void DebuggerView::uiUpdate()
 {
 	if (debugger->getEmulator()->isRunning()) {
-		button_step->Disable();
-		button_continue->Disable();
-		button_break->Enable();
+		GetToolBar()->EnableTool(DEBUGGER_TOOL_CONTINUE, false);
+		GetToolBar()->EnableTool(DEBUGGER_TOOL_BREAK, true);
+		GetToolBar()->EnableTool(DEBUGGER_TOOL_STEP, false);
 	} else {
-		button_step->Enable();
-		button_continue->Enable();
-		button_break->Disable();
+		GetToolBar()->EnableTool(DEBUGGER_TOOL_CONTINUE, true);
+		GetToolBar()->EnableTool(DEBUGGER_TOOL_BREAK, false);
+		GetToolBar()->EnableTool(DEBUGGER_TOOL_STEP, true);
 	}
+
+	wxIcon();
 }
 
 void DebuggerView::OnDebuggerStep(wxCommandEvent &event)
@@ -145,7 +151,7 @@ void DebuggerView::OnHexViewModified(wxStyledTextEvent &event)
 
 void DebuggerView::OnDebuggerNotebookPageChanged(wxNotebookEvent & event)
 {
-	if (event.GetSelection() == 1) {
+	if (event.GetSelection() == 0) {
 		debugger_code_view->uiUpdate();
 	}
 }
@@ -177,17 +183,12 @@ void DebuggerView::do_layout()
 {
 	// begin wxGlade: DebuggerView::do_layout
 	wxBoxSizer* debugger_panes = new wxBoxSizer(wxVERTICAL);
-	wxBoxSizer* buttons = new wxBoxSizer(wxHORIZONTAL);
 	wxBoxSizer* sizer_1 = new wxBoxSizer(wxHORIZONTAL);
 	sizer_1->Add(hex_view, 1, wxEXPAND, 0);
 	notebook_pane_hex->SetSizer(sizer_1);
-	notebook->AddPage(notebook_pane_hex, _("Hex"));
 	notebook->AddPage(debugger_code_view, _("Code"));
+	notebook->AddPage(notebook_pane_hex, _("Hex"));
 	debugger_panes->Add(notebook, 1, wxEXPAND, 0);
-	buttons->Add(button_step, 0, wxADJUST_MINSIZE, 0);
-	buttons->Add(button_continue, 0, wxADJUST_MINSIZE, 0);
-	buttons->Add(button_break, 0, wxADJUST_MINSIZE, 0);
-	debugger_panes->Add(buttons, 0, wxALIGN_BOTTOM|wxALIGN_CENTER_HORIZONTAL|wxADJUST_MINSIZE, 0);
 	SetSizer(debugger_panes);
 	Layout();
 	// end wxGlade

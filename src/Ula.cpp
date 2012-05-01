@@ -151,9 +151,10 @@ void Ula::pwrite(uint16_t port, uint8_t value) {
 		borderColor = value & 0x07;
 
 		// sound
-		int ear = (value & (1 << 4)) != 0;
+		int spk = (value & (1 << 4)) != 0;
+		int mic = (value & (1 << 3)) != 0;
 		if (speaker != NULL) {
-			speaker->setSignal(ear ? 0.8 : -0.8);
+			speaker->setSignal((spk ? 0.8 : -0.8) + (mic ? 0.1 : -0.1));
 		}
 	}
 }

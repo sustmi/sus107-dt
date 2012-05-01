@@ -36,6 +36,8 @@ add_executable(sus107-dt
 	src/ui/DebuggerCodeGui.cpp
 	src/ui/DebuggerHexGui.cpp
 	
+	src/ui/icons.cpp
+	
 	src/ui/HexDataObject.cpp
 	src/ui/widgets/HexEditorCtrl/HexEditorCtrl.cpp
 	src/ui/widgets/HexEditorCtrl/HexEditorCtrlGui.cpp

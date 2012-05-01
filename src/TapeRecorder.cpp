@@ -40,6 +40,7 @@ void TapeRecorder::load(const char *filename) {
 	fread(buffer, sizeof(char), fsize, f);
 	fclose(f);
 
+	libspectrum_tape_clear(tape);
 	libspectrum_tape_read(tape, buffer, fsize, LIBSPECTRUM_ID_UNKNOWN, filename);
 
 	delete buffer;

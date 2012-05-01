@@ -190,6 +190,9 @@ void DebuggerCodeGui::attach(Emulator *emulator, Debugger *debugger)
 	this->debugger = debugger;
 	emulator->addListener(this);
     debugger->addListener(this);
+
+    // update UI with model data
+    uiUpdate();
 }
 
 void DebuggerCodeGui::emulatorEvent(EmulatorEvent event)
@@ -221,48 +224,50 @@ void DebuggerCodeGui::debuggerEvent(DebuggerEvent event)
 
 void DebuggerCodeGui::uiUpdate()
 {
-	char buf[1024];
-	int dummy;
+	if (debugger) {
+		char buf[1024];
+		int dummy;
 
-	int len;
-	int row = 0;
+		int len;
+		int row = 0;
 
-	addressToRowMap.clear();
-	rowToAddressMap.clear();
+		addressToRowMap.clear();
+		rowToAddressMap.clear();
 
-	code_grid->DisableCellEditControl();
-	code_grid->BeginBatch();
+		code_grid->DisableCellEditControl();
+		code_grid->BeginBatch();
 
-	for (int addr = 0; addr < 65536; addr += len) {
-		addressToRowMap[addr] = row;
-		rowToAddressMap[row] = addr;
+		for (int addr = 0; addr < 65536; addr += len) {
+			addressToRowMap[addr] = row;
+			rowToAddressMap[row] = addr;
 
-		len = debugger->disassembly(buf, 1024, addr);
+			len = debugger->disassembly(buf, 1024, addr);
 
-		if (row >= code_grid->GetRows()) {
-			code_grid->InsertRows(code_grid->GetRows(), 100);
-		}
-
-		code_grid->SetCellValue(row, 0, debugger->isBreakpoint(addr) ? wxT("BP") : wxT("  "));
-		code_grid->SetCellValue(row, 1, wxString::Format(wxT("%04X"), addr));
-
-		wxString dataStr;
-		for (int j = 0; j < len; j++) {
-			dataStr.Append(wxString::Format(wxT("%02X"), debugger->readMemory(addr + j)));
-			if (j < len - 1) {
-				dataStr.Append(wxT(" "));
+			if (row >= code_grid->GetRows()) {
+				code_grid->InsertRows(code_grid->GetRows(), 100);
 			}
+
+			code_grid->SetCellValue(row, 0, debugger->isBreakpoint(addr) ? wxT("BP") : wxT("  "));
+			code_grid->SetCellValue(row, 1, wxString::Format(wxT("%04X"), addr));
+
+			wxString dataStr;
+			for (int j = 0; j < len; j++) {
+				dataStr.Append(wxString::Format(wxT("%02X"), debugger->readMemory(addr + j)));
+				if (j < len - 1) {
+					dataStr.Append(wxT(" "));
+				}
+			}
+			code_grid->SetCellValue(row, 2, dataStr);
+
+			code_grid->SetCellValue(row, 3, wxString::From8BitData(buf));
+
+			row++;
 		}
-		code_grid->SetCellValue(row, 2, dataStr);
 
-		code_grid->SetCellValue(row, 3, wxString::From8BitData(buf));
+		code_grid->DeleteRows(row, code_grid->GetRows() - row);
 
-		row++;
+		code_grid->EndBatch();
 	}
-
-	code_grid->DeleteRows(row, code_grid->GetRows() - row);
-
-	code_grid->EndBatch();
 }
 
 void DebuggerCodeGui::gotoAddress(int address)

@@ -36,19 +36,21 @@ EmulatorView::EmulatorView(wxWindow* parent, int id, const wxString& title, cons
 	// begin wxGlade: EmulatorView::EmulatorView
 	menubar = new wxMenuBar();
 	wxMenu* wxglade_tmp_menu_1 = new wxMenu();
-	wxglade_tmp_menu_1->Append(9, _("Open..."), wxEmptyString, wxITEM_NORMAL);
+	wxglade_tmp_menu_1->Append(MENU_FILE_OPEN, _("Open..."), wxEmptyString, wxITEM_NORMAL);
+	wxglade_tmp_menu_1->Append(MENU_FILE_EXIT, _("Exit"), wxEmptyString, wxITEM_NORMAL);
 	menubar->Append(wxglade_tmp_menu_1, _("File"));
 	wxMenu* wxglade_tmp_menu_2 = new wxMenu();
-	wxglade_tmp_menu_2->Append(1, _("Start"), wxEmptyString, wxITEM_NORMAL);
-	wxglade_tmp_menu_2->Append(2, _("Stop"), wxEmptyString, wxITEM_NORMAL);
-	wxglade_tmp_menu_2->Append(7, _("Reset"), wxEmptyString, wxITEM_NORMAL);
-	wxglade_tmp_menu_2->Append(8, _("Debug..."), wxEmptyString, wxITEM_NORMAL);
+	wxglade_tmp_menu_2->Append(MENU_MACHINE_START, _("Start"), wxEmptyString, wxITEM_NORMAL);
+	wxglade_tmp_menu_2->Append(MENU_MACHINE_STOP, _("Stop"), wxEmptyString, wxITEM_NORMAL);
+	wxglade_tmp_menu_2->Append(MENU_MACHINE_RESET, _("Reset"), wxEmptyString, wxITEM_NORMAL);
+	wxglade_tmp_menu_2->AppendSeparator();
+	wxglade_tmp_menu_2->Append(MENU_MACHINE_DEBUGGER, _("Debugger..."), wxEmptyString, wxITEM_NORMAL);
 	menubar->Append(wxglade_tmp_menu_2, _("Machine"));
 	wxMenu* wxglade_tmp_menu_3 = new wxMenu();
-	wxglade_tmp_menu_3->Append(3, _("Open..."), wxEmptyString, wxITEM_NORMAL);
-	wxglade_tmp_menu_3->Append(4, _("Play"), wxEmptyString, wxITEM_NORMAL);
-	wxglade_tmp_menu_3->Append(5, _("Stop"), wxEmptyString, wxITEM_NORMAL);
-	wxglade_tmp_menu_3->Append(6, _("Rewind"), wxEmptyString, wxITEM_NORMAL);
+	wxglade_tmp_menu_3->Append(MENU_TAPE_OPEN, _("Open..."), wxEmptyString, wxITEM_NORMAL);
+	wxglade_tmp_menu_3->Append(MENU_TAPE_PLAY, _("Play"), wxEmptyString, wxITEM_NORMAL);
+	wxglade_tmp_menu_3->Append(MENU_TAPE_STOP, _("Stop"), wxEmptyString, wxITEM_NORMAL);
+	wxglade_tmp_menu_3->Append(MENU_TAPE_REWIND, _("Rewind"), wxEmptyString, wxITEM_NORMAL);
 	menubar->Append(wxglade_tmp_menu_3, _("Tape"));
 	SetMenuBar(menubar);
 	panel = new wxPanel(this, wxID_ANY);
@@ -63,6 +65,9 @@ EmulatorView::EmulatorView(wxWindow* parent, int id, const wxString& title, cons
 	panel->Connect(wxEVT_KEY_UP, wxKeyEventHandler(EmulatorView::OnKeyUp), NULL, this);
 
 	emulator = NULL;
+
+	frameBuffer = new wxBitmap(352, 288);
+	frameBufferData = new wxNativePixelData(*frameBuffer);
 }
 
 void EmulatorView::init() {
@@ -121,6 +126,8 @@ void EmulatorView::init() {
 	keyboardMapping[WXK_SHIFT] = KEY_CAPS_SHIFT;
 	keyboardMapping[WXK_CONTROL] = KEY_SYMBOL_SHIFT;
 
+	emulator->addListener(this);
+
 	// run the emulation
 	start();
 }
@@ -150,17 +157,30 @@ void EmulatorView::stop()
 	}
 }
 
+void EmulatorView::emulatorEvent(EmulatorEvent event)
+{
+	if (event == EMULATOR_EVENT_EMULATION_START) {
+		GetMenuBar()->Enable(MENU_MACHINE_START, false);
+		GetMenuBar()->Enable(MENU_MACHINE_STOP, true);
+	}
+	if (event == EMULATOR_EVENT_EMULATION_STOP) {
+		GetMenuBar()->Enable(MENU_MACHINE_START, true);
+		GetMenuBar()->Enable(MENU_MACHINE_STOP, false);
+	}
+}
+
 BEGIN_EVENT_TABLE(EmulatorView, wxFrame)
 	// begin wxGlade: EmulatorView::event_table
-	EVT_MENU(9, EmulatorView::OnFileOpen)
-	EVT_MENU(1, EmulatorView::OnMachineStart)
-	EVT_MENU(2, EmulatorView::OnMachineStop)
-	EVT_MENU(7, EmulatorView::OnMachineReset)
-	EVT_MENU(8, EmulatorView::OnMachineDebug)
-	EVT_MENU(3, EmulatorView::OnTapeOpen)
-	EVT_MENU(4, EmulatorView::OnTapePlay)
-	EVT_MENU(5, EmulatorView::OnTapeStop)
-	EVT_MENU(6, EmulatorView::OnTapeRewind)
+	EVT_MENU(MENU_FILE_OPEN, EmulatorView::OnFileOpen)
+	EVT_MENU(MENU_FILE_EXIT, EmulatorView::OnFileExit)
+	EVT_MENU(MENU_MACHINE_START, EmulatorView::OnMachineStart)
+	EVT_MENU(MENU_MACHINE_STOP, EmulatorView::OnMachineStop)
+	EVT_MENU(MENU_MACHINE_RESET, EmulatorView::OnMachineReset)
+	EVT_MENU(MENU_MACHINE_DEBUGGER, EmulatorView::OnMachineDebug)
+	EVT_MENU(MENU_TAPE_OPEN, EmulatorView::OnTapeOpen)
+	EVT_MENU(MENU_TAPE_PLAY, EmulatorView::OnTapePlay)
+	EVT_MENU(MENU_TAPE_STOP, EmulatorView::OnTapeStop)
+	EVT_MENU(MENU_TAPE_REWIND, EmulatorView::OnTapeRewind)
 	// end wxGlade
 END_EVENT_TABLE();
 
@@ -176,6 +196,11 @@ void EmulatorView::OnFileOpen(wxCommandEvent & event)
 		emulator->getMachine()->loadSnapshot(openFileDialog->GetPath().mb_str().data());
 		start();
 	}
+}
+
+void EmulatorView::OnFileExit(wxCommandEvent & event)
+{
+	Close();
 }
 
 void EmulatorView::OnMachineStart(wxCommandEvent &event)
@@ -286,10 +311,7 @@ void EmulatorView::OnJoystickTimer(wxTimerEvent &event)
 
 void EmulatorView::OnPaint(wxPaintEvent &event)
 {
-	//printf("paint\n");
-	wxImage img(352, 288);
-	//wxPaintDC dc(this);
-	wxPaintDC dc2(panel);
+	wxPaintDC dc(panel);
 
 	uint32_t *buffer;
 	buffer = new uint32_t[352*288];
@@ -298,17 +320,17 @@ void EmulatorView::OnPaint(wxPaintEvent &event)
 		emulator->renderScreen(buffer);
 	}
 
+	wxNativePixelData::Iterator p(*frameBufferData);
+
 	for (int y = 0; y < 288; y++) {
-		for (int x = 0; x < 352; x++) {
-			img.SetRGB(x, y,
-					(buffer[y*352 + x] & 0xff0000) >> 16,
-					(buffer[y*352 + x] & 0x00ff00) >> 8,
-					(buffer[y*352 + x] & 0x0000ff));
+		for (int x = 0; x < 352; x++, p++) {
+			p.Red() = (buffer[y*352 + x] & 0xff0000) >> 16;
+			p.Green() = (buffer[y*352 + x] & 0x00ff00) >> 8;
+			p.Blue() = (buffer[y*352 + x] & 0x0000ff);
 		}
 	}
 
-	//dc.DrawBitmap(img, wxPoint(0,0));
-	dc2.DrawBitmap(img, wxPoint(0,0));
+	dc.DrawBitmap(*frameBuffer, wxPoint(0,0));
 	delete buffer;
 }
 

@@ -24,6 +24,7 @@
 #ifndef DEBUGGERVIEW_H
 #define DEBUGGERVIEW_H
 
+#include "icons.h"
 
 #include "../Debugger.h"
 #include "../DebuggerListener.h"
@@ -46,6 +47,11 @@ class DebuggerHexGui;
 class DebuggerView: public wxFrame, public EmulatorListener, public DebuggerListener {
 public:
 	// begin wxGlade: DebuggerView::ids
+	enum {
+		DEBUGGER_TOOL_CONTINUE = wxID_HIGHEST + 1033,
+		DEBUGGER_TOOL_BREAK = wxID_HIGHEST + 1034,
+		DEBUGGER_TOOL_STEP = wxID_HIGHEST + 1035
+	};
 	// end wxGlade
 
 	DebuggerView(wxWindow* parent, int id, const wxString& title, const wxPoint& pos=wxDefaultPosition, const wxSize& size=wxDefaultSize, long style=wxDEFAULT_FRAME_STYLE);
@@ -67,13 +73,11 @@ private:
 protected:
 	// begin wxGlade: DebuggerView::attributes
 	wxMenuBar* debugger_menubar;
+	wxToolBar* debugger_view_toolbar;
+	DebuggerCodeGui* debugger_code_view;
 	DebuggerHexGui* hex_view;
 	wxPanel* notebook_pane_hex;
-	DebuggerCodeGui* debugger_code_view;
 	wxNotebook* notebook;
-	wxButton* button_step;
-	wxButton* button_continue;
-	wxButton* button_break;
 	// end wxGlade
 
 	DECLARE_EVENT_TABLE();
