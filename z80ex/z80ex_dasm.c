@@ -74,7 +74,7 @@ LIB_EXPORT int z80ex_dasm(char *output, int output_size, unsigned flags, int *t_
 			{
 				disp_u = readbyte_cb(addr++,user_data);
 				next = readbyte_cb(addr++,user_data);
-				bytes+=3;
+				bytes+=2; /* FIX: add only two-bytes, third is added for "" in mnemonics. <sus107@vsb.cz> @20120501 */
 				
 				dasm = (opc==0xDD)? &dasm_ddcb[next]: &dasm_fdcb[next];
 				have_disp=1;
