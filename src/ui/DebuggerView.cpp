@@ -41,6 +41,8 @@ DebuggerView::DebuggerView(wxWindow* parent, int id, const wxString& title, cons
 	debugger_view_toolbar->AddTool(DEBUGGER_TOOL_CONTINUE, _("Continue"), (*_img_media_playback_start_4), wxNullBitmap, wxITEM_NORMAL, _("Continue program execution"), wxEmptyString);
 	debugger_view_toolbar->AddTool(DEBUGGER_TOOL_BREAK, _("Break"), (*_img_media_playback_pause_4), wxNullBitmap, wxITEM_NORMAL, _("Break program"), wxEmptyString);
 	debugger_view_toolbar->AddTool(DEBUGGER_TOOL_STEP, _("Step"), (*_img_debug_step_into_instruction), wxNullBitmap, wxITEM_NORMAL, _("Step instruction"), wxEmptyString);
+	debugger_view_toolbar->AddSeparator();
+	debugger_view_toolbar->AddTool(DEBUGGER_TOOL_GOTOPC, _("Go to PC"), (*_img_go_next_4), wxNullBitmap, wxITEM_NORMAL, _("Go to Program Counter"), wxEmptyString);
 	debugger_view_toolbar->Realize();
 	debugger_code_view = new DebuggerCodeGui(notebook, wxID_ANY);
 	hex_view = new DebuggerHexGui(notebook_pane_hex, wxID_ANY);
@@ -96,6 +98,7 @@ BEGIN_EVENT_TABLE(DebuggerView, wxFrame)
 	EVT_TOOL(DEBUGGER_TOOL_CONTINUE, DebuggerView::OnDebuggerContinue)
 	EVT_TOOL(DEBUGGER_TOOL_BREAK, DebuggerView::OnDebuggerBreak)
 	EVT_TOOL(DEBUGGER_TOOL_STEP, DebuggerView::OnDebuggerStep)
+	EVT_TOOL(DEBUGGER_TOOL_GOTOPC, DebuggerView::OnDebuggerGotoPc)
 	EVT_NOTEBOOK_PAGE_CHANGED(wxID_ANY, DebuggerView::OnDebuggerNotebookPageChanged)
 	// end wxGlade
 END_EVENT_TABLE();
@@ -128,6 +131,11 @@ void DebuggerView::OnDebuggerContinue(wxCommandEvent &event)
 void DebuggerView::OnDebuggerBreak(wxCommandEvent &event)
 {
 	debugger->emulationBreak();
+}
+
+void DebuggerView::OnDebuggerGotoPc(wxCommandEvent & event)
+{
+	debugger_code_view->gotoAddress(debugger->getCpuRegister(regPC));
 }
 
 void DebuggerView::OnViewRegisters(wxCommandEvent &event)

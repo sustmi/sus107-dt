@@ -31,10 +31,13 @@
 
 // end wxGlade
 
+#include "icons.h"
+
 #include <map>
 #include "../Debugger.h"
 #include "../EmulatorListener.h"
 #include "../DebuggerListener.h"
+#include "GridCellBitmapRenderer.h"
 
 class Debugger;
 class EmulatorListener;

@@ -30,13 +30,14 @@ add_executable(sus107-dt
 	src/Speaker.cpp
 	src/Clock.cpp
 	
+	src/ui/icons.cpp
+	src/ui/GridCellBitmapRenderer.cpp
+	
 	src/ui/EmulatorView.cpp
 	src/ui/DebuggerView.cpp
 	src/ui/DebuggerRegistersView.cpp
 	src/ui/DebuggerCodeGui.cpp
 	src/ui/DebuggerHexGui.cpp
-	
-	src/ui/icons.cpp
 	
 	src/ui/HexDataObject.cpp
 	src/ui/widgets/HexEditorCtrl/HexEditorCtrl.cpp
@@ -57,7 +58,8 @@ if(CMAKE_BUILD_TYPE MATCHES "Release")
     set(CMAKE_CXX_FLAGS "-O2")
 endif()
 
-set (Z80EX_PATH "${PROJECT_SOURCE_DIR}/z80ex"
+# z80ex library (static) 
+set (Z80EX_PATH "${PROJECT_SOURCE_DIR}/lib/z80ex"
 	CACHE PATH "Path to Z80Ex library")
 include_directories("${Z80EX_PATH}/include")
 set (Z80EX_BINARY_DIR "${PROJECT_BINARY_DIR}/lib_z80ex")

@@ -182,9 +182,6 @@ uint64_t Machine::getCpuFreq() const {
 	return cpuFreq;
 }
 
-Z80EX_WORD Machine::getPC() {
-	return cpu->getRegister(regPC);
-}
 
 
 

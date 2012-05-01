@@ -48,9 +48,10 @@ class DebuggerView: public wxFrame, public EmulatorListener, public DebuggerList
 public:
 	// begin wxGlade: DebuggerView::ids
 	enum {
-		DEBUGGER_TOOL_CONTINUE = wxID_HIGHEST + 1033,
-		DEBUGGER_TOOL_BREAK = wxID_HIGHEST + 1034,
-		DEBUGGER_TOOL_STEP = wxID_HIGHEST + 1035
+		DEBUGGER_TOOL_CONTINUE = wxID_HIGHEST + 1034,
+		DEBUGGER_TOOL_BREAK = wxID_HIGHEST + 1035,
+		DEBUGGER_TOOL_STEP = wxID_HIGHEST + 1036,
+		DEBUGGER_TOOL_GOTOPC = wxID_HIGHEST + 1037
 	};
 	// end wxGlade
 
@@ -89,6 +90,7 @@ public:
 	virtual void OnViewRegisters(wxCommandEvent &event); // wxGlade: <event_handler>
 	virtual void OnHexViewModified(wxStyledTextEvent &event); // wxGlade: <event_handler>
 	virtual void OnDebuggerNotebookPageChanged(wxNotebookEvent &event); // wxGlade: <event_handler>
+	virtual void OnDebuggerGotoPc(wxCommandEvent &event); // wxGlade: <event_handler>
 	void attach(Emulator *emulator, Debugger *debugger);
 }; // wxGlade: end class
 

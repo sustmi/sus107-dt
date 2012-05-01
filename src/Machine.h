@@ -44,7 +44,6 @@ public:
 	void stepInstruction();
 	bool loadRom(const char *filename);
 	bool loadSnapshot(const char *filename);
-	Z80EX_WORD getPC();
 
 	uint64_t getCurrentTime();
 	//void addEvent(int event);
