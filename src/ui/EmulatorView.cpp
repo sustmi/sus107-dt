@@ -247,18 +247,32 @@ void EmulatorView::OnTapeOpen(wxCommandEvent & event)
 			wxFD_OPEN|wxFD_FILE_MUST_EXIST, wxDefaultPosition);
 
 	if (openFileDialog->ShowModal() == wxID_OK) {
+		emulator->getTapeRecorder()->stop();
 		emulator->getTapeRecorder()->load(openFileDialog->GetPath().mb_str().data());
+		if (emulator->getTapeRecorder()->getState() != TAPE_RECORDER_STATE_EMPTY) {
+			GetMenuBar()->Enable(MENU_TAPE_PLAY, true);
+			GetMenuBar()->Enable(MENU_TAPE_STOP, false);
+			GetMenuBar()->Enable(MENU_TAPE_REWIND, true);
+		}
 	}
 }
 
 void EmulatorView::OnTapePlay(wxCommandEvent & event)
 {
 	emulator->getTapeRecorder()->play();
+	if (emulator->getTapeRecorder()->getState() == TAPE_RECORDER_STATE_PLAYING) {
+		GetMenuBar()->Enable(MENU_TAPE_PLAY, false);
+		GetMenuBar()->Enable(MENU_TAPE_STOP, true);
+	}
 }
 
 void EmulatorView::OnTapeStop(wxCommandEvent & event)
 {
 	emulator->getTapeRecorder()->stop();
+	if (emulator->getTapeRecorder()->getState() == TAPE_RECORDER_STATE_STOPPED) {
+		GetMenuBar()->Enable(MENU_TAPE_PLAY, true);
+		GetMenuBar()->Enable(MENU_TAPE_STOP, false);
+	}
 }
 
 void EmulatorView::OnTapeRewind(wxCommandEvent & event)
@@ -385,6 +399,11 @@ void EmulatorView::set_properties()
 	panel->SetMinSize(wxSize(352, 288));
 	panel->SetFocus();
 	// end wxGlade
+
+	GetMenuBar()->Enable(MENU_TAPE_OPEN, true);
+	GetMenuBar()->Enable(MENU_TAPE_PLAY, false);
+	GetMenuBar()->Enable(MENU_TAPE_STOP, false);
+	GetMenuBar()->Enable(MENU_TAPE_REWIND, false);
 }
 
 

@@ -45,6 +45,8 @@ public:
 
 	int getSignal();
 
+	TapeRecorderState getState();
+
 private:
 	uint64_t getPosition();
 

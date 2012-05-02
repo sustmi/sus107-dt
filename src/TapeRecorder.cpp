@@ -112,6 +112,10 @@ uint64_t TapeRecorder::getPosition() {
 	return lastPosition;
 }
 
+TapeRecorderState TapeRecorder::getState()
+{
+	return state;
+}
 
 
 
