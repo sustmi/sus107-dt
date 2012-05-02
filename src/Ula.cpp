@@ -126,7 +126,6 @@ int Ula::contendedDelay(uint64_t tstates)
 				cpu->wait(delay);
 				ret = delay;
 			}
-			//printf("%d, %d\n", tstates, delay);
 		}
 	}
 	return ret;

@@ -194,7 +194,6 @@ void DebuggerView::OnShowInHexView(wxCommandEvent & event)
 void DebuggerView::OnShowInCodeView(wxCommandEvent & event)
 {
 	if (hex_view->select->GetState()) {
-		printf("%d, %d\n", hex_view->select->StartOffset, hex_view->select->EndOffset);
 		debugger_code_view->selectAddresses(hex_view->select->StartOffset, hex_view->select->EndOffset);
 	} else {
 		debugger_code_view->gotoAddress(hex_view->CursorOffset());
@@ -212,18 +211,6 @@ void DebuggerView::set_properties()
 	SetTitle(_("Debugger"));
 	SetSize(wxSize(430, 480));
 	// end wxGlade
-
-	char buf[65536];
-	for (int i = 0; i < 65536; i++) {
-		buf[i] = (i % ('z' - 'a')) + 'a';
-	}
-
-	hex_view->ReadFromBuffer(0, 65536, buf);
-	//hex_view->ReadFromBuffer(16, 62, "qwertzuioplkjhgfdsayxcvbnm0123456789QWERTZUIOPLKJHGFDSAYXCVBNM");
-	//hex_view->Select(5, 8); // data selection
-	printf("%d\n", hex_view->GetByteCount());
-	printf("%d\n", hex_view->GetLastPosition());
-
 }
 
 void DebuggerView::do_layout()
