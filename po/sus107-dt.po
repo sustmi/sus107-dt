@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sus107-dt\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-05-01 15:58+0100\n"
-"PO-Revision-Date: 2012-05-01 15:59+0100\n"
+"POT-Creation-Date: 2012-05-02 02:47+0100\n"
+"PO-Revision-Date: 2012-05-02 03:02+0100\n"
 "Last-Translator: Miroslav Šustek <sus107@vsb.cz>\n"
 "Language-Team:  <sus107@vsb.cz>\n"
 "Language: \n"
@@ -17,66 +17,191 @@ msgstr ""
 "X-Poedit-SourceCharset: utf-8\n"
 "X-Poedit-SearchPath-0: ../src\n"
 
-#: ../src/ui/DebuggerRegistersView.cpp:31
+#: ../src/ui/DebuggerHexGui.cpp:320
+msgid "Copy"
+msgstr "Kopírovat"
+
+#: ../src/ui/DebuggerHexGui.cpp:321
+msgid "Paste"
+msgstr "Vložit"
+
+#: ../src/ui/DebuggerHexGui.cpp:322
+msgid "Save as file..."
+msgstr "Uložit jako soubor..."
+
+#: ../src/ui/DebuggerHexGui.cpp:324
+msgid "Show in Code View"
+msgstr "Označit ve zobrazení kódu"
+
+#: ../src/ui/DebuggerHexGui.cpp:410
+msgid "Save as file"
+msgstr "Uložit jako soubor"
+
+#: ../src/ui/DebuggerHexGui.cpp:421
+#: ../src/ui/DebuggerHexGui.cpp:436
+msgid "Failed to save selected data."
+msgstr "Chyba při ukládání vybraných dat."
+
+#: ../src/ui/DebuggerHexGui.cpp:421
+#: ../src/ui/DebuggerHexGui.cpp:436
+msgid "Save failed"
+msgstr "Uložení selhalo"
+
+#: ../src/ui/DebuggerHexGui.cpp:434
+#, c-format
+msgid "Successfuly saved %d bytes."
+msgstr "Úspěšně uloženo %d bajtů."
+
+#: ../src/ui/DebuggerHexGui.cpp:434
+msgid "File saved"
+msgstr "Soubor uložen"
+
+#: ../src/ui/DebuggerRegistersView.cpp:32
+#: ../src/ui/xxx.cpp:14
+msgid "General registers:"
+msgstr "Všeobecné registry:"
+
+#: ../src/ui/DebuggerRegistersView.cpp:33
+#: ../src/ui/xxx.cpp:15
 msgid "AF"
 msgstr ""
 
-#: ../src/ui/DebuggerRegistersView.cpp:33
-msgid "BC"
-msgstr ""
-
 #: ../src/ui/DebuggerRegistersView.cpp:35
-msgid "DE"
-msgstr ""
-
-#: ../src/ui/DebuggerRegistersView.cpp:37
-msgid "HL"
-msgstr ""
-
-#: ../src/ui/DebuggerRegistersView.cpp:39
-msgid "PC"
-msgstr ""
-
-#: ../src/ui/DebuggerRegistersView.cpp:41
-msgid "SP"
-msgstr ""
-
-#: ../src/ui/DebuggerRegistersView.cpp:43
-msgid "I"
-msgstr ""
-
-#: ../src/ui/DebuggerRegistersView.cpp:45
+#: ../src/ui/xxx.cpp:17
 msgid "AF'"
 msgstr ""
 
-#: ../src/ui/DebuggerRegistersView.cpp:47
+#: ../src/ui/DebuggerRegistersView.cpp:37
+#: ../src/ui/xxx.cpp:19
+msgid "BC"
+msgstr ""
+
+#: ../src/ui/DebuggerRegistersView.cpp:39
+#: ../src/ui/xxx.cpp:21
 msgid "BC'"
 msgstr ""
 
-#: ../src/ui/DebuggerRegistersView.cpp:49
+#: ../src/ui/DebuggerRegistersView.cpp:41
+#: ../src/ui/xxx.cpp:23
+msgid "DE"
+msgstr ""
+
+#: ../src/ui/DebuggerRegistersView.cpp:43
+#: ../src/ui/xxx.cpp:25
 msgid "DE'"
 msgstr ""
 
-#: ../src/ui/DebuggerRegistersView.cpp:51
+#: ../src/ui/DebuggerRegistersView.cpp:45
+#: ../src/ui/xxx.cpp:27
+msgid "HL"
+msgstr ""
+
+#: ../src/ui/DebuggerRegistersView.cpp:47
+#: ../src/ui/xxx.cpp:29
 msgid "HL'"
 msgstr ""
 
-#: ../src/ui/DebuggerRegistersView.cpp:53
+#: ../src/ui/DebuggerRegistersView.cpp:49
+#: ../src/ui/xxx.cpp:31
+msgid "Program Counter and Stack Pointer:"
+msgstr "Programový čítač a ukazatel zásobníku:"
+
+#: ../src/ui/DebuggerRegistersView.cpp:50
+#: ../src/ui/xxx.cpp:32
+msgid "PC"
+msgstr ""
+
+#: ../src/ui/DebuggerRegistersView.cpp:52
+#: ../src/ui/xxx.cpp:34
+msgid "SP"
+msgstr ""
+
+#: ../src/ui/DebuggerRegistersView.cpp:54
+#: ../src/ui/xxx.cpp:36
+msgid "Index registers:"
+msgstr "Index registry:"
+
+#: ../src/ui/DebuggerRegistersView.cpp:55
+#: ../src/ui/xxx.cpp:37
 msgid "IX"
 msgstr ""
 
-#: ../src/ui/DebuggerRegistersView.cpp:55
+#: ../src/ui/DebuggerRegistersView.cpp:57
+#: ../src/ui/xxx.cpp:39
 msgid "IY"
 msgstr ""
 
-#: ../src/ui/DebuggerRegistersView.cpp:57
+#: ../src/ui/DebuggerRegistersView.cpp:59
+#: ../src/ui/xxx.cpp:41
+msgid "Interrupt Page and Memory Refresh:"
+msgstr "Stránka přerušení a obnova paměti"
+
+#: ../src/ui/DebuggerRegistersView.cpp:60
+#: ../src/ui/xxx.cpp:42
+msgid "I"
+msgstr ""
+
+#: ../src/ui/DebuggerRegistersView.cpp:62
+#: ../src/ui/xxx.cpp:44
 msgid "R"
 msgstr ""
 
-#: ../src/ui/DebuggerRegistersView.cpp:174
-#: ../src/ui/DebuggerView.cpp:35
+#: ../src/ui/DebuggerRegistersView.cpp:64
+msgid "Flags:"
+msgstr "Příznaky:"
+
+#: ../src/ui/DebuggerRegistersView.cpp:65
+#: ../src/ui/xxx.cpp:47
+msgid "S"
+msgstr ""
+
+#: ../src/ui/DebuggerRegistersView.cpp:66
+#: ../src/ui/xxx.cpp:48
+msgid "Z"
+msgstr ""
+
+#: ../src/ui/DebuggerRegistersView.cpp:67
+#: ../src/ui/xxx.cpp:49
+msgid "Y"
+msgstr ""
+
+#: ../src/ui/DebuggerRegistersView.cpp:68
+#: ../src/ui/xxx.cpp:50
+msgid "H"
+msgstr ""
+
+#: ../src/ui/DebuggerRegistersView.cpp:69
+#: ../src/ui/xxx.cpp:51
+msgid "X"
+msgstr ""
+
+#: ../src/ui/DebuggerRegistersView.cpp:70
+#: ../src/ui/xxx.cpp:52
+msgid "P"
+msgstr ""
+
+#: ../src/ui/DebuggerRegistersView.cpp:71
+#: ../src/ui/xxx.cpp:53
+msgid "N"
+msgstr ""
+
+#: ../src/ui/DebuggerRegistersView.cpp:72
+#: ../src/ui/xxx.cpp:54
+msgid "C"
+msgstr ""
+
+#: ../src/ui/DebuggerRegistersView.cpp:230
+#: ../src/ui/DebuggerView.cpp:38
 msgid "Registers"
 msgstr "Registry"
+
+#: ../src/ui/xxx.cpp:46
+msgid "label_5"
+msgstr ""
+
+#: ../src/ui/xxx.cpp:103
+msgid "frame_1"
+msgstr ""
 
 #: ../src/ui/EmulatorView.cpp:39
 #: ../src/ui/EmulatorView.cpp:50
@@ -85,147 +210,195 @@ msgstr "Otevřít..."
 
 #: ../src/ui/EmulatorView.cpp:40
 msgid "Exit"
-msgstr ""
+msgstr "Konec"
 
 #: ../src/ui/EmulatorView.cpp:41
 msgid "File"
-msgstr ""
+msgstr "Soubor"
 
 #: ../src/ui/EmulatorView.cpp:43
 msgid "Start"
-msgstr ""
+msgstr "Spustit"
 
 #: ../src/ui/EmulatorView.cpp:44
 #: ../src/ui/EmulatorView.cpp:52
 msgid "Stop"
-msgstr ""
+msgstr "Zastavit"
 
 #: ../src/ui/EmulatorView.cpp:45
 msgid "Reset"
-msgstr ""
+msgstr "Resetovat"
 
 #: ../src/ui/EmulatorView.cpp:47
 msgid "Debugger..."
-msgstr ""
+msgstr "Debugger..."
 
 #: ../src/ui/EmulatorView.cpp:48
 msgid "Machine"
-msgstr ""
+msgstr "Počítač"
 
 #: ../src/ui/EmulatorView.cpp:51
 msgid "Play"
-msgstr ""
+msgstr "Přehrát"
 
 #: ../src/ui/EmulatorView.cpp:53
 msgid "Rewind"
-msgstr ""
+msgstr "Přetočit"
 
 #: ../src/ui/EmulatorView.cpp:54
 msgid "Tape"
-msgstr ""
+msgstr "Magnetofon"
 
-#: ../src/ui/EmulatorView.cpp:189
-#: ../src/ui/EmulatorView.cpp:234
+#: ../src/ui/EmulatorView.cpp:78
+msgid "Please put ROM file named 48.rom into application directory and restart application."
+msgstr "Prosím uložte ROM soubor s názvem 48.rom do složky s aplikací a restartujete aplikaci."
+
+#: ../src/ui/EmulatorView.cpp:79
+msgid "File 48.rom not found"
+msgstr "Soubor 48.rom nenalezen"
+
+#: ../src/ui/EmulatorView.cpp:194
+#: ../src/ui/EmulatorView.cpp:244
 msgid "Open file"
-msgstr ""
+msgstr "Otevřít soubor"
 
-#: ../src/ui/EmulatorView.cpp:372
+#: ../src/ui/EmulatorView.cpp:203
+msgid "Could not load selected snapshot."
+msgstr "Nepodařilo se načíst snapshot."
+
+#: ../src/ui/EmulatorView.cpp:203
+msgid "Error loading snapshot"
+msgstr "Chyba při načítání snapshotu"
+
+#: ../src/ui/EmulatorView.cpp:205
+msgid "Loaded snapshot is not targeted for ZX Spectrum 48K."
+msgstr "Načtený snapshot není určen pro ZX Spectrum 48K."
+
+#: ../src/ui/EmulatorView.cpp:205
+msgid "Improper snapshot machine"
+msgstr "Snapshot pro nesprávný počítač"
+
+#: ../src/ui/EmulatorView.cpp:396
 msgid "Emulator"
-msgstr ""
+msgstr "Emulátor"
 
-#: ../src/ui/DebuggerCodeGui.cpp:301
-msgid "BP"
-msgstr ""
-
-#: ../src/ui/DebuggerCodeGui.cpp:303
+#: ../src/ui/DebuggerCodeGui.cpp:358
 msgid "Address"
-msgstr ""
+msgstr "Adresa"
 
-#: ../src/ui/DebuggerCodeGui.cpp:305
+#: ../src/ui/DebuggerCodeGui.cpp:360
 msgid "Data"
-msgstr ""
+msgstr "Data"
 
-#: ../src/ui/DebuggerCodeGui.cpp:307
+#: ../src/ui/DebuggerCodeGui.cpp:362
 msgid "Instruction"
-msgstr ""
+msgstr "Instrukce"
+
+#: ../src/ui/DebuggerView.cpp:35
+#: ../src/ui/DebuggerView.cpp:159
+msgid "Go to address..."
+msgstr "Jít na adresu:"
+
+#: ../src/ui/DebuggerView.cpp:35
+msgid "Add or remove breakpoint at selected address"
+msgstr "Přidat nebo odebrat breakpoint na dané adrese"
 
 #: ../src/ui/DebuggerView.cpp:36
+msgid "Edit"
+msgstr "Úpravy"
+
+#: ../src/ui/DebuggerView.cpp:39
 msgid "View"
-msgstr ""
+msgstr "Zobrazit"
 
 #: ../src/ui/DebuggerView.cpp:41
+#: ../src/ui/DebuggerView.cpp:49
 msgid "Continue"
-msgstr ""
-
-#: ../src/ui/DebuggerView.cpp:41
-msgid "Continue program execution"
-msgstr ""
+msgstr "Pokračovat"
 
 #: ../src/ui/DebuggerView.cpp:42
+#: ../src/ui/DebuggerView.cpp:50
 msgid "Break"
-msgstr ""
-
-#: ../src/ui/DebuggerView.cpp:42
-msgid "Break program"
-msgstr ""
+msgstr "Pozastavit"
 
 #: ../src/ui/DebuggerView.cpp:43
-msgid "Step"
-msgstr ""
-
-#: ../src/ui/DebuggerView.cpp:43
+#: ../src/ui/DebuggerView.cpp:51
 msgid "Step instruction"
-msgstr ""
+msgstr "Instrukční krok"
 
-#: ../src/ui/DebuggerView.cpp:45
-msgid "Go to PC"
-msgstr ""
-
-#: ../src/ui/DebuggerView.cpp:45
-msgid "Go to Program Counter"
-msgstr ""
-
-#: ../src/ui/DebuggerView.cpp:173
+#: ../src/ui/DebuggerView.cpp:44
+#: ../src/ui/DebuggerView.cpp:211
 msgid "Debugger"
-msgstr ""
+msgstr "Debugger"
 
-#: ../src/ui/DebuggerView.cpp:197
-msgid "Code"
-msgstr ""
+#: ../src/ui/DebuggerView.cpp:49
+msgid "Continue program execution"
+msgstr "Pokračovat ve spouštění programu"
 
-#: ../src/ui/DebuggerView.cpp:198
-msgid "Hex"
-msgstr ""
+#: ../src/ui/DebuggerView.cpp:50
+msgid "Break program"
+msgstr "Pozastavit program"
+
+#: ../src/ui/DebuggerView.cpp:51
+msgid "Step"
+msgstr "Krokovat"
+
+#: ../src/ui/DebuggerView.cpp:53
+msgid "Go to PC"
+msgstr "Jít na PC"
+
+#: ../src/ui/DebuggerView.cpp:53
+msgid "Go to Program Counter"
+msgstr "Přejít na programový čítač"
+
+#: ../src/ui/DebuggerView.cpp:159
+msgid "Address (hex):"
+msgstr "Adresa (hexadecimálně):"
+
+#: ../src/ui/DebuggerView.cpp:223
+msgid "Code view"
+msgstr "Kód"
+
+#: ../src/ui/DebuggerView.cpp:224
+msgid "Hex view"
+msgstr "Hexadecimální"
 
 #: ../src/ui/widgets/wxHexCtrl/main.cpp:44
+#: ../src/ui/widgets/HexEditorCtrl/main.cpp:44
 msgid "&Quit\tAlt-F4"
-msgstr ""
+msgstr "&Konec\tAlt-F4"
 
 #: ../src/ui/widgets/wxHexCtrl/main.cpp:44
+#: ../src/ui/widgets/HexEditorCtrl/main.cpp:44
 msgid "Quit the application"
-msgstr ""
+msgstr "Ukončit aplikaci"
 
 #: ../src/ui/widgets/wxHexCtrl/main.cpp:45
+#: ../src/ui/widgets/HexEditorCtrl/main.cpp:45
 msgid "&File"
-msgstr ""
+msgstr "&Soubor"
 
 #: ../src/ui/widgets/wxHexCtrl/main.cpp:49
+#: ../src/ui/widgets/HexEditorCtrl/main.cpp:50
 msgid "&About\tF1"
-msgstr ""
+msgstr "&O programu\tF1"
 
 #: ../src/ui/widgets/wxHexCtrl/main.cpp:49
+#: ../src/ui/widgets/HexEditorCtrl/main.cpp:50
 msgid "Show info about this application"
-msgstr ""
+msgstr "Zobrazit informace o této aplikaci"
 
 #: ../src/ui/widgets/wxHexCtrl/main.cpp:50
+#: ../src/ui/widgets/HexEditorCtrl/main.cpp:51
 msgid "&Help"
-msgstr ""
+msgstr "&Nápověda"
 
 #: ../src/ui/widgets/wxHexCtrl/main.cpp:58
 msgid "wxHexCtrl Status Text"
 msgstr ""
 
 #: ../src/ui/widgets/wxHexCtrl/main.cpp:81
+#: ../src/ui/widgets/HexEditorCtrl/main.cpp:81
 msgid "Welcome to..."
 msgstr ""
 
@@ -272,673 +445,20 @@ msgstr ""
 msgid "FAILED"
 msgstr ""
 
-#: ../src/ui/widgets/MadEdit/MadEditSearch.cpp:662
-#: ../src/ui/widgets/MadEdit/MadEditSearch.cpp:878
-#, c-format
-msgid "'%s' is not a valid regular expression."
-msgstr ""
-
-#: ../src/ui/widgets/MadEdit/MadEditSearch.cpp:787
-msgid ""
-"Catched a exception of 'regex_error'.\n"
-"Maybe the regular expression is invalid."
-msgstr ""
-
-#: ../src/ui/widgets/MadEdit/MadEditSearch.cpp:914
-#, c-format
-msgid "The format of '%s' is invalid."
-msgstr ""
-
-#: ../src/ui/widgets/MadEdit/MadEditBasic.cpp:581
-#, c-format
-msgid ""
-"Do you want to continue?\n"
-"The file size is %s bytes.\n"
-"It may take long time and large memories to convert to Text/Column Mode."
-msgstr ""
-
-#: ../src/ui/widgets/MadEdit/MadEditBasic.cpp:581
-msgid "Hex Mode to Text/Column Mode"
-msgstr ""
-
-#: ../src/ui/widgets/MadEdit/MadEditBasic.cpp:1961
-#: ../src/ui/widgets/MadEdit/MadEditBasic.cpp:2030
-msgid "The Parent Directory of this file does not exist:"
-msgstr ""
-
-#: ../src/ui/widgets/MadEdit/MadEditBasic.cpp:2050
-msgid "Cannot save this file:"
-msgstr ""
-
-#: ../src/ui/widgets/MadEdit/MadEditBasic.cpp:2078
-msgid "Do you want to save this file?"
-msgstr ""
-
-#: ../src/ui/widgets/MadEdit/MadEditBasic.cpp:2089
-msgid "Save File As"
-msgstr ""
-
-#: ../src/ui/widgets/MadEdit/MadEditBasic.cpp:2093
-msgid "Save File"
-msgstr ""
-
-#: ../src/ui/widgets/MadEdit/MadEditBasic.cpp:2133
-msgid "Do you want to discard changes?"
-msgstr ""
-
-#: ../src/ui/widgets/MadEdit/MadEditBasic.cpp:2168
-msgid "This file has been changed by another application."
-msgstr ""
-
-#: ../src/ui/widgets/MadEdit/MadEditBasic.cpp:2169
-msgid "Do you want to reload it?"
-msgstr ""
-
-#: ../src/ui/widgets/MadEdit/MadEditBasic.cpp:2405
-msgid "The input string is not a valid Hex-String:"
-msgstr ""
-
-#: ../src/ui/widgets/MadEdit/MadEditAdvanced.cpp:1295
-msgid "Control Characters"
-msgstr ""
-
-#: ../src/ui/widgets/MadEdit/MadEditAdvanced.cpp:1296
-msgid "Basic Latin"
-msgstr ""
-
-#: ../src/ui/widgets/MadEdit/MadEditAdvanced.cpp:1297
-msgid "Latin-1 Supplement"
-msgstr ""
-
-#: ../src/ui/widgets/MadEdit/MadEditAdvanced.cpp:1298
-msgid "Latin Extended-A"
-msgstr ""
-
-#: ../src/ui/widgets/MadEdit/MadEditAdvanced.cpp:1299
-msgid "Latin Extended-B"
-msgstr ""
-
-#: ../src/ui/widgets/MadEdit/MadEditAdvanced.cpp:1300
-msgid "IPA Extensions"
-msgstr ""
-
-#: ../src/ui/widgets/MadEdit/MadEditAdvanced.cpp:1301
-msgid "Spacing Modifier Letters"
-msgstr ""
-
-#: ../src/ui/widgets/MadEdit/MadEditAdvanced.cpp:1302
-msgid "Combining Diacritical Marks"
-msgstr ""
-
-#: ../src/ui/widgets/MadEdit/MadEditAdvanced.cpp:1303
-msgid "Greek and Coptic"
-msgstr ""
-
-#: ../src/ui/widgets/MadEdit/MadEditAdvanced.cpp:1304
-msgid "Cyrillic"
-msgstr ""
-
-#: ../src/ui/widgets/MadEdit/MadEditAdvanced.cpp:1305
-msgid "Cyrillic Supplement"
-msgstr ""
-
-#: ../src/ui/widgets/MadEdit/MadEditAdvanced.cpp:1306
-msgid "Armenian"
-msgstr ""
-
-#: ../src/ui/widgets/MadEdit/MadEditAdvanced.cpp:1307
-msgid "Hebrew"
-msgstr ""
-
-#: ../src/ui/widgets/MadEdit/MadEditAdvanced.cpp:1308
-msgid "Arabic"
-msgstr ""
-
-#: ../src/ui/widgets/MadEdit/MadEditAdvanced.cpp:1309
-msgid "Syriac"
-msgstr ""
-
-#: ../src/ui/widgets/MadEdit/MadEditAdvanced.cpp:1310
-msgid "Arabic Supplement"
-msgstr ""
-
-#: ../src/ui/widgets/MadEdit/MadEditAdvanced.cpp:1311
-msgid "Thaana"
-msgstr ""
-
-#: ../src/ui/widgets/MadEdit/MadEditAdvanced.cpp:1312
-msgid "Devanagari"
-msgstr ""
-
-#: ../src/ui/widgets/MadEdit/MadEditAdvanced.cpp:1313
-msgid "Bengali"
-msgstr ""
-
-#: ../src/ui/widgets/MadEdit/MadEditAdvanced.cpp:1314
-msgid "Gurmukhi"
-msgstr ""
-
-#: ../src/ui/widgets/MadEdit/MadEditAdvanced.cpp:1315
-msgid "Gujarati"
-msgstr ""
-
-#: ../src/ui/widgets/MadEdit/MadEditAdvanced.cpp:1316
-msgid "Oriya"
-msgstr ""
-
-#: ../src/ui/widgets/MadEdit/MadEditAdvanced.cpp:1317
-msgid "Tamil"
-msgstr ""
-
-#: ../src/ui/widgets/MadEdit/MadEditAdvanced.cpp:1318
-msgid "Telugu"
-msgstr ""
-
-#: ../src/ui/widgets/MadEdit/MadEditAdvanced.cpp:1319
-msgid "Kannada"
-msgstr ""
-
-#: ../src/ui/widgets/MadEdit/MadEditAdvanced.cpp:1320
-msgid "Malayalam"
-msgstr ""
-
-#: ../src/ui/widgets/MadEdit/MadEditAdvanced.cpp:1321
-msgid "Sinhala"
-msgstr ""
-
-#: ../src/ui/widgets/MadEdit/MadEditAdvanced.cpp:1322
-msgid "Thai"
-msgstr ""
-
-#: ../src/ui/widgets/MadEdit/MadEditAdvanced.cpp:1323
-msgid "Lao"
-msgstr ""
-
-#: ../src/ui/widgets/MadEdit/MadEditAdvanced.cpp:1324
-msgid "Tibetan"
-msgstr ""
-
-#: ../src/ui/widgets/MadEdit/MadEditAdvanced.cpp:1325
-msgid "Myanmar"
-msgstr ""
-
-#: ../src/ui/widgets/MadEdit/MadEditAdvanced.cpp:1326
-msgid "Georgian"
-msgstr ""
-
-#: ../src/ui/widgets/MadEdit/MadEditAdvanced.cpp:1327
-msgid "Hangul Jamo"
-msgstr ""
-
-#: ../src/ui/widgets/MadEdit/MadEditAdvanced.cpp:1328
-msgid "Ethiopic"
-msgstr ""
-
-#: ../src/ui/widgets/MadEdit/MadEditAdvanced.cpp:1329
-msgid "Ethiopic Supplement"
-msgstr ""
-
-#: ../src/ui/widgets/MadEdit/MadEditAdvanced.cpp:1330
-msgid "Cherokee"
-msgstr ""
-
-#: ../src/ui/widgets/MadEdit/MadEditAdvanced.cpp:1331
-msgid "Unified Canadian Aboriginal Syllabics"
-msgstr ""
-
-#: ../src/ui/widgets/MadEdit/MadEditAdvanced.cpp:1332
-msgid "Ogham"
-msgstr ""
-
-#: ../src/ui/widgets/MadEdit/MadEditAdvanced.cpp:1333
-msgid "Runic"
-msgstr ""
-
-#: ../src/ui/widgets/MadEdit/MadEditAdvanced.cpp:1334
-msgid "Tagalog"
-msgstr ""
-
-#: ../src/ui/widgets/MadEdit/MadEditAdvanced.cpp:1335
-msgid "Hanunoo"
-msgstr ""
-
-#: ../src/ui/widgets/MadEdit/MadEditAdvanced.cpp:1336
-msgid "Buhid"
-msgstr ""
-
-#: ../src/ui/widgets/MadEdit/MadEditAdvanced.cpp:1337
-msgid "Tagbanwa"
-msgstr ""
-
-#: ../src/ui/widgets/MadEdit/MadEditAdvanced.cpp:1338
-msgid "Khmer"
-msgstr ""
-
-#: ../src/ui/widgets/MadEdit/MadEditAdvanced.cpp:1339
-msgid "Mongolian"
-msgstr ""
-
-#: ../src/ui/widgets/MadEdit/MadEditAdvanced.cpp:1340
-msgid "Limbu"
-msgstr ""
-
-#: ../src/ui/widgets/MadEdit/MadEditAdvanced.cpp:1341
-msgid "Tai Le"
-msgstr ""
-
-#: ../src/ui/widgets/MadEdit/MadEditAdvanced.cpp:1342
-msgid "New Tai Lue"
-msgstr ""
-
-#: ../src/ui/widgets/MadEdit/MadEditAdvanced.cpp:1343
-msgid "Khmer Symbols"
-msgstr ""
-
-#: ../src/ui/widgets/MadEdit/MadEditAdvanced.cpp:1344
-msgid "Buginese"
-msgstr ""
-
-#: ../src/ui/widgets/MadEdit/MadEditAdvanced.cpp:1345
-msgid "Phonetic Extensions"
-msgstr ""
-
-#: ../src/ui/widgets/MadEdit/MadEditAdvanced.cpp:1346
-msgid "Phonetic Extensions Supplement"
-msgstr ""
-
-#: ../src/ui/widgets/MadEdit/MadEditAdvanced.cpp:1347
-msgid "Combining Diacritical Marks Supplement"
-msgstr ""
-
-#: ../src/ui/widgets/MadEdit/MadEditAdvanced.cpp:1348
-msgid "Latin Extended Additional"
-msgstr ""
-
-#: ../src/ui/widgets/MadEdit/MadEditAdvanced.cpp:1349
-msgid "Greek Extended"
-msgstr ""
-
-#: ../src/ui/widgets/MadEdit/MadEditAdvanced.cpp:1350
-msgid "General Punctuation"
-msgstr ""
-
-#: ../src/ui/widgets/MadEdit/MadEditAdvanced.cpp:1351
-msgid "Superscripts and Subscripts"
-msgstr ""
-
-#: ../src/ui/widgets/MadEdit/MadEditAdvanced.cpp:1352
-msgid "Currency Symbols"
-msgstr ""
-
-#: ../src/ui/widgets/MadEdit/MadEditAdvanced.cpp:1353
-msgid "Combining Diacritical Marks for Symbols"
-msgstr ""
-
-#: ../src/ui/widgets/MadEdit/MadEditAdvanced.cpp:1354
-msgid "Letterlike Symbols"
-msgstr ""
-
-#: ../src/ui/widgets/MadEdit/MadEditAdvanced.cpp:1355
-msgid "Number Forms"
-msgstr ""
-
-#: ../src/ui/widgets/MadEdit/MadEditAdvanced.cpp:1356
-msgid "Arrows"
-msgstr ""
-
-#: ../src/ui/widgets/MadEdit/MadEditAdvanced.cpp:1357
-msgid "Mathematical Operators"
-msgstr ""
-
-#: ../src/ui/widgets/MadEdit/MadEditAdvanced.cpp:1358
-msgid "Miscellaneous Technical"
-msgstr ""
-
-#: ../src/ui/widgets/MadEdit/MadEditAdvanced.cpp:1359
-msgid "Control Pictures"
-msgstr ""
-
-#: ../src/ui/widgets/MadEdit/MadEditAdvanced.cpp:1360
-msgid "Optical Character Recognition"
-msgstr ""
-
-#: ../src/ui/widgets/MadEdit/MadEditAdvanced.cpp:1361
-msgid "Enclosed Alphanumerics"
-msgstr ""
-
-#: ../src/ui/widgets/MadEdit/MadEditAdvanced.cpp:1362
-msgid "Box Drawing"
-msgstr ""
-
-#: ../src/ui/widgets/MadEdit/MadEditAdvanced.cpp:1363
-msgid "Block Elements"
-msgstr ""
-
-#: ../src/ui/widgets/MadEdit/MadEditAdvanced.cpp:1364
-msgid "Geometric Shapes"
-msgstr ""
-
-#: ../src/ui/widgets/MadEdit/MadEditAdvanced.cpp:1365
-msgid "Miscellaneous Symbols"
-msgstr ""
-
-#: ../src/ui/widgets/MadEdit/MadEditAdvanced.cpp:1366
-msgid "Dingbats"
-msgstr ""
-
-#: ../src/ui/widgets/MadEdit/MadEditAdvanced.cpp:1367
-msgid "Miscellaneous Mathematical Symbols-A"
-msgstr ""
-
-#: ../src/ui/widgets/MadEdit/MadEditAdvanced.cpp:1368
-msgid "Supplemental Arrows-A"
-msgstr ""
-
-#: ../src/ui/widgets/MadEdit/MadEditAdvanced.cpp:1369
-msgid "Braille Patterns"
-msgstr ""
-
-#: ../src/ui/widgets/MadEdit/MadEditAdvanced.cpp:1370
-msgid "Supplemental Arrows-B"
-msgstr ""
-
-#: ../src/ui/widgets/MadEdit/MadEditAdvanced.cpp:1371
-msgid "Miscellaneous Mathematical Symbols-B"
-msgstr ""
-
-#: ../src/ui/widgets/MadEdit/MadEditAdvanced.cpp:1372
-msgid "Supplemental Mathematical Operators"
-msgstr ""
-
-#: ../src/ui/widgets/MadEdit/MadEditAdvanced.cpp:1373
-msgid "Miscellaneous Symbols and Arrows"
-msgstr ""
-
-#: ../src/ui/widgets/MadEdit/MadEditAdvanced.cpp:1374
-msgid "Glagolitic"
-msgstr ""
-
-#: ../src/ui/widgets/MadEdit/MadEditAdvanced.cpp:1375
-msgid "Coptic"
-msgstr ""
-
-#: ../src/ui/widgets/MadEdit/MadEditAdvanced.cpp:1376
-msgid "Georgian Supplement"
-msgstr ""
-
-#: ../src/ui/widgets/MadEdit/MadEditAdvanced.cpp:1377
-msgid "Tifinagh"
-msgstr ""
-
-#: ../src/ui/widgets/MadEdit/MadEditAdvanced.cpp:1378
-msgid "Ethiopic Extended"
-msgstr ""
-
-#: ../src/ui/widgets/MadEdit/MadEditAdvanced.cpp:1379
-msgid "Supplemental Punctuation"
-msgstr ""
-
-#: ../src/ui/widgets/MadEdit/MadEditAdvanced.cpp:1380
-msgid "CJK Radicals Supplement"
-msgstr ""
-
-#: ../src/ui/widgets/MadEdit/MadEditAdvanced.cpp:1381
-msgid "Kangxi Radicals"
-msgstr ""
-
-#: ../src/ui/widgets/MadEdit/MadEditAdvanced.cpp:1382
-msgid "Ideographic Description Characters"
-msgstr ""
-
-#: ../src/ui/widgets/MadEdit/MadEditAdvanced.cpp:1383
-msgid "CJK Symbols and Punctuation"
-msgstr ""
-
-#: ../src/ui/widgets/MadEdit/MadEditAdvanced.cpp:1384
-msgid "Hiragana"
-msgstr ""
-
-#: ../src/ui/widgets/MadEdit/MadEditAdvanced.cpp:1385
-msgid "Katakana"
-msgstr ""
-
-#: ../src/ui/widgets/MadEdit/MadEditAdvanced.cpp:1386
-msgid "Bopomofo"
-msgstr ""
-
-#: ../src/ui/widgets/MadEdit/MadEditAdvanced.cpp:1387
-msgid "Hangul Compatibility Jamo"
-msgstr ""
-
-#: ../src/ui/widgets/MadEdit/MadEditAdvanced.cpp:1388
-msgid "Kanbun"
-msgstr ""
-
-#: ../src/ui/widgets/MadEdit/MadEditAdvanced.cpp:1389
-msgid "Bopomofo Extended"
-msgstr ""
-
-#: ../src/ui/widgets/MadEdit/MadEditAdvanced.cpp:1390
-msgid "CJK Strokes"
-msgstr ""
-
-#: ../src/ui/widgets/MadEdit/MadEditAdvanced.cpp:1391
-msgid "Katakana Phonetic Extensions"
-msgstr ""
-
-#: ../src/ui/widgets/MadEdit/MadEditAdvanced.cpp:1392
-msgid "Enclosed CJK Letters and Months"
-msgstr ""
-
-#: ../src/ui/widgets/MadEdit/MadEditAdvanced.cpp:1393
-msgid "CJK Compatibility"
-msgstr ""
-
-#: ../src/ui/widgets/MadEdit/MadEditAdvanced.cpp:1394
-msgid "CJK Unified Ideographs Extension A"
-msgstr ""
-
-#: ../src/ui/widgets/MadEdit/MadEditAdvanced.cpp:1395
-msgid "Yijing Hexagram Symbols"
-msgstr ""
-
-#: ../src/ui/widgets/MadEdit/MadEditAdvanced.cpp:1396
-msgid "CJK Unified Ideographs"
-msgstr ""
-
-#: ../src/ui/widgets/MadEdit/MadEditAdvanced.cpp:1397
-msgid "Yi Syllables"
-msgstr ""
-
-#: ../src/ui/widgets/MadEdit/MadEditAdvanced.cpp:1398
-msgid "Yi Radicals"
-msgstr ""
-
-#: ../src/ui/widgets/MadEdit/MadEditAdvanced.cpp:1399
-msgid "Modifier Tone Letters"
-msgstr ""
-
-#: ../src/ui/widgets/MadEdit/MadEditAdvanced.cpp:1400
-msgid "Syloti Nagri"
-msgstr ""
-
-#: ../src/ui/widgets/MadEdit/MadEditAdvanced.cpp:1401
-msgid "Hangul Syllables"
-msgstr ""
-
-#: ../src/ui/widgets/MadEdit/MadEditAdvanced.cpp:1402
-msgid "High Surrogates"
-msgstr ""
-
-#: ../src/ui/widgets/MadEdit/MadEditAdvanced.cpp:1403
-msgid "High Private Use Surrogates"
-msgstr ""
-
-#: ../src/ui/widgets/MadEdit/MadEditAdvanced.cpp:1404
-msgid "Low Surrogates"
-msgstr ""
-
-#: ../src/ui/widgets/MadEdit/MadEditAdvanced.cpp:1405
-msgid "Private Use Area"
-msgstr ""
-
-#: ../src/ui/widgets/MadEdit/MadEditAdvanced.cpp:1406
-msgid "CJK Compatibility Ideographs"
-msgstr ""
-
-#: ../src/ui/widgets/MadEdit/MadEditAdvanced.cpp:1407
-msgid "Alphabetic Presentation Forms"
-msgstr ""
-
-#: ../src/ui/widgets/MadEdit/MadEditAdvanced.cpp:1408
-msgid "Arabic Presentation Forms-A"
-msgstr ""
-
-#: ../src/ui/widgets/MadEdit/MadEditAdvanced.cpp:1409
-msgid "Variation Selectors"
-msgstr ""
-
-#: ../src/ui/widgets/MadEdit/MadEditAdvanced.cpp:1410
-msgid "Vertical Forms"
-msgstr ""
-
-#: ../src/ui/widgets/MadEdit/MadEditAdvanced.cpp:1411
-msgid "Combining Half Marks"
-msgstr ""
-
-#: ../src/ui/widgets/MadEdit/MadEditAdvanced.cpp:1412
-msgid "CJK Compatibility Forms"
-msgstr ""
-
-#: ../src/ui/widgets/MadEdit/MadEditAdvanced.cpp:1413
-msgid "Small Form Variants"
-msgstr ""
-
-#: ../src/ui/widgets/MadEdit/MadEditAdvanced.cpp:1414
-msgid "Arabic Presentation Forms-B"
-msgstr ""
-
-#: ../src/ui/widgets/MadEdit/MadEditAdvanced.cpp:1415
-msgid "Halfwidth and Fullwidth Forms"
-msgstr ""
-
-#: ../src/ui/widgets/MadEdit/MadEditAdvanced.cpp:1416
-msgid "Specials"
-msgstr ""
-
-#: ../src/ui/widgets/MadEdit/MadEditAdvanced.cpp:1417
-msgid "Linear B Syllabary"
-msgstr ""
-
-#: ../src/ui/widgets/MadEdit/MadEditAdvanced.cpp:1418
-msgid "Linear B Ideograms"
-msgstr ""
-
-#: ../src/ui/widgets/MadEdit/MadEditAdvanced.cpp:1419
-msgid "Aegean Numbers"
-msgstr ""
-
-#: ../src/ui/widgets/MadEdit/MadEditAdvanced.cpp:1420
-msgid "Ancient Greek Numbers"
-msgstr ""
-
-#: ../src/ui/widgets/MadEdit/MadEditAdvanced.cpp:1421
-msgid "Old Italic"
-msgstr ""
-
-#: ../src/ui/widgets/MadEdit/MadEditAdvanced.cpp:1422
-msgid "Gothic"
-msgstr ""
-
-#: ../src/ui/widgets/MadEdit/MadEditAdvanced.cpp:1423
-msgid "Ugaritic"
-msgstr ""
-
-#: ../src/ui/widgets/MadEdit/MadEditAdvanced.cpp:1424
-msgid "Old Persian"
-msgstr ""
-
-#: ../src/ui/widgets/MadEdit/MadEditAdvanced.cpp:1425
-msgid "Deseret"
-msgstr ""
-
-#: ../src/ui/widgets/MadEdit/MadEditAdvanced.cpp:1426
-msgid "Shavian"
-msgstr ""
-
-#: ../src/ui/widgets/MadEdit/MadEditAdvanced.cpp:1427
-msgid "Osmanya"
-msgstr ""
-
-#: ../src/ui/widgets/MadEdit/MadEditAdvanced.cpp:1428
-msgid "Cypriot Syllabary"
-msgstr ""
-
-#: ../src/ui/widgets/MadEdit/MadEditAdvanced.cpp:1429
-msgid "Kharoshthi"
-msgstr ""
-
-#: ../src/ui/widgets/MadEdit/MadEditAdvanced.cpp:1430
-msgid "Byzantine Musical Symbols"
-msgstr ""
-
-#: ../src/ui/widgets/MadEdit/MadEditAdvanced.cpp:1431
-msgid "Musical Symbols"
-msgstr ""
-
-#: ../src/ui/widgets/MadEdit/MadEditAdvanced.cpp:1432
-msgid "Ancient Greek Musical Notation"
-msgstr ""
-
-#: ../src/ui/widgets/MadEdit/MadEditAdvanced.cpp:1433
-msgid "Tai Xuan Jing Symbols"
-msgstr ""
-
-#: ../src/ui/widgets/MadEdit/MadEditAdvanced.cpp:1434
-msgid "Mathematical Alphanumeric Symbols"
-msgstr ""
-
-#: ../src/ui/widgets/MadEdit/MadEditAdvanced.cpp:1435
-msgid "CJK Unified Ideographs Extension B"
-msgstr ""
-
-#: ../src/ui/widgets/MadEdit/MadEditAdvanced.cpp:1436
-msgid "CJK Compatibility Ideographs Supplement"
-msgstr ""
-
-#: ../src/ui/widgets/MadEdit/MadEditAdvanced.cpp:1437
-msgid "Tags"
-msgstr ""
-
-#: ../src/ui/widgets/MadEdit/MadEditAdvanced.cpp:1438
-msgid "Variation Selectors Supplement"
-msgstr ""
-
-#: ../src/ui/widgets/MadEdit/MadEditAdvanced.cpp:1439
-msgid "Supplementary Private Use Area-A"
-msgstr ""
-
-#: ../src/ui/widgets/MadEdit/MadEditAdvanced.cpp:1440
-msgid "Supplementary Private Use Area-B"
-msgstr ""
-
-#: ../src/ui/widgets/MadEdit/MadEditAdvanced.cpp:1618
-msgid "Invalid Unicode Characters"
-msgstr ""
-
 #: ../src/ui/widgets/HexEditorCtrl/main.cpp:59
 msgid "HexEditorCtrl Status"
 msgstr ""
 
 #: ../src/ui/widgets/HexEditorCtrl/HexEditorCtrl.cpp:41
 msgid "Offset"
-msgstr ""
+msgstr "Offset"
 
 #: ../src/ui/widgets/HexEditorCtrl/app.cpp:8
 msgid "HexEditorCtrl; 3 in 1 HexEditorGUI"
 msgstr ""
 
 #: ../src/ui/widgets/wxHexCtrl/TagDialogGui.h:49
+#: ../src/ui/widgets/HexEditorCtrl/wxHexCtrl/TagDialogGui.h:49
 msgid "Tag Dialog"
 msgstr ""
 
