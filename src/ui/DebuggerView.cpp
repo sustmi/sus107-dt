@@ -35,7 +35,7 @@ DebuggerView::DebuggerView(wxWindow* parent, int id, const wxString& title, cons
 	wxglade_tmp_menu_1->Append(DEBUGGER_EDIT_GOTO, _("Go to address..."), _("Add or remove breakpoint at selected address"), wxITEM_NORMAL);
 	debugger_menubar->Append(wxglade_tmp_menu_1, _("Edit"));
 	wxMenu* wxglade_tmp_menu_2 = new wxMenu();
-	wxglade_tmp_menu_2->Append(DEBUGGER_VIEW_REGISTERS, _("Registers"), wxEmptyString, wxITEM_NORMAL);
+	wxglade_tmp_menu_2->Append(DEBUGGER_VIEW_REGISTERS, _("Registers..."), wxEmptyString, wxITEM_NORMAL);
 	debugger_menubar->Append(wxglade_tmp_menu_2, _("View"));
 	wxMenu* wxglade_tmp_menu_3 = new wxMenu();
 	wxglade_tmp_menu_3->Append(DEBUGGER_TOOL_CONTINUE, _("Continue"), wxEmptyString, wxITEM_NORMAL);

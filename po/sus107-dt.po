@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sus107-dt\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-05-02 03:20+0100\n"
-"PO-Revision-Date: 2012-05-02 03:22+0100\n"
+"POT-Creation-Date: 2012-05-02 03:42+0100\n"
+"PO-Revision-Date: 2012-05-02 03:42+0100\n"
 "Last-Translator: Miroslav Šustek <sus107@vsb.cz>\n"
 "Language-Team:  <sus107@vsb.cz>\n"
 "Language: \n"
@@ -57,92 +57,74 @@ msgid "File saved"
 msgstr "Soubor uložen"
 
 #: ../src/ui/DebuggerRegistersView.cpp:32
-#: ../src/ui/xxx.cpp:14
 msgid "General registers:"
 msgstr "Všeobecné registry:"
 
 #: ../src/ui/DebuggerRegistersView.cpp:33
-#: ../src/ui/xxx.cpp:15
 msgid "AF"
 msgstr ""
 
 #: ../src/ui/DebuggerRegistersView.cpp:35
-#: ../src/ui/xxx.cpp:17
 msgid "AF'"
 msgstr ""
 
 #: ../src/ui/DebuggerRegistersView.cpp:37
-#: ../src/ui/xxx.cpp:19
 msgid "BC"
 msgstr ""
 
 #: ../src/ui/DebuggerRegistersView.cpp:39
-#: ../src/ui/xxx.cpp:21
 msgid "BC'"
 msgstr ""
 
 #: ../src/ui/DebuggerRegistersView.cpp:41
-#: ../src/ui/xxx.cpp:23
 msgid "DE"
 msgstr ""
 
 #: ../src/ui/DebuggerRegistersView.cpp:43
-#: ../src/ui/xxx.cpp:25
 msgid "DE'"
 msgstr ""
 
 #: ../src/ui/DebuggerRegistersView.cpp:45
-#: ../src/ui/xxx.cpp:27
 msgid "HL"
 msgstr ""
 
 #: ../src/ui/DebuggerRegistersView.cpp:47
-#: ../src/ui/xxx.cpp:29
 msgid "HL'"
 msgstr ""
 
 #: ../src/ui/DebuggerRegistersView.cpp:49
-#: ../src/ui/xxx.cpp:31
 msgid "Program Counter and Stack Pointer:"
 msgstr "Programový čítač a ukazatel zásobníku:"
 
 #: ../src/ui/DebuggerRegistersView.cpp:50
-#: ../src/ui/xxx.cpp:32
 msgid "PC"
 msgstr ""
 
 #: ../src/ui/DebuggerRegistersView.cpp:52
-#: ../src/ui/xxx.cpp:34
 msgid "SP"
 msgstr ""
 
 #: ../src/ui/DebuggerRegistersView.cpp:54
-#: ../src/ui/xxx.cpp:36
 msgid "Index registers:"
 msgstr "Index registry:"
 
 #: ../src/ui/DebuggerRegistersView.cpp:55
-#: ../src/ui/xxx.cpp:37
 msgid "IX"
 msgstr ""
 
 #: ../src/ui/DebuggerRegistersView.cpp:57
-#: ../src/ui/xxx.cpp:39
 msgid "IY"
 msgstr ""
 
 #: ../src/ui/DebuggerRegistersView.cpp:59
-#: ../src/ui/xxx.cpp:41
 msgid "Interrupt Page and Memory Refresh:"
 msgstr "Stránka přerušení a obnova paměti"
 
 #: ../src/ui/DebuggerRegistersView.cpp:60
-#: ../src/ui/xxx.cpp:42
 msgid "I"
 msgstr ""
 
 #: ../src/ui/DebuggerRegistersView.cpp:62
-#: ../src/ui/xxx.cpp:44
 msgid "R"
 msgstr ""
 
@@ -151,57 +133,40 @@ msgid "Flags:"
 msgstr "Příznaky:"
 
 #: ../src/ui/DebuggerRegistersView.cpp:65
-#: ../src/ui/xxx.cpp:47
 msgid "S"
 msgstr ""
 
 #: ../src/ui/DebuggerRegistersView.cpp:66
-#: ../src/ui/xxx.cpp:48
 msgid "Z"
 msgstr ""
 
 #: ../src/ui/DebuggerRegistersView.cpp:67
-#: ../src/ui/xxx.cpp:49
 msgid "Y"
 msgstr ""
 
 #: ../src/ui/DebuggerRegistersView.cpp:68
-#: ../src/ui/xxx.cpp:50
 msgid "H"
 msgstr ""
 
 #: ../src/ui/DebuggerRegistersView.cpp:69
-#: ../src/ui/xxx.cpp:51
 msgid "X"
 msgstr ""
 
 #: ../src/ui/DebuggerRegistersView.cpp:70
-#: ../src/ui/xxx.cpp:52
 msgid "P"
 msgstr ""
 
 #: ../src/ui/DebuggerRegistersView.cpp:71
-#: ../src/ui/xxx.cpp:53
 msgid "N"
 msgstr ""
 
 #: ../src/ui/DebuggerRegistersView.cpp:72
-#: ../src/ui/xxx.cpp:54
 msgid "C"
 msgstr ""
 
 #: ../src/ui/DebuggerRegistersView.cpp:230
-#: ../src/ui/DebuggerView.cpp:38
 msgid "Registers"
 msgstr "Registry"
-
-#: ../src/ui/xxx.cpp:46
-msgid "label_5"
-msgstr ""
-
-#: ../src/ui/xxx.cpp:103
-msgid "frame_1"
-msgstr ""
 
 #: ../src/ui/EmulatorView.cpp:39
 #: ../src/ui/EmulatorView.cpp:50
@@ -314,6 +279,10 @@ msgstr "Přidat nebo odebrat breakpoint na dané adrese"
 #: ../src/ui/DebuggerView.cpp:36
 msgid "Edit"
 msgstr "Úpravy"
+
+#: ../src/ui/DebuggerView.cpp:38
+msgid "Registers..."
+msgstr "Registry..."
 
 #: ../src/ui/DebuggerView.cpp:39
 msgid "View"
