@@ -32,8 +32,16 @@ DebuggerView::DebuggerView(wxWindow* parent, int id, const wxString& title, cons
 	notebook_pane_hex = new wxPanel(notebook, wxID_ANY);
 	debugger_menubar = new wxMenuBar();
 	wxMenu* wxglade_tmp_menu_1 = new wxMenu();
-	wxglade_tmp_menu_1->Append(301, _("Registers"), wxEmptyString, wxITEM_NORMAL);
-	debugger_menubar->Append(wxglade_tmp_menu_1, _("View"));
+	wxglade_tmp_menu_1->Append(DEBUGGER_EDIT_GOTO, _("Go to address..."), _("Add or remove breakpoint at selected address"), wxITEM_NORMAL);
+	debugger_menubar->Append(wxglade_tmp_menu_1, _("Edit"));
+	wxMenu* wxglade_tmp_menu_2 = new wxMenu();
+	wxglade_tmp_menu_2->Append(DEBUGGER_VIEW_REGISTERS, _("Registers"), wxEmptyString, wxITEM_NORMAL);
+	debugger_menubar->Append(wxglade_tmp_menu_2, _("View"));
+	wxMenu* wxglade_tmp_menu_3 = new wxMenu();
+	wxglade_tmp_menu_3->Append(DEBUGGER_TOOL_CONTINUE, _("Continue"), wxEmptyString, wxITEM_NORMAL);
+	wxglade_tmp_menu_3->Append(DEBUGGER_TOOL_BREAK, _("Break"), wxEmptyString, wxITEM_NORMAL);
+	wxglade_tmp_menu_3->Append(DEBUGGER_TOOL_STEP, _("Step instruction"), wxEmptyString, wxITEM_NORMAL);
+	debugger_menubar->Append(wxglade_tmp_menu_3, _("Debugger"));
 	SetMenuBar(debugger_menubar);
 	debugger_view_toolbar = new wxToolBar(this, -1);
 	SetToolBar(debugger_view_toolbar);
@@ -53,7 +61,6 @@ DebuggerView::DebuggerView(wxWindow* parent, int id, const wxString& title, cons
 
 	emulator = NULL;
 	debugger = NULL;
-	//hex_view->Connect(wxEVT_STC_UPDATEUI, (wxObjectEventFunction)(wxEventFunction)wxStaticCastEvent(wxStyledTextEventFunction, &DebuggerView::OnHexViewModified) , NULL, this);
 }
 
 DebuggerView::~DebuggerView()
@@ -94,28 +101,37 @@ void DebuggerView::attach(Emulator *emulator, Debugger *debugger)
 
 BEGIN_EVENT_TABLE(DebuggerView, wxFrame)
 	// begin wxGlade: DebuggerView::event_table
-	EVT_MENU(301, DebuggerView::OnViewRegisters)
+	EVT_MENU(DEBUGGER_EDIT_GOTO, DebuggerView::OnEditGotoAddress)
+	EVT_MENU(DEBUGGER_VIEW_REGISTERS, DebuggerView::OnViewRegisters)
 	EVT_TOOL(DEBUGGER_TOOL_CONTINUE, DebuggerView::OnDebuggerContinue)
 	EVT_TOOL(DEBUGGER_TOOL_BREAK, DebuggerView::OnDebuggerBreak)
 	EVT_TOOL(DEBUGGER_TOOL_STEP, DebuggerView::OnDebuggerStep)
 	EVT_TOOL(DEBUGGER_TOOL_GOTOPC, DebuggerView::OnDebuggerGotoPc)
 	EVT_NOTEBOOK_PAGE_CHANGED(wxID_ANY, DebuggerView::OnDebuggerNotebookPageChanged)
 	// end wxGlade
+	EVT_MENU(DEBUGGER_SHOW_IN_HEXVIEW, DebuggerView::OnShowInHexView)
+	EVT_MENU(DEBUGGER_SHOW_IN_CODEVIEW, DebuggerView::OnShowInCodeView)
 END_EVENT_TABLE();
 
 void DebuggerView::uiUpdate()
 {
 	if (debugger->getEmulator()->isRunning()) {
+		GetMenuBar()->Enable(DEBUGGER_TOOL_CONTINUE, false);
+		GetMenuBar()->Enable(DEBUGGER_TOOL_BREAK, true);
+		GetMenuBar()->Enable(DEBUGGER_TOOL_STEP, false);
+
 		GetToolBar()->EnableTool(DEBUGGER_TOOL_CONTINUE, false);
 		GetToolBar()->EnableTool(DEBUGGER_TOOL_BREAK, true);
 		GetToolBar()->EnableTool(DEBUGGER_TOOL_STEP, false);
 	} else {
+		GetMenuBar()->Enable(DEBUGGER_TOOL_CONTINUE, true);
+		GetMenuBar()->Enable(DEBUGGER_TOOL_BREAK, false);
+		GetMenuBar()->Enable(DEBUGGER_TOOL_STEP, true);
+
 		GetToolBar()->EnableTool(DEBUGGER_TOOL_CONTINUE, true);
 		GetToolBar()->EnableTool(DEBUGGER_TOOL_BREAK, false);
 		GetToolBar()->EnableTool(DEBUGGER_TOOL_STEP, true);
 	}
-
-	wxIcon();
 }
 
 void DebuggerView::OnDebuggerStep(wxCommandEvent &event)
@@ -138,6 +154,20 @@ void DebuggerView::OnDebuggerGotoPc(wxCommandEvent & event)
 	debugger_code_view->gotoAddress(debugger->getCpuRegister(regPC));
 }
 
+void DebuggerView::OnEditGotoAddress(wxCommandEvent & event)
+{
+	wxTextEntryDialog *dialog = new wxTextEntryDialog(this, _("Address (hex):"), _("Go to address..."));
+
+	if (dialog->ShowModal() == wxID_OK) {
+		unsigned long int val;
+		if (dialog->GetValue().ToULong(&val, 16)) {
+			debugger_code_view->gotoAddress(val);
+			hex_view->Select(val, val);
+			hex_view->MakeAddressVisible(val);
+		}
+	}
+}
+
 void DebuggerView::OnViewRegisters(wxCommandEvent &event)
 {
 	DebuggerRegistersView *registersView = new DebuggerRegistersView(this, wxID_ANY, wxEmptyString);
@@ -147,21 +177,30 @@ void DebuggerView::OnViewRegisters(wxCommandEvent &event)
 	debugger->addListener(registersView);
 }
 
-void DebuggerView::OnHexViewModified(wxStyledTextEvent &event)
-{
-	printf("store: %d -%s-\n", event.GetPosition(), event.GetText().mb_str().data());
-
-	/*if (hex_view->GetCurrentPos() % 3 == 2) {
-		hex_view->CharRight();
-		//hex_view->Get
-	}*/
-}
-
 void DebuggerView::OnDebuggerNotebookPageChanged(wxNotebookEvent & event)
 {
 	if (event.GetSelection() == 0) {
 		debugger_code_view->uiUpdate();
 	}
+}
+
+void DebuggerView::OnShowInHexView(wxCommandEvent & event)
+{
+	hex_view->Select(debugger_code_view->getSelectedStartAddress(), debugger_code_view->getSelectedEndAddress());
+	hex_view->MakeAddressVisible(debugger_code_view->getSelectedStartAddress());
+	notebook->ChangeSelection(1);
+}
+
+void DebuggerView::OnShowInCodeView(wxCommandEvent & event)
+{
+	if (hex_view->select->GetState()) {
+		printf("%d, %d\n", hex_view->select->StartOffset, hex_view->select->EndOffset);
+		debugger_code_view->selectAddresses(hex_view->select->StartOffset, hex_view->select->EndOffset);
+	} else {
+		debugger_code_view->gotoAddress(hex_view->CursorOffset());
+	}
+	hex_view->MakeAddressVisible(debugger_code_view->getSelectedStartAddress());
+	notebook->ChangeSelection(0);
 }
 
 // wxGlade: add DebuggerView event handlers
@@ -194,8 +233,8 @@ void DebuggerView::do_layout()
 	wxBoxSizer* sizer_1 = new wxBoxSizer(wxHORIZONTAL);
 	sizer_1->Add(hex_view, 1, wxEXPAND, 0);
 	notebook_pane_hex->SetSizer(sizer_1);
-	notebook->AddPage(debugger_code_view, _("Code"));
-	notebook->AddPage(notebook_pane_hex, _("Hex"));
+	notebook->AddPage(debugger_code_view, _("Code view"));
+	notebook->AddPage(notebook_pane_hex, _("Hex view"));
 	debugger_panes->Add(notebook, 1, wxEXPAND, 0);
 	SetSizer(debugger_panes);
 	Layout();

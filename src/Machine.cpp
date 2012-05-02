@@ -15,13 +15,15 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include <stdio.h>
+#include <iostream>
+#include <fstream>
+#include <queue>
+
+#include <cstdio>
 
 #include <z80ex.h>
 #include <z80ex_dasm.h>
 #include <libspectrum.h>
-
-#include <queue>
 
 #include "Machine.h"
 
@@ -54,102 +56,127 @@ Ula *Machine::getUla()
 }
 
 bool Machine::loadRom(const char *filename) {
-	FILE *f = fopen(filename, "rb");
-	fseek(f, 0 , SEEK_END);
-	long fsize = ftell(f);
-	rewind(f);
+	std::ifstream file;
+	file.exceptions(std::ifstream::failbit | std::ifstream::badbit);
 
-	uint8_t *buffer = new uint8_t[fsize];
-	fread(buffer, sizeof(char), fsize, f);
-	fclose(f);
+	uint8_t *buffer = NULL;
+	try {
+		file.open(filename, std::ifstream::in | std::ifstream::binary);
 
-	memory->writePage(0, buffer, fsize);
+		file.seekg(0, std::ifstream::end);
+		long fsize = file.tellg();
+		file.seekg(0, std::ifstream::beg);
 
-	delete buffer;
+		buffer = new uint8_t[fsize];
+		file.read((char*)buffer, fsize);
+		file.close();
+
+		memory->writePage(0, buffer, fsize);
+
+		delete buffer;
+	} catch (std::ifstream::failure & e) {
+		if (buffer) {
+			delete buffer;
+		}
+		return false;
+	}
 
 	return true;
 }
 
-bool Machine::loadSnapshot(const char *filename) {
+int Machine::loadSnapshot(const char *filename) {
+	int ret = 0;
+
 	libspectrum_snap *snap = libspectrum_snap_alloc();
 
-	FILE *f = fopen(filename, "rb");
-	fseek(f, 0 , SEEK_END);
-	long fsize = ftell(f);
-	rewind(f);
+	std::ifstream file;
+	file.exceptions(std::ifstream::failbit | std::ifstream::badbit);
 
-	uint8_t *buffer = new uint8_t[fsize];
-	fread(buffer, sizeof(uint8_t), fsize, f);
-	fclose(f);
+	uint8_t *buffer = NULL;
 
-	libspectrum_error error = libspectrum_snap_read(snap, (libspectrum_byte*)buffer, fsize,
-			LIBSPECTRUM_ID_UNKNOWN, filename);
+	try {
+		file.open(filename, std::ifstream::in | std::ifstream::binary);
 
-	cpu->reset();
+		file.seekg(0, std::ifstream::end);
+		long fsize = file.tellg();
+		file.seekg(0, std::ifstream::beg);
 
-	// load CPU registers
-	cpu->setRegister(regAF, (libspectrum_snap_a(snap) << 8) | (libspectrum_snap_f(snap)));
-	cpu->setRegister(regAF, (libspectrum_snap_a(snap) << 8) | (libspectrum_snap_f(snap)));;
-	cpu->setRegister(regBC, libspectrum_snap_bc(snap));
-	cpu->setRegister(regDE, libspectrum_snap_de(snap));
-	cpu->setRegister(regHL, libspectrum_snap_hl(snap));
-	cpu->setRegister(regAF_, (libspectrum_snap_a_(snap) << 8) | (libspectrum_snap_f_(snap)));
-	cpu->setRegister(regBC_, libspectrum_snap_bc_(snap));
-	cpu->setRegister(regDE_, libspectrum_snap_de_(snap));
-	cpu->setRegister(regHL_, libspectrum_snap_hl_(snap));
-	cpu->setRegister(regIX, libspectrum_snap_ix(snap));
-	cpu->setRegister(regIY, libspectrum_snap_iy(snap));
-	cpu->setRegister(regPC, libspectrum_snap_pc(snap));
-	cpu->setRegister(regSP, libspectrum_snap_sp(snap));
-	cpu->setRegister(regI, libspectrum_snap_i(snap));
-	cpu->setRegister(regR, libspectrum_snap_r(snap));
-	//cpu->setRegister(regR7, TODO);
-	cpu->setRegister(regIM, libspectrum_snap_im(snap));
-	cpu->setRegister(regIFF1, libspectrum_snap_iff1(snap));
-	cpu->setRegister(regIFF2, libspectrum_snap_iff2(snap));
+		buffer = new uint8_t[fsize];
+		file.read((char*)buffer, fsize);
+		file.close();
 
-	// load ROM
-	const libspectrum_byte *rom;
-	int rom_size;
-	rom = libspectrum_snap_roms(snap, 0);
-	rom_size = libspectrum_snap_rom_length(snap, 0);
-	memory->writePage(0, rom, rom_size);
+		libspectrum_error error = libspectrum_snap_read(snap, (libspectrum_byte*)buffer, fsize,
+				LIBSPECTRUM_ID_UNKNOWN, filename);
 
-	// load memory pages
-	const libspectrum_byte *page;
-	// 0x4000-0x7fff = pages[5]
-	page = libspectrum_snap_pages(snap, 5);
-	memory->writePage(1, page, 0x4000);
-	// 0x8000-0xbfff = pages[2]
-	page = libspectrum_snap_pages(snap, 2);
-	memory->writePage(2, page, 0x4000);
-	// 0xc000-0xffff = pages[0]
-	page = libspectrum_snap_pages(snap, 0);
-	memory->writePage(3, page, 0x4000);
+		if (error != LIBSPECTRUM_ERROR_NONE) {
+			throw error;
+		}
 
-	// set current emulation time
-	currentTime = libspectrum_snap_tstates(snap);
+		cpu->reset();
 
-	libspectrum_snap_free(snap);
-	delete buffer;
+		// load CPU registers
+		cpu->setRegister(regAF, (libspectrum_snap_a(snap) << 8) | (libspectrum_snap_f(snap)));
+		cpu->setRegister(regAF, (libspectrum_snap_a(snap) << 8) | (libspectrum_snap_f(snap)));;
+		cpu->setRegister(regBC, libspectrum_snap_bc(snap));
+		cpu->setRegister(regDE, libspectrum_snap_de(snap));
+		cpu->setRegister(regHL, libspectrum_snap_hl(snap));
+		cpu->setRegister(regAF_, (libspectrum_snap_a_(snap) << 8) | (libspectrum_snap_f_(snap)));
+		cpu->setRegister(regBC_, libspectrum_snap_bc_(snap));
+		cpu->setRegister(regDE_, libspectrum_snap_de_(snap));
+		cpu->setRegister(regHL_, libspectrum_snap_hl_(snap));
+		cpu->setRegister(regIX, libspectrum_snap_ix(snap));
+		cpu->setRegister(regIY, libspectrum_snap_iy(snap));
+		cpu->setRegister(regPC, libspectrum_snap_pc(snap));
+		cpu->setRegister(regSP, libspectrum_snap_sp(snap));
+		cpu->setRegister(regI, libspectrum_snap_i(snap));
+		cpu->setRegister(regR, libspectrum_snap_r(snap));
+		//cpu->setRegister(regR7, TODO);
+		cpu->setRegister(regIM, libspectrum_snap_im(snap));
+		cpu->setRegister(regIFF1, libspectrum_snap_iff1(snap));
+		cpu->setRegister(regIFF2, libspectrum_snap_iff2(snap));
 
-	return true;
+		// load ROM
+		const libspectrum_byte *rom;
+		int rom_size;
+		rom = libspectrum_snap_roms(snap, 0);
+		rom_size = libspectrum_snap_rom_length(snap, 0);
+		memory->writePage(0, rom, rom_size);
+
+		// load memory pages
+		const libspectrum_byte *page;
+		// 0x4000-0x7fff = pages[5]
+		page = libspectrum_snap_pages(snap, 5);
+		memory->writePage(1, page, 0x4000);
+		// 0x8000-0xbfff = pages[2]
+		page = libspectrum_snap_pages(snap, 2);
+		memory->writePage(2, page, 0x4000);
+		// 0xc000-0xffff = pages[0]
+		page = libspectrum_snap_pages(snap, 0);
+		memory->writePage(3, page, 0x4000);
+
+		// set current emulation time
+		currentTime = libspectrum_snap_tstates(snap);
+
+		if (libspectrum_snap_machine(snap) == LIBSPECTRUM_MACHINE_48) {
+			ret = 1;
+		} else {
+			ret = 0;
+		}
+
+		libspectrum_snap_free(snap);
+		delete buffer;
+	} catch (...) {
+		libspectrum_snap_free(snap);
+		if (buffer) {
+			delete buffer;
+		}
+		return -1;
+	}
+
+	return ret;
 }
 
 void Machine::step() {
-	// for each Event where Event->time <= current time
-	//   Event->invoke()
-
-	// z80_step()
-
-	/*int event;
-	while ((event = eventQueue.top()) <= currentTime) {
-		eventQueue.pop();
-		currentTime = event;
-		//Event->invoke();
-		// - může v CPU nastavit interruptRequest
-	}*/
-
 	cpu->setIntLineState(ula->getIntLineState());
 
 	inCallback = true;

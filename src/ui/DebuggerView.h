@@ -20,6 +20,7 @@
 #include <wx/wx.h>
 #include <wx/image.h>
 #include <wx/stc/stc.h>
+#include <wx/textdlg.h>
 
 #ifndef DEBUGGERVIEW_H
 #define DEBUGGERVIEW_H
@@ -48,10 +49,12 @@ class DebuggerView: public wxFrame, public EmulatorListener, public DebuggerList
 public:
 	// begin wxGlade: DebuggerView::ids
 	enum {
-		DEBUGGER_TOOL_CONTINUE = wxID_HIGHEST + 1034,
-		DEBUGGER_TOOL_BREAK = wxID_HIGHEST + 1035,
-		DEBUGGER_TOOL_STEP = wxID_HIGHEST + 1036,
-		DEBUGGER_TOOL_GOTOPC = wxID_HIGHEST + 1037
+		DEBUGGER_EDIT_GOTO = wxID_HIGHEST + 1032,
+		DEBUGGER_VIEW_REGISTERS = wxID_HIGHEST + 1033,
+		DEBUGGER_TOOL_CONTINUE = wxID_HIGHEST + 1040,
+		DEBUGGER_TOOL_BREAK = wxID_HIGHEST + 1041,
+		DEBUGGER_TOOL_STEP = wxID_HIGHEST + 1042,
+		DEBUGGER_TOOL_GOTOPC = wxID_HIGHEST + 1043
 	};
 	// end wxGlade
 
@@ -61,6 +64,8 @@ public:
 	void uiUpdate();
 	void emulatorEvent(EmulatorEvent event);
 	void debuggerEvent(DebuggerEvent event);
+
+	void gotoAddress(uint16_t address);
 
 private:
 	// begin wxGlade: DebuggerView::methods
@@ -88,9 +93,11 @@ public:
 	virtual void OnDebuggerContinue(wxCommandEvent &event); // wxGlade: <event_handler>
 	virtual void OnDebuggerBreak(wxCommandEvent &event); // wxGlade: <event_handler>
 	virtual void OnViewRegisters(wxCommandEvent &event); // wxGlade: <event_handler>
-	virtual void OnHexViewModified(wxStyledTextEvent &event); // wxGlade: <event_handler>
 	virtual void OnDebuggerNotebookPageChanged(wxNotebookEvent &event); // wxGlade: <event_handler>
 	virtual void OnDebuggerGotoPc(wxCommandEvent &event); // wxGlade: <event_handler>
+	virtual void OnEditGotoAddress(wxCommandEvent &event); // wxGlade: <event_handler>
+	virtual void OnShowInHexView(wxCommandEvent &event);
+	virtual void OnShowInCodeView(wxCommandEvent &event);
 	void attach(Emulator *emulator, Debugger *debugger);
 }; // wxGlade: end class
 

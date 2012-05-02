@@ -50,6 +50,7 @@ public:
 private:
 	Machine *machine;
 
+	bool paInitialized;
 	PaStream *stream;
 
 	uint64_t lastFrameTime;

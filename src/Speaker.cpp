@@ -20,13 +20,16 @@
 #include "Speaker.h"
 
 Speaker::Speaker() {
+	paInitialized = false;
+	stream = NULL;
+
 	PaError err;
 
 	err = Pa_Initialize();
 	if (err != paNoError) {
-		printf("paError\n");
-		exit(1); // TODO: error handling
+		return;
 	}
+	paInitialized = true;
 
 	PaStreamParameters outputParameters;
 	outputParameters.device = Pa_GetDefaultOutputDevice(); // default output device
@@ -45,15 +48,16 @@ Speaker::Speaker() {
 			  this );
 
 	if (err != paNoError) {
-		printf("paError2\n");
-		exit(1); // TODO: error handling
+		return;
 	}
 
 	pthread_mutex_init(&mutex, NULL);
 }
 
 Speaker::~Speaker() {
-	Pa_Terminate();
+	if (paInitialized) {
+		Pa_Terminate();
+	}
 	pthread_mutex_destroy(&mutex);
 }
 
@@ -64,14 +68,18 @@ void Speaker::attach(Machine *machine)
 
 void Speaker::start()
 {
-	// start with 0.5s lag, so that soundBuffer always contains enough data for paCallback
-	lastFrameTime = machine->getCurrentTime() - (uint64_t)(0.5 * machine->getCpuFreq());
-	Pa_StartStream(stream);
+	if (stream != NULL) {
+		// start with 0.5s lag, so that soundBuffer always contains enough data for paCallback
+		lastFrameTime = machine->getCurrentTime() - (uint64_t)(0.5 * machine->getCpuFreq());
+		Pa_StartStream(stream);
+	}
 }
 
 void Speaker::stop()
 {
-	Pa_StopStream(stream);
+	if (stream != NULL) {
+		Pa_StopStream(stream);
+	}
 
 	pthread_mutex_lock(&mutex);
 	soundBuffer.clear();
@@ -79,27 +87,29 @@ void Speaker::stop()
 }
 
 void Speaker::setSignal(double level) {
-	uint64_t time = machine->getCurrentTime();
+	if (stream != NULL) {
+		uint64_t time = machine->getCurrentTime();
 
-	pthread_mutex_lock(&mutex);
+		pthread_mutex_lock(&mutex);
 
-	if (soundBuffer.empty()) {
-		SpeakerSample soundEvent;
-		soundEvent.time = time;
-		soundEvent.value = level;
-		soundBuffer.push_back(soundEvent);
-	} else {
-		SpeakerSample lastSoundEvent;
-		lastSoundEvent = soundBuffer.back();
-		if (lastSoundEvent.time < time && lastSoundEvent.value != level) {
+		if (soundBuffer.empty()) {
 			SpeakerSample soundEvent;
 			soundEvent.time = time;
 			soundEvent.value = level;
 			soundBuffer.push_back(soundEvent);
+		} else {
+			SpeakerSample lastSoundEvent;
+			lastSoundEvent = soundBuffer.back();
+			if (lastSoundEvent.time < time && lastSoundEvent.value != level) {
+				SpeakerSample soundEvent;
+				soundEvent.time = time;
+				soundEvent.value = level;
+				soundBuffer.push_back(soundEvent);
+			}
 		}
-	}
 
-	pthread_mutex_unlock(&mutex);
+		pthread_mutex_unlock(&mutex);
+	}
 }
 
 int Speaker::paCallback(const void *inputBuffer, void *outputBuffer,
@@ -108,6 +118,10 @@ int Speaker::paCallback(const void *inputBuffer, void *outputBuffer,
 		PaStreamCallbackFlags statusFlags,
 		void *userData)
 {
+	if (stream == NULL) {
+		return paComplete;
+	}
+
 	uint64_t bufferLenTstates = ((framesPerBuffer) / 22050.0) * machine->getCpuFreq();
 
 	uint64_t startTstate = this->lastFrameTime;

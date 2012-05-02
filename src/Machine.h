@@ -43,7 +43,7 @@ public:
 	void step();
 	void stepInstruction();
 	bool loadRom(const char *filename);
-	bool loadSnapshot(const char *filename);
+	int loadSnapshot(const char *filename);
 
 	uint64_t getCurrentTime();
 	//void addEvent(int event);

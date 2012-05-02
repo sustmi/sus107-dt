@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sus107-dt\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-04-29 00:11+0100\n"
-"PO-Revision-Date: 2012-04-29 00:27+0100\n"
+"POT-Creation-Date: 2012-05-01 15:58+0100\n"
+"PO-Revision-Date: 2012-05-01 15:59+0100\n"
 "Last-Translator: Miroslav Šustek <sus107@vsb.cz>\n"
 "Language-Team:  <sus107@vsb.cz>\n"
 "Language: \n"
@@ -17,160 +17,184 @@ msgstr ""
 "X-Poedit-SourceCharset: utf-8\n"
 "X-Poedit-SearchPath-0: ../src\n"
 
-#: ../src/ui/DebuggerRegistersView.cpp:14
+#: ../src/ui/DebuggerRegistersView.cpp:31
 msgid "AF"
 msgstr ""
 
-#: ../src/ui/DebuggerRegistersView.cpp:16
+#: ../src/ui/DebuggerRegistersView.cpp:33
 msgid "BC"
 msgstr ""
 
-#: ../src/ui/DebuggerRegistersView.cpp:18
+#: ../src/ui/DebuggerRegistersView.cpp:35
 msgid "DE"
 msgstr ""
 
-#: ../src/ui/DebuggerRegistersView.cpp:20
+#: ../src/ui/DebuggerRegistersView.cpp:37
 msgid "HL"
 msgstr ""
 
-#: ../src/ui/DebuggerRegistersView.cpp:22
+#: ../src/ui/DebuggerRegistersView.cpp:39
 msgid "PC"
 msgstr ""
 
-#: ../src/ui/DebuggerRegistersView.cpp:24
+#: ../src/ui/DebuggerRegistersView.cpp:41
 msgid "SP"
 msgstr ""
 
-#: ../src/ui/DebuggerRegistersView.cpp:26
+#: ../src/ui/DebuggerRegistersView.cpp:43
 msgid "I"
 msgstr ""
 
-#: ../src/ui/DebuggerRegistersView.cpp:28
+#: ../src/ui/DebuggerRegistersView.cpp:45
 msgid "AF'"
 msgstr ""
 
-#: ../src/ui/DebuggerRegistersView.cpp:30
+#: ../src/ui/DebuggerRegistersView.cpp:47
 msgid "BC'"
 msgstr ""
 
-#: ../src/ui/DebuggerRegistersView.cpp:32
+#: ../src/ui/DebuggerRegistersView.cpp:49
 msgid "DE'"
 msgstr ""
 
-#: ../src/ui/DebuggerRegistersView.cpp:34
+#: ../src/ui/DebuggerRegistersView.cpp:51
 msgid "HL'"
 msgstr ""
 
-#: ../src/ui/DebuggerRegistersView.cpp:36
+#: ../src/ui/DebuggerRegistersView.cpp:53
 msgid "IX"
 msgstr ""
 
-#: ../src/ui/DebuggerRegistersView.cpp:38
+#: ../src/ui/DebuggerRegistersView.cpp:55
 msgid "IY"
 msgstr ""
 
-#: ../src/ui/DebuggerRegistersView.cpp:40
+#: ../src/ui/DebuggerRegistersView.cpp:57
 msgid "R"
 msgstr ""
 
-#: ../src/ui/DebuggerRegistersView.cpp:149
-#: ../src/ui/DebuggerView.cpp:18
+#: ../src/ui/DebuggerRegistersView.cpp:174
+#: ../src/ui/DebuggerView.cpp:35
 msgid "Registers"
 msgstr "Registry"
 
-#: ../src/ui/EmulatorView.cpp:22
-#: ../src/ui/EmulatorView.cpp:31
+#: ../src/ui/EmulatorView.cpp:39
+#: ../src/ui/EmulatorView.cpp:50
 msgid "Open..."
 msgstr "Otevřít..."
 
-#: ../src/ui/EmulatorView.cpp:23
+#: ../src/ui/EmulatorView.cpp:40
+msgid "Exit"
+msgstr ""
+
+#: ../src/ui/EmulatorView.cpp:41
 msgid "File"
 msgstr ""
 
-#: ../src/ui/EmulatorView.cpp:25
+#: ../src/ui/EmulatorView.cpp:43
 msgid "Start"
 msgstr ""
 
-#: ../src/ui/EmulatorView.cpp:26
-#: ../src/ui/EmulatorView.cpp:33
+#: ../src/ui/EmulatorView.cpp:44
+#: ../src/ui/EmulatorView.cpp:52
 msgid "Stop"
 msgstr ""
 
-#: ../src/ui/EmulatorView.cpp:27
+#: ../src/ui/EmulatorView.cpp:45
 msgid "Reset"
 msgstr ""
 
-#: ../src/ui/EmulatorView.cpp:28
-msgid "Debug..."
+#: ../src/ui/EmulatorView.cpp:47
+msgid "Debugger..."
 msgstr ""
 
-#: ../src/ui/EmulatorView.cpp:29
+#: ../src/ui/EmulatorView.cpp:48
 msgid "Machine"
 msgstr ""
 
-#: ../src/ui/EmulatorView.cpp:32
+#: ../src/ui/EmulatorView.cpp:51
 msgid "Play"
 msgstr ""
 
-#: ../src/ui/EmulatorView.cpp:34
+#: ../src/ui/EmulatorView.cpp:53
 msgid "Rewind"
 msgstr ""
 
-#: ../src/ui/EmulatorView.cpp:35
+#: ../src/ui/EmulatorView.cpp:54
 msgid "Tape"
 msgstr ""
 
-#: ../src/ui/EmulatorView.cpp:150
-#: ../src/ui/EmulatorView.cpp:190
+#: ../src/ui/EmulatorView.cpp:189
+#: ../src/ui/EmulatorView.cpp:234
 msgid "Open file"
 msgstr ""
 
-#: ../src/ui/EmulatorView.cpp:332
+#: ../src/ui/EmulatorView.cpp:372
 msgid "Emulator"
 msgstr ""
 
-#: ../src/ui/DebuggerCodeGui.cpp:255
+#: ../src/ui/DebuggerCodeGui.cpp:301
 msgid "BP"
 msgstr ""
 
-#: ../src/ui/DebuggerCodeGui.cpp:257
+#: ../src/ui/DebuggerCodeGui.cpp:303
 msgid "Address"
 msgstr ""
 
-#: ../src/ui/DebuggerCodeGui.cpp:259
+#: ../src/ui/DebuggerCodeGui.cpp:305
 msgid "Data"
 msgstr ""
 
-#: ../src/ui/DebuggerCodeGui.cpp:261
+#: ../src/ui/DebuggerCodeGui.cpp:307
 msgid "Instruction"
 msgstr ""
 
-#: ../src/ui/DebuggerView.cpp:19
+#: ../src/ui/DebuggerView.cpp:36
 msgid "View"
 msgstr ""
 
-#: ../src/ui/DebuggerView.cpp:23
-msgid "Step"
-msgstr ""
-
-#: ../src/ui/DebuggerView.cpp:24
+#: ../src/ui/DebuggerView.cpp:41
 msgid "Continue"
 msgstr ""
 
-#: ../src/ui/DebuggerView.cpp:25
+#: ../src/ui/DebuggerView.cpp:41
+msgid "Continue program execution"
+msgstr ""
+
+#: ../src/ui/DebuggerView.cpp:42
 msgid "Break"
 msgstr ""
 
-#: ../src/ui/DebuggerView.cpp:131
+#: ../src/ui/DebuggerView.cpp:42
+msgid "Break program"
+msgstr ""
+
+#: ../src/ui/DebuggerView.cpp:43
+msgid "Step"
+msgstr ""
+
+#: ../src/ui/DebuggerView.cpp:43
+msgid "Step instruction"
+msgstr ""
+
+#: ../src/ui/DebuggerView.cpp:45
+msgid "Go to PC"
+msgstr ""
+
+#: ../src/ui/DebuggerView.cpp:45
+msgid "Go to Program Counter"
+msgstr ""
+
+#: ../src/ui/DebuggerView.cpp:173
 msgid "Debugger"
 msgstr ""
 
-#: ../src/ui/DebuggerView.cpp:155
-msgid "Hex"
+#: ../src/ui/DebuggerView.cpp:197
+msgid "Code"
 msgstr ""
 
-#: ../src/ui/DebuggerView.cpp:156
-msgid "Code"
+#: ../src/ui/DebuggerView.cpp:198
+msgid "Hex"
 msgstr ""
 
 #: ../src/ui/widgets/wxHexCtrl/main.cpp:44

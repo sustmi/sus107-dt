@@ -26,6 +26,7 @@ DebuggerHexGui::DebuggerHexGui(wxWindow* parent, int id, const wxPoint& pos, con
 	offset_scroll->Enable(true);
 	offset_ctrl->SetOffsetLimit(65536);
 	offset_ctrl->offset_mode = 'X';
+	offset_scroll_real->SetMinSize( wxSize( 20, 0 ));
 
 	hex_ctrl->Connect(wxEVT_CHAR, wxKeyEventHandler(DebuggerHexGui::OnKeyboardChar), NULL, this);
 	text_ctrl->Connect(wxEVT_CHAR, wxKeyEventHandler(DebuggerHexGui::OnKeyboardChar), NULL, this);
@@ -59,6 +60,10 @@ DebuggerHexGui::~DebuggerHexGui() {
 	this->Disconnect(wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler(DebuggerHexGui::OnMenuEvent));
 }
 
+BEGIN_EVENT_TABLE(DebuggerHexGui, HexEditorCtrl)
+	EVT_MENU(wxID_SAVEAS, DebuggerHexGui::OnSaveAsFile)
+END_EVENT_TABLE();
+
 void DebuggerHexGui::OnOffsetScroll(wxScrollEvent & event)
 {
 	LoadFromOffset(event.GetPosition() * BytePerLine());
@@ -84,13 +89,11 @@ void DebuggerHexGui::emulatorEvent(EmulatorEvent event)
 
 void DebuggerHexGui::debuggerEvent(DebuggerEvent event)
 {
-	// nothing ?
+	// nothing?
 }
 
 void DebuggerHexGui::uiUpdate()
 {
-	//int address = debugger->getCpuRegister(regPC);
-	//LoadFromOffset(address, false, true);
 	LoadFromOffset(page_offset, false, true);
 	UpdateOffsetScroll();
 }
@@ -263,37 +266,6 @@ void DebuggerHexGui::OnKeyboardInput(wxKeyEvent& event) {
 			}
 			break;
 
-		case (WXK_DELETE):
-		case (WXK_NUMPAD_DELETE):
-			/*if( myctrl->GetInsertionPoint() != myctrl->GetLastPosition() ){
-			 int hex_loc = myctrl->GetInsertionPoint();
-			 HexCharReplace(hex_loc,'0');
-			 myctrl->SetInsertionPoint(hex_loc);
-			 }
-			 else
-			 */
-			wxBell();
-			break;
-
-		case (WXK_BACK):
-			/*
-			 if( myctrl->GetInsertionPoint()!=0 ){
-			 HexCharReplace(myctrl->GetInsertionPoint()-1,'0');
-			 myctrl->SetInsertionPoint(myctrl->GetInsertionPoint()-1);
-			 }
-			 else
-			 if(page_offset == 0)
-			 wxBell();
-			 else{	//Has to be a line over up
-			 // TODO (death#3#): if BytePerLine() changes, current offset gona be mad, like taking minus argument because it thinks a compleete line over up... spend caution about it.
-			 page_offset -= myctrl->BytePerLine();
-			 LoadFromOffset( page_offset );
-			 HexCharReplace(myctrl->HexPerLine()-1,'0');
-			 myctrl->SetInsertionPoint(myctrl->HexPerLine()-1);
-			 }
-			 */
-			break;
-
 		default: {
 			if (event.ControlDown()) {
 				switch (event.GetKeyCode()) {
@@ -345,8 +317,11 @@ void DebuggerHexGui::OnMouseRight(wxMouseEvent & event)
 {
 	wxMenu menu;
 
-	menu.Append(wxID_COPY, wxT("Copy"));
-	menu.Append(wxID_PASTE, wxT("Paste"));
+	menu.Append(wxID_COPY, _("Copy"));
+	menu.Append(wxID_PASTE, _("Paste"));
+	menu.Append(wxID_SAVEAS, _("Save as file..."));
+	menu.AppendSeparator();
+	menu.Append(DEBUGGER_SHOW_IN_CODEVIEW, _("Show in Code View"));
 
 	PopupMenu(&menu);
 }
@@ -400,10 +375,22 @@ void DebuggerHexGui::LoadFromOffset(int64_t position, bool cursor_reset, bool pa
 	}
 }
 
+void DebuggerHexGui::MakeAddressVisible(int64_t position)
+{
+	if (position < page_offset || position >= page_offset + ByteCapacity()) {
+		uint64_t newPageOffset = (position / ByteCapacity()) * ByteCapacity();
+		if (newPageOffset + ByteCapacity() >= 65536) {
+			newPageOffset = 65535 - ByteCapacity();
+		}
+		page_offset = newPageOffset;
+
+		LoadFromOffset(page_offset, false, true);
+		UpdateOffsetScroll();
+	}
+}
+
 void DebuggerHexGui::CopySelection()
 {
-	printf("copy %d %d %d\n", select->GetStart(), select->GetEnd(), select->GetState());
-
 	if (select->GetState()) {
 		if (wxTheClipboard->Open()) {
 			int length = select->GetSize();
@@ -418,23 +405,70 @@ void DebuggerHexGui::CopySelection()
 	}
 }
 
-void DebuggerHexGui::PasteFromClipboard()
+void DebuggerHexGui::OnSaveAsFile(wxCommandEvent & event)
 {
-	printf("paste %d %d\n", select->GetStart(), select->GetEnd());
+	wxFileDialog* saveFileDialog = new wxFileDialog(this, _("Save as file"),
+			wxEmptyString, wxEmptyString,
+			wxT("All files (*.*)|*.*"),
+			wxFD_SAVE | wxFD_OVERWRITE_PROMPT);
 
-	if (select->GetState()) {
-		if (wxTheClipboard->Open()) {
-			if (wxTheClipboard->IsSupported(wxDF_TEXT)) {
-				wxTextDataObject data;
-				wxTheClipboard->GetData(data);
-				int length = select->GetSize() < data.GetTextLength() ? select->GetSize() : data.GetTextLength();
+	if (saveFileDialog->ShowModal() == wxID_OK) {
+		unsigned char *buffer = NULL;
+		try {
+			wxFileOutputStream output_stream(saveFileDialog->GetPath());
 
-				debugger->writeMemory((unsigned char*)data.GetText().To8BitData().data(), select->GetStart(), length);
+			if (!output_stream.IsOk()) {
+				wxMessageBox(_("Failed to save selected data."), _("Save failed"), wxICON_ERROR);
+				return;
 			}
-			wxTheClipboard->Close();
+
+			int length = select->GetSize();
+			unsigned char *buffer = new unsigned char[length];
+
+			debugger->readMemory(buffer, select->GetStart(), length);
+
+			output_stream.Write(buffer, length);
+
+			delete buffer;
+
+			wxMessageBox(wxString::Format(_("Successfuly saved %d bytes."), length), _("File saved"), wxICON_INFORMATION);
+		} catch (...) {
+			wxMessageBox(_("Failed to save selected data."), _("Save failed"), wxICON_ERROR);
+			if (buffer) {
+				delete buffer;
+			}
 		}
 	}
 }
+
+void DebuggerHexGui::PasteFromClipboard()
+{
+	if (wxTheClipboard->Open()) {
+		if (wxTheClipboard->IsSupported(wxDF_TEXT)) {
+			wxTextDataObject data;
+			wxTheClipboard->GetData(data);
+
+			int start;
+			int length;
+
+			if (select->GetState()) { // into selection
+				start = select->GetStart();
+				length = select->GetSize() < data.GetTextLength() ? select->GetSize() : data.GetTextLength();
+			} else { // rewrite from current position
+				start = CursorOffset();
+				length = data.GetTextLength();
+			}
+
+			debugger->writeMemory((unsigned char*)data.GetText().To8BitData().data(), start, length);
+		}
+		wxTheClipboard->Close();
+	}
+}
+
+
+
+
+
 
 
 

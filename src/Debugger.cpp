@@ -18,7 +18,7 @@
 #include "Debugger.h"
 
 Debugger::Debugger() {
-	// TODO Auto-generated constructor stub
+	emulator = NULL;
 }
 
 Debugger::~Debugger() {

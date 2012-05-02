@@ -20,6 +20,7 @@
 #include "Memory.h"
 
 Memory::Memory() {
+	memset(mem, 0, sizeof(mem));
 }
 
 Memory::~Memory() {

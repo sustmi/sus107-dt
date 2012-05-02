@@ -18,6 +18,11 @@
 #ifndef DEBUGGERHEXGUI_H_
 #define DEBUGGERHEXGUI_H_
 
+#include <iostream>
+#include <fstream>
+#include <wx/filedlg.h>
+#include <wx/wfstream.h>
+
 #include "widgets/HexEditorCtrl/HexEditorCtrl.h"
 #include "../Emulator.h"
 #include "../EmulatorListener.h"
@@ -28,6 +33,8 @@ class Emulator;
 class EmulatorListener;
 class Debugger;
 class DebuggerListener;
+
+const int DEBUGGER_SHOW_IN_CODEVIEW = wxID_HIGHEST + 5002;
 
 class DebuggerHexGui: public HexEditorCtrl, public EmulatorListener, public DebuggerListener {
 public:
@@ -47,9 +54,11 @@ public:
 	void OnMouseRight(wxMouseEvent& event);
 	void OnKeyboardSelector(wxKeyEvent& event);
 	void OnMenuEvent(wxCommandEvent& event);
+	void OnSaveAsFile(wxCommandEvent& event);
 
 	void UpdateOffsetScroll();
 	void LoadFromOffset(int64_t position, bool cursor_reset = false, bool paint = true);
+	void MakeAddressVisible(int64_t position);
 
 	void CopySelection();
 	void PasteFromClipboard();
@@ -57,6 +66,9 @@ public:
 private:
 	Emulator *emulator;
 	Debugger *debugger;
+
+protected:
+	DECLARE_EVENT_TABLE()
 };
 
 #endif /* DEBUGGERHEXGUI_H_ */

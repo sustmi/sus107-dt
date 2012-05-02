@@ -69,8 +69,6 @@ void Emulator::init()
 	ports->connectDevice(ula);
 	ports->connectDevice(joystick);
 
-	machine->loadRom("48.rom");
-
 	// Spectrum 48k machine specifics
 	ula->setInterruptLength(libspectrum_timings_interrupt_length(LIBSPECTRUM_MACHINE_48));
 	ula->setInterruptPeriod(libspectrum_timings_tstates_per_frame(LIBSPECTRUM_MACHINE_48));

@@ -43,6 +43,9 @@ class Debugger;
 class EmulatorListener;
 class DebuggerListener;
 
+const int DEBUGGER_TOGGLE_BREAKPOINT = wxID_HIGHEST + 5000;
+const int DEBUGGER_SHOW_IN_HEXVIEW = wxID_HIGHEST + 5001;
+
 class DebuggerCodeGui: public wxPanel, public EmulatorListener, public DebuggerListener {
 public:
 	// begin wxGlade: DebuggerCodeGui::ids
@@ -55,6 +58,11 @@ public:
 	void emulatorEvent(EmulatorEvent event);
 	void debuggerEvent(DebuggerEvent event);
 	void gotoAddress(int address);
+	void selectAddresses(int from, int to);
+
+	int getSelectedRow();
+	uint16_t getSelectedStartAddress();
+	uint16_t getSelectedEndAddress();
 
 private:
 	// begin wxGlade: DebuggerCodeGui::methods

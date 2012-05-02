@@ -74,6 +74,11 @@ void EmulatorView::init() {
 	emulator = new Emulator();
 	emulator->init();
 
+	if (!emulator->getMachine()->loadRom("48.rom")) {
+		wxMessageBox(_("Please put ROM file named 48.rom into application directory and restart application."),
+			_("File 48.rom not found"));
+	}
+
 	timer = new wxTimer(this, wxID_ANY);
 	Connect(timer->GetId(), wxEVT_TIMER, wxTimerEventHandler(EmulatorView::OnTimer));
 	stopWatch = new wxStopWatch();
@@ -193,7 +198,12 @@ void EmulatorView::OnFileOpen(wxCommandEvent & event)
 
 	if (openFileDialog->ShowModal() == wxID_OK) {
 		stop();
-		emulator->getMachine()->loadSnapshot(openFileDialog->GetPath().mb_str().data());
+		int ret = emulator->getMachine()->loadSnapshot(openFileDialog->GetPath().mb_str().data());
+		if (ret == -1) {
+			wxMessageBox(_("Could not load selected snapshot."), _("Error loading snapshot"), wxICON_ERROR);
+		} else if (ret == 0) {
+			wxMessageBox(_("Loaded snapshot is not targeted for ZX Spectrum 48K."), _("Improper snapshot machine"));
+		}
 		start();
 	}
 }
@@ -205,12 +215,12 @@ void EmulatorView::OnFileExit(wxCommandEvent & event)
 
 void EmulatorView::OnMachineStart(wxCommandEvent &event)
 {
-	start();
+	emulator->start();
 }
 
 void EmulatorView::OnMachineStop(wxCommandEvent &event)
 {
-	stop();
+	emulator->stop();
 }
 
 void EmulatorView::OnMachineReset(wxCommandEvent & event)

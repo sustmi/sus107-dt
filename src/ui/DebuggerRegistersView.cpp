@@ -28,34 +28,57 @@ DebuggerRegistersView::DebuggerRegistersView(wxWindow* parent, int id, const wxS
 	wxFrame(parent, id, title, pos, size, wxDEFAULT_FRAME_STYLE)
 {
 	// begin wxGlade: DebuggerRegistersView::DebuggerRegistersView
-	label_af = new wxStaticText(this, wxID_ANY, _("AF"));
-	reg_af = new wxTextCtrl(this, 101, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxTE_PROCESS_ENTER);
-	label_bc = new wxStaticText(this, wxID_ANY, _("BC"));
-	reg_bc = new wxTextCtrl(this, 102, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxTE_PROCESS_ENTER);
-	label_de = new wxStaticText(this, wxID_ANY, _("DE"));
-	reg_de = new wxTextCtrl(this, 103, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxTE_PROCESS_ENTER);
-	label_hl = new wxStaticText(this, wxID_ANY, _("HL"));
-	reg_hl = new wxTextCtrl(this, 104, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxTE_PROCESS_ENTER);
-	label_pc = new wxStaticText(this, wxID_ANY, _("PC"));
-	reg_pc = new wxTextCtrl(this, 109, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxTE_PROCESS_ENTER);
-	label_sp = new wxStaticText(this, wxID_ANY, _("SP"));
-	reg_sp = new wxTextCtrl(this, 110, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxTE_PROCESS_ENTER);
-	label_i = new wxStaticText(this, wxID_ANY, _("I"));
-	reg_i = new wxTextCtrl(this, 113, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxTE_PROCESS_ENTER);
-	label_af2 = new wxStaticText(this, wxID_ANY, _("AF'"));
-	reg_af2 = new wxTextCtrl(this, 105, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxTE_PROCESS_ENTER);
-	label_bc2 = new wxStaticText(this, wxID_ANY, _("BC'"));
-	reg_bc2 = new wxTextCtrl(this, 106, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxTE_PROCESS_ENTER);
-	label_de2 = new wxStaticText(this, wxID_ANY, _("DE'"));
-	reg_de2 = new wxTextCtrl(this, 107, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxTE_PROCESS_ENTER);
-	label_hl2 = new wxStaticText(this, wxID_ANY, _("HL'"));
-	reg_hl2 = new wxTextCtrl(this, 108, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxTE_PROCESS_ENTER);
-	label_ix = new wxStaticText(this, wxID_ANY, _("IX"));
-	reg_ix = new wxTextCtrl(this, 111, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxTE_PROCESS_ENTER);
-	label_iy = new wxStaticText(this, wxID_ANY, _("IY"));
-	reg_iy = new wxTextCtrl(this, 112, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxTE_PROCESS_ENTER);
-	label_r = new wxStaticText(this, wxID_ANY, _("R"));
-	reg_r = new wxTextCtrl(this, 114, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxTE_PROCESS_ENTER);
+	panel_2 = new wxPanel(this, wxID_ANY);
+	label_1 = new wxStaticText(panel_2, wxID_ANY, _("General registers:"));
+	label_af = new wxStaticText(panel_2, wxID_ANY, _("AF"));
+	reg_af = new wxTextCtrl(panel_2, REGISTER_AF, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxTE_PROCESS_ENTER);
+	label_af2 = new wxStaticText(panel_2, wxID_ANY, _("AF'"));
+	reg_af2 = new wxTextCtrl(panel_2, REGISTER_AF2, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxTE_PROCESS_ENTER);
+	label_bc = new wxStaticText(panel_2, wxID_ANY, _("BC"));
+	reg_bc = new wxTextCtrl(panel_2, REGISTER_BC, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxTE_PROCESS_ENTER);
+	label_bc2 = new wxStaticText(panel_2, wxID_ANY, _("BC'"));
+	reg_bc2 = new wxTextCtrl(panel_2, REGISTER_BC2, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxTE_PROCESS_ENTER);
+	label_de = new wxStaticText(panel_2, wxID_ANY, _("DE"));
+	reg_de = new wxTextCtrl(panel_2, REGISTER_DE, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxTE_PROCESS_ENTER);
+	label_de2 = new wxStaticText(panel_2, wxID_ANY, _("DE'"));
+	reg_de2 = new wxTextCtrl(panel_2, REGISTER_DE2, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxTE_PROCESS_ENTER);
+	label_hl = new wxStaticText(panel_2, wxID_ANY, _("HL"));
+	reg_hl = new wxTextCtrl(panel_2, REGISTER_HL, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxTE_PROCESS_ENTER);
+	label_hl2 = new wxStaticText(panel_2, wxID_ANY, _("HL'"));
+	reg_hl2 = new wxTextCtrl(panel_2, REGISTER_HL2, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxTE_PROCESS_ENTER);
+	label_2 = new wxStaticText(panel_2, wxID_ANY, _("Program Counter and Stack Pointer:"));
+	label_pc = new wxStaticText(panel_2, wxID_ANY, _("PC"));
+	reg_pc = new wxTextCtrl(panel_2, REGISTER_PC, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxTE_PROCESS_ENTER);
+	label_sp = new wxStaticText(panel_2, wxID_ANY, _("SP"));
+	reg_sp = new wxTextCtrl(panel_2, REGISTER_SP, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxTE_PROCESS_ENTER);
+	label_3 = new wxStaticText(panel_2, wxID_ANY, _("Index registers:"));
+	label_ix = new wxStaticText(panel_2, wxID_ANY, _("IX"));
+	reg_ix = new wxTextCtrl(panel_2, REGISTER_IX, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxTE_PROCESS_ENTER);
+	label_iy = new wxStaticText(panel_2, wxID_ANY, _("IY"));
+	reg_iy = new wxTextCtrl(panel_2, REGISTER_IY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxTE_PROCESS_ENTER);
+	label_4 = new wxStaticText(panel_2, wxID_ANY, _("Interrupt Page and Memory Refresh:"));
+	label_i = new wxStaticText(panel_2, wxID_ANY, _("I"));
+	reg_i = new wxTextCtrl(panel_2, REGISTER_I, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxTE_PROCESS_ENTER);
+	label_r = new wxStaticText(panel_2, wxID_ANY, _("R"));
+	reg_r = new wxTextCtrl(panel_2, REGISTER_R, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxTE_PROCESS_ENTER);
+	label_5 = new wxStaticText(panel_2, wxID_ANY, _("Flags:"));
+	label_9 = new wxStaticText(panel_2, wxID_ANY, _("S"));
+	label_10 = new wxStaticText(panel_2, wxID_ANY, _("Z"));
+	label_11 = new wxStaticText(panel_2, wxID_ANY, _("Y"));
+	label_12 = new wxStaticText(panel_2, wxID_ANY, _("H"));
+	label_13 = new wxStaticText(panel_2, wxID_ANY, _("X"));
+	label_14 = new wxStaticText(panel_2, wxID_ANY, _("P"));
+	label_15 = new wxStaticText(panel_2, wxID_ANY, _("N"));
+	label_16 = new wxStaticText(panel_2, wxID_ANY, _("C"));
+	checkbox_flag_s = new wxCheckBox(panel_2, FLAG_S, wxEmptyString);
+	checkbox_flag_z = new wxCheckBox(panel_2, FLAG_Z, wxEmptyString);
+	checkbox_flag_y = new wxCheckBox(panel_2, FLAG_Y, wxEmptyString);
+	checkbox_flag_h = new wxCheckBox(panel_2, FLAG_H, wxEmptyString);
+	checkbox_flag_x = new wxCheckBox(panel_2, FLAG_X, wxEmptyString);
+	checkbox_flag_p = new wxCheckBox(panel_2, FLAG_P, wxEmptyString);
+	checkbox_flag_n = new wxCheckBox(panel_2, FLAG_N, wxEmptyString);
+	checkbox_flag_c = new wxCheckBox(panel_2, FLAG_C, wxEmptyString);
+	panel_1 = new wxPanel(panel_2, wxID_ANY);
 
 	set_properties();
 	do_layout();
@@ -74,20 +97,28 @@ DebuggerRegistersView::~DebuggerRegistersView()
 
 BEGIN_EVENT_TABLE(DebuggerRegistersView, wxFrame)
 	// begin wxGlade: DebuggerRegistersView::event_table
-	EVT_TEXT_ENTER(101, DebuggerRegistersView::OnRegEnter)
-	EVT_TEXT_ENTER(102, DebuggerRegistersView::OnRegEnter)
-	EVT_TEXT_ENTER(103, DebuggerRegistersView::OnRegEnter)
-	EVT_TEXT_ENTER(104, DebuggerRegistersView::OnRegEnter)
-	EVT_TEXT_ENTER(109, DebuggerRegistersView::OnRegEnter)
-	EVT_TEXT_ENTER(110, DebuggerRegistersView::OnRegEnter)
-	EVT_TEXT_ENTER(113, DebuggerRegistersView::OnRegEnter)
-	EVT_TEXT_ENTER(105, DebuggerRegistersView::OnRegEnter)
-	EVT_TEXT_ENTER(106, DebuggerRegistersView::OnRegEnter)
-	EVT_TEXT_ENTER(107, DebuggerRegistersView::OnRegEnter)
-	EVT_TEXT_ENTER(108, DebuggerRegistersView::OnRegEnter)
-	EVT_TEXT_ENTER(111, DebuggerRegistersView::OnRegEnter)
-	EVT_TEXT_ENTER(112, DebuggerRegistersView::OnRegEnter)
-	EVT_TEXT_ENTER(114, DebuggerRegistersView::OnRegEnter)
+	EVT_TEXT_ENTER(REGISTER_AF, DebuggerRegistersView::OnRegEnter)
+	EVT_TEXT_ENTER(REGISTER_AF2, DebuggerRegistersView::OnRegEnter)
+	EVT_TEXT_ENTER(REGISTER_BC, DebuggerRegistersView::OnRegEnter)
+	EVT_TEXT_ENTER(REGISTER_BC2, DebuggerRegistersView::OnRegEnter)
+	EVT_TEXT_ENTER(REGISTER_DE, DebuggerRegistersView::OnRegEnter)
+	EVT_TEXT_ENTER(REGISTER_DE2, DebuggerRegistersView::OnRegEnter)
+	EVT_TEXT_ENTER(REGISTER_HL, DebuggerRegistersView::OnRegEnter)
+	EVT_TEXT_ENTER(REGISTER_HL2, DebuggerRegistersView::OnRegEnter)
+	EVT_TEXT_ENTER(REGISTER_PC, DebuggerRegistersView::OnRegEnter)
+	EVT_TEXT_ENTER(REGISTER_SP, DebuggerRegistersView::OnRegEnter)
+	EVT_TEXT_ENTER(REGISTER_IX, DebuggerRegistersView::OnRegEnter)
+	EVT_TEXT_ENTER(REGISTER_IY, DebuggerRegistersView::OnRegEnter)
+	EVT_TEXT_ENTER(REGISTER_I, DebuggerRegistersView::OnRegEnter)
+	EVT_TEXT_ENTER(REGISTER_R, DebuggerRegistersView::OnRegEnter)
+	EVT_CHECKBOX(FLAG_S, DebuggerRegistersView::OnFlagCheckbox)
+	EVT_CHECKBOX(FLAG_Z, DebuggerRegistersView::OnFlagCheckbox)
+	EVT_CHECKBOX(FLAG_Y, DebuggerRegistersView::OnFlagCheckbox)
+	EVT_CHECKBOX(FLAG_H, DebuggerRegistersView::OnFlagCheckbox)
+	EVT_CHECKBOX(FLAG_X, DebuggerRegistersView::OnFlagCheckbox)
+	EVT_CHECKBOX(FLAG_P, DebuggerRegistersView::OnFlagCheckbox)
+	EVT_CHECKBOX(FLAG_N, DebuggerRegistersView::OnFlagCheckbox)
+	EVT_CHECKBOX(FLAG_C, DebuggerRegistersView::OnFlagCheckbox)
 	// end wxGlade
 END_EVENT_TABLE();
 
@@ -113,6 +144,16 @@ void DebuggerRegistersView::uiUpdate()
 
 	reg_i->ChangeValue(wxString::Format(wxT("%02X"), debugger->getCpuRegister(regI)));
 	reg_r->ChangeValue(wxString::Format(wxT("%02X"), debugger->getCpuRegister(regR)));
+
+	uint8_t f = debugger->getCpuRegister(regAF) & 0xff;
+	checkbox_flag_s->SetValue((f & (1 << 7)) != 0);
+	checkbox_flag_z->SetValue((f & (1 << 6)) != 0);
+	checkbox_flag_y->SetValue((f & (1 << 5)) != 0);
+	checkbox_flag_h->SetValue((f & (1 << 4)) != 0);
+	checkbox_flag_x->SetValue((f & (1 << 3)) != 0);
+	checkbox_flag_p->SetValue((f & (1 << 2)) != 0);
+	checkbox_flag_n->SetValue((f & (1 << 1)) != 0);
+	checkbox_flag_c->SetValue((f & (1 << 0)) != 0);
 }
 
 void DebuggerRegistersView::emulatorEvent(EmulatorEvent event)
@@ -145,102 +186,161 @@ void DebuggerRegistersView::OnRegEnter(wxCommandEvent &event)
 		int val;
 		if (sscanf(textCtl->GetValue().mb_str(), "%x", &val) == 1) {
 			switch (event.GetId()) {
-				case 101: debugger->setCpuRegister(regAF, val); break;
-				case 102: debugger->setCpuRegister(regBC, val); break;
-				case 103: debugger->setCpuRegister(regDE, val); break;
-				case 104: debugger->setCpuRegister(regHL, val); break;
-				case 105: debugger->setCpuRegister(regAF_, val); break;
-				case 106: debugger->setCpuRegister(regBC_, val); break;
-				case 107: debugger->setCpuRegister(regDE_, val); break;
-				case 108: debugger->setCpuRegister(regHL_, val); break;
-				case 109: debugger->setCpuRegister(regPC, val); break;
-				case 110: debugger->setCpuRegister(regSP, val); break;
-				case 111: debugger->setCpuRegister(regIX, val); break;
-				case 112: debugger->setCpuRegister(regIY, val); break;
-				case 113: debugger->setCpuRegister(regI, val); break;
-				case 114: debugger->setCpuRegister(regR, val); break;
+				case REGISTER_AF: debugger->setCpuRegister(regAF, val); break;
+				case REGISTER_BC: debugger->setCpuRegister(regBC, val); break;
+				case REGISTER_DE: debugger->setCpuRegister(regDE, val); break;
+				case REGISTER_HL: debugger->setCpuRegister(regHL, val); break;
+				case REGISTER_AF2: debugger->setCpuRegister(regAF_, val); break;
+				case REGISTER_BC2: debugger->setCpuRegister(regBC_, val); break;
+				case REGISTER_DE2: debugger->setCpuRegister(regDE_, val); break;
+				case REGISTER_HL2: debugger->setCpuRegister(regHL_, val); break;
+				case REGISTER_PC: debugger->setCpuRegister(regPC, val); break;
+				case REGISTER_SP: debugger->setCpuRegister(regSP, val); break;
+				case REGISTER_IX: debugger->setCpuRegister(regIX, val); break;
+				case REGISTER_IY: debugger->setCpuRegister(regIY, val); break;
+				case REGISTER_I: debugger->setCpuRegister(regI, val); break;
+				case REGISTER_R: debugger->setCpuRegister(regR, val); break;
 			}
 		}
 	}
 }
 
+void DebuggerRegistersView::OnFlagCheckbox(wxCommandEvent & event)
+{
+	uint8_t f = 0;
+	f = f | (checkbox_flag_c->GetValue() ? 1 : 0) << 0;
+	f = f | (checkbox_flag_n->GetValue() ? 1 : 0) << 1;
+	f = f | (checkbox_flag_p->GetValue() ? 1 : 0) << 2;
+	f = f | (checkbox_flag_x->GetValue() ? 1 : 0) << 3;
+	f = f | (checkbox_flag_h->GetValue() ? 1 : 0) << 4;
+	f = f | (checkbox_flag_y->GetValue() ? 1 : 0) << 5;
+	f = f | (checkbox_flag_z->GetValue() ? 1 : 0) << 6;
+	f = f | (checkbox_flag_s->GetValue() ? 1 : 0) << 7;
+
+	uint16_t af = debugger->getCpuRegister(regAF);
+	af = (af & ~(0xff)) | f;
+	debugger->setCpuRegister(regAF, af);
+}
 
 // wxGlade: add DebuggerRegistersView event handlers
-
 
 void DebuggerRegistersView::set_properties()
 {
 	// begin wxGlade: DebuggerRegistersView::set_properties
 	SetTitle(_("Registers"));
+	label_1->SetFont(wxFont(10, wxDEFAULT, wxNORMAL, wxBOLD, 0, wxT("")));
+	label_2->SetFont(wxFont(10, wxDEFAULT, wxNORMAL, wxBOLD, 0, wxT("")));
+	label_3->SetFont(wxFont(10, wxDEFAULT, wxNORMAL, wxBOLD, 0, wxT("")));
+	label_4->SetFont(wxFont(10, wxDEFAULT, wxNORMAL, wxBOLD, 0, wxT("")));
+	label_5->SetFont(wxFont(10, wxDEFAULT, wxNORMAL, wxBOLD, 0, wxT("")));
 	// end wxGlade
 }
 
 void DebuggerRegistersView::do_layout()
 {
 	// begin wxGlade: DebuggerRegistersView::do_layout
-	wxBoxSizer* registers_columns = new wxBoxSizer(wxHORIZONTAL);
-	wxBoxSizer* registers2 = new wxBoxSizer(wxVERTICAL);
+	wxBoxSizer* sizer_13 = new wxBoxSizer(wxHORIZONTAL);
+	wxBoxSizer* sizer_3 = new wxBoxSizer(wxVERTICAL);
+	wxBoxSizer* sizer_11 = new wxBoxSizer(wxHORIZONTAL);
+	wxGridSizer* grid_sizer_1 = new wxGridSizer(2, 8, 0, 0);
+	wxBoxSizer* sizer_10 = new wxBoxSizer(wxHORIZONTAL);
 	wxBoxSizer* sizer_reg_r = new wxBoxSizer(wxHORIZONTAL);
+	wxBoxSizer* sizer_reg_i = new wxBoxSizer(wxHORIZONTAL);
+	wxBoxSizer* sizer_9 = new wxBoxSizer(wxHORIZONTAL);
 	wxBoxSizer* sizer_reg_iy = new wxBoxSizer(wxHORIZONTAL);
 	wxBoxSizer* sizer_reg_ix = new wxBoxSizer(wxHORIZONTAL);
-	wxBoxSizer* sizer_reg_hl2 = new wxBoxSizer(wxHORIZONTAL);
-	wxBoxSizer* sizer_reg_de2 = new wxBoxSizer(wxHORIZONTAL);
-	wxBoxSizer* sizer_reg_bc2 = new wxBoxSizer(wxHORIZONTAL);
-	wxBoxSizer* sizer_reg_af2 = new wxBoxSizer(wxHORIZONTAL);
-	wxBoxSizer* registers1 = new wxBoxSizer(wxVERTICAL);
-	wxBoxSizer* sizer_reg_i = new wxBoxSizer(wxHORIZONTAL);
+	wxBoxSizer* sizer_8 = new wxBoxSizer(wxHORIZONTAL);
 	wxBoxSizer* sizer_reg_sp = new wxBoxSizer(wxHORIZONTAL);
 	wxBoxSizer* sizer_reg_pc = new wxBoxSizer(wxHORIZONTAL);
+	wxBoxSizer* sizer_7 = new wxBoxSizer(wxHORIZONTAL);
+	wxBoxSizer* sizer_reg_hl2 = new wxBoxSizer(wxHORIZONTAL);
 	wxBoxSizer* sizer_reg_hl = new wxBoxSizer(wxHORIZONTAL);
+	wxBoxSizer* sizer_6 = new wxBoxSizer(wxHORIZONTAL);
+	wxBoxSizer* sizer_reg_de2 = new wxBoxSizer(wxHORIZONTAL);
 	wxBoxSizer* sizer_reg_de = new wxBoxSizer(wxHORIZONTAL);
+	wxBoxSizer* sizer_5 = new wxBoxSizer(wxHORIZONTAL);
+	wxBoxSizer* sizer_reg_bc2 = new wxBoxSizer(wxHORIZONTAL);
 	wxBoxSizer* sizer_reg_bc = new wxBoxSizer(wxHORIZONTAL);
+	wxBoxSizer* sizer_4 = new wxBoxSizer(wxHORIZONTAL);
+	wxBoxSizer* sizer_reg_af2 = new wxBoxSizer(wxHORIZONTAL);
 	wxBoxSizer* sizer_reg_af = new wxBoxSizer(wxHORIZONTAL);
+	sizer_3->Add(label_1, 0, wxADJUST_MINSIZE, 0);
 	sizer_reg_af->Add(label_af, 1, wxALIGN_CENTER_VERTICAL, 0);
 	sizer_reg_af->Add(reg_af, 0, wxALIGN_RIGHT|wxALIGN_CENTER_VERTICAL|wxFIXED_MINSIZE, 0);
-	registers1->Add(sizer_reg_af, 1, wxALIGN_RIGHT|wxADJUST_MINSIZE, 0);
-	sizer_reg_bc->Add(label_bc, 1, wxALIGN_CENTER_VERTICAL|wxADJUST_MINSIZE, 0);
-	sizer_reg_bc->Add(reg_bc, 0, wxALIGN_RIGHT|wxALIGN_CENTER_VERTICAL|wxFIXED_MINSIZE, 0);
-	registers1->Add(sizer_reg_bc, 1, wxALIGN_RIGHT|wxADJUST_MINSIZE, 0);
-	sizer_reg_de->Add(label_de, 1, wxALIGN_CENTER_VERTICAL|wxADJUST_MINSIZE, 0);
-	sizer_reg_de->Add(reg_de, 0, wxALIGN_RIGHT|wxALIGN_CENTER_VERTICAL|wxFIXED_MINSIZE, 0);
-	registers1->Add(sizer_reg_de, 1, wxALIGN_RIGHT|wxADJUST_MINSIZE, 0);
-	sizer_reg_hl->Add(label_hl, 1, wxALIGN_CENTER_VERTICAL|wxADJUST_MINSIZE, 0);
-	sizer_reg_hl->Add(reg_hl, 0, wxALIGN_RIGHT|wxALIGN_CENTER_VERTICAL|wxFIXED_MINSIZE, 0);
-	registers1->Add(sizer_reg_hl, 1, wxALIGN_RIGHT|wxADJUST_MINSIZE, 0);
-	sizer_reg_pc->Add(label_pc, 1, wxALIGN_CENTER_VERTICAL|wxADJUST_MINSIZE, 0);
-	sizer_reg_pc->Add(reg_pc, 0, wxALIGN_RIGHT|wxALIGN_CENTER_VERTICAL|wxFIXED_MINSIZE, 0);
-	registers1->Add(sizer_reg_pc, 1, wxALIGN_RIGHT|wxADJUST_MINSIZE, 0);
-	sizer_reg_sp->Add(label_sp, 1, wxALIGN_CENTER_VERTICAL|wxADJUST_MINSIZE, 0);
-	sizer_reg_sp->Add(reg_sp, 0, wxALIGN_RIGHT|wxALIGN_CENTER_VERTICAL|wxFIXED_MINSIZE, 0);
-	registers1->Add(sizer_reg_sp, 1, wxALIGN_RIGHT|wxADJUST_MINSIZE, 0);
-	sizer_reg_i->Add(label_i, 1, wxALIGN_CENTER_VERTICAL|wxADJUST_MINSIZE, 0);
-	sizer_reg_i->Add(reg_i, 0, wxALIGN_RIGHT|wxALIGN_CENTER_VERTICAL|wxFIXED_MINSIZE, 0);
-	registers1->Add(sizer_reg_i, 1, wxALIGN_RIGHT|wxADJUST_MINSIZE, 0);
-	registers_columns->Add(registers1, 1, wxEXPAND, 0);
+	sizer_4->Add(sizer_reg_af, 1, wxALIGN_RIGHT|wxADJUST_MINSIZE, 0);
 	sizer_reg_af2->Add(label_af2, 1, wxALIGN_CENTER_VERTICAL|wxADJUST_MINSIZE, 0);
 	sizer_reg_af2->Add(reg_af2, 0, wxALIGN_RIGHT|wxALIGN_CENTER_VERTICAL|wxFIXED_MINSIZE, 0);
-	registers2->Add(sizer_reg_af2, 1, wxALIGN_RIGHT|wxADJUST_MINSIZE, 0);
+	sizer_4->Add(sizer_reg_af2, 1, wxALIGN_RIGHT|wxADJUST_MINSIZE, 0);
+	sizer_3->Add(sizer_4, 1, wxEXPAND, 0);
+	sizer_reg_bc->Add(label_bc, 1, wxALIGN_CENTER_VERTICAL|wxADJUST_MINSIZE, 0);
+	sizer_reg_bc->Add(reg_bc, 0, wxALIGN_RIGHT|wxALIGN_CENTER_VERTICAL|wxFIXED_MINSIZE, 0);
+	sizer_5->Add(sizer_reg_bc, 1, wxALIGN_RIGHT|wxADJUST_MINSIZE, 0);
 	sizer_reg_bc2->Add(label_bc2, 1, wxALIGN_CENTER_VERTICAL|wxADJUST_MINSIZE, 0);
 	sizer_reg_bc2->Add(reg_bc2, 0, wxALIGN_RIGHT|wxALIGN_CENTER_VERTICAL|wxFIXED_MINSIZE, 0);
-	registers2->Add(sizer_reg_bc2, 1, wxALIGN_RIGHT|wxADJUST_MINSIZE, 0);
+	sizer_5->Add(sizer_reg_bc2, 1, wxALIGN_RIGHT|wxADJUST_MINSIZE, 0);
+	sizer_3->Add(sizer_5, 1, wxEXPAND, 0);
+	sizer_reg_de->Add(label_de, 1, wxALIGN_CENTER_VERTICAL|wxADJUST_MINSIZE, 0);
+	sizer_reg_de->Add(reg_de, 0, wxALIGN_RIGHT|wxALIGN_CENTER_VERTICAL|wxFIXED_MINSIZE, 0);
+	sizer_6->Add(sizer_reg_de, 1, wxALIGN_RIGHT|wxADJUST_MINSIZE, 0);
 	sizer_reg_de2->Add(label_de2, 1, wxALIGN_CENTER_VERTICAL|wxADJUST_MINSIZE, 0);
 	sizer_reg_de2->Add(reg_de2, 0, wxALIGN_RIGHT|wxALIGN_CENTER_VERTICAL|wxFIXED_MINSIZE, 0);
-	registers2->Add(sizer_reg_de2, 1, wxALIGN_RIGHT|wxADJUST_MINSIZE, 0);
+	sizer_6->Add(sizer_reg_de2, 1, wxALIGN_RIGHT|wxADJUST_MINSIZE, 0);
+	sizer_3->Add(sizer_6, 1, wxEXPAND, 0);
+	sizer_reg_hl->Add(label_hl, 1, wxALIGN_CENTER_VERTICAL|wxADJUST_MINSIZE, 0);
+	sizer_reg_hl->Add(reg_hl, 0, wxALIGN_RIGHT|wxALIGN_CENTER_VERTICAL|wxFIXED_MINSIZE, 0);
+	sizer_7->Add(sizer_reg_hl, 1, wxALIGN_RIGHT|wxADJUST_MINSIZE, 0);
 	sizer_reg_hl2->Add(label_hl2, 1, wxALIGN_CENTER_VERTICAL|wxADJUST_MINSIZE, 0);
 	sizer_reg_hl2->Add(reg_hl2, 0, wxALIGN_RIGHT|wxALIGN_CENTER_VERTICAL|wxFIXED_MINSIZE, 0);
-	registers2->Add(sizer_reg_hl2, 1, wxALIGN_RIGHT|wxADJUST_MINSIZE, 0);
+	sizer_7->Add(sizer_reg_hl2, 1, wxALIGN_RIGHT|wxADJUST_MINSIZE, 0);
+	sizer_3->Add(sizer_7, 1, wxEXPAND, 0);
+	sizer_3->Add(label_2, 0, wxTOP|wxADJUST_MINSIZE, 2);
+	sizer_reg_pc->Add(label_pc, 1, wxALIGN_CENTER_VERTICAL|wxADJUST_MINSIZE, 0);
+	sizer_reg_pc->Add(reg_pc, 0, wxALIGN_RIGHT|wxALIGN_CENTER_VERTICAL|wxFIXED_MINSIZE, 0);
+	sizer_8->Add(sizer_reg_pc, 1, wxALIGN_RIGHT|wxADJUST_MINSIZE, 0);
+	sizer_reg_sp->Add(label_sp, 1, wxALIGN_CENTER_VERTICAL|wxADJUST_MINSIZE, 0);
+	sizer_reg_sp->Add(reg_sp, 0, wxALIGN_RIGHT|wxALIGN_CENTER_VERTICAL|wxFIXED_MINSIZE, 0);
+	sizer_8->Add(sizer_reg_sp, 1, wxALIGN_RIGHT|wxADJUST_MINSIZE, 0);
+	sizer_3->Add(sizer_8, 1, wxEXPAND, 0);
+	sizer_3->Add(label_3, 0, wxTOP|wxADJUST_MINSIZE, 2);
 	sizer_reg_ix->Add(label_ix, 1, wxALIGN_CENTER_VERTICAL|wxADJUST_MINSIZE, 0);
 	sizer_reg_ix->Add(reg_ix, 0, wxALIGN_RIGHT|wxALIGN_CENTER_VERTICAL|wxFIXED_MINSIZE, 0);
-	registers2->Add(sizer_reg_ix, 1, wxALIGN_RIGHT|wxADJUST_MINSIZE, 0);
+	sizer_9->Add(sizer_reg_ix, 1, wxALIGN_RIGHT|wxADJUST_MINSIZE, 0);
 	sizer_reg_iy->Add(label_iy, 1, wxALIGN_CENTER_VERTICAL|wxADJUST_MINSIZE, 0);
 	sizer_reg_iy->Add(reg_iy, 0, wxALIGN_RIGHT|wxALIGN_CENTER_VERTICAL|wxFIXED_MINSIZE, 0);
-	registers2->Add(sizer_reg_iy, 1, wxALIGN_RIGHT|wxADJUST_MINSIZE, 0);
+	sizer_9->Add(sizer_reg_iy, 1, wxALIGN_RIGHT|wxADJUST_MINSIZE, 0);
+	sizer_3->Add(sizer_9, 1, wxEXPAND, 0);
+	sizer_3->Add(label_4, 0, wxTOP|wxADJUST_MINSIZE, 2);
+	sizer_reg_i->Add(label_i, 1, wxALIGN_CENTER_VERTICAL|wxADJUST_MINSIZE, 0);
+	sizer_reg_i->Add(reg_i, 0, wxALIGN_RIGHT|wxALIGN_CENTER_VERTICAL|wxFIXED_MINSIZE, 0);
+	sizer_10->Add(sizer_reg_i, 1, wxALIGN_RIGHT|wxADJUST_MINSIZE, 0);
 	sizer_reg_r->Add(label_r, 1, wxALIGN_CENTER_VERTICAL|wxADJUST_MINSIZE, 0);
 	sizer_reg_r->Add(reg_r, 0, wxALIGN_RIGHT|wxALIGN_CENTER_VERTICAL|wxFIXED_MINSIZE, 0);
-	registers2->Add(sizer_reg_r, 1, wxALIGN_RIGHT|wxADJUST_MINSIZE, 0);
-	registers_columns->Add(registers2, 1, wxEXPAND, 0);
-	SetSizer(registers_columns);
-	registers_columns->Fit(this);
+	sizer_10->Add(sizer_reg_r, 1, wxALIGN_RIGHT|wxADJUST_MINSIZE, 0);
+	sizer_3->Add(sizer_10, 1, wxEXPAND, 0);
+	sizer_3->Add(label_5, 0, wxTOP|wxADJUST_MINSIZE, 2);
+	grid_sizer_1->Add(label_9, 0, wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxADJUST_MINSIZE, 0);
+	grid_sizer_1->Add(label_10, 0, wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxADJUST_MINSIZE, 0);
+	grid_sizer_1->Add(label_11, 0, wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxADJUST_MINSIZE, 0);
+	grid_sizer_1->Add(label_12, 0, wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxADJUST_MINSIZE, 0);
+	grid_sizer_1->Add(label_13, 0, wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxADJUST_MINSIZE, 0);
+	grid_sizer_1->Add(label_14, 0, wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxADJUST_MINSIZE, 0);
+	grid_sizer_1->Add(label_15, 0, wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxADJUST_MINSIZE, 0);
+	grid_sizer_1->Add(label_16, 0, wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxADJUST_MINSIZE, 0);
+	grid_sizer_1->Add(checkbox_flag_s, 0, wxADJUST_MINSIZE, 0);
+	grid_sizer_1->Add(checkbox_flag_z, 0, wxADJUST_MINSIZE, 0);
+	grid_sizer_1->Add(checkbox_flag_y, 0, wxADJUST_MINSIZE, 0);
+	grid_sizer_1->Add(checkbox_flag_h, 0, wxADJUST_MINSIZE, 0);
+	grid_sizer_1->Add(checkbox_flag_x, 0, wxADJUST_MINSIZE, 0);
+	grid_sizer_1->Add(checkbox_flag_p, 0, wxADJUST_MINSIZE, 0);
+	grid_sizer_1->Add(checkbox_flag_n, 0, wxADJUST_MINSIZE, 0);
+	grid_sizer_1->Add(checkbox_flag_c, 0, wxADJUST_MINSIZE, 0);
+	sizer_11->Add(grid_sizer_1, 2, wxEXPAND, 0);
+	sizer_11->Add(panel_1, 1, wxEXPAND, 0);
+	sizer_3->Add(sizer_11, 2, wxEXPAND, 0);
+	panel_2->SetSizer(sizer_3);
+	sizer_13->Add(panel_2, 1, wxEXPAND, 0);
+	SetSizer(sizer_13);
+	sizer_13->Fit(this);
 	Layout();
 	// end wxGlade
 }

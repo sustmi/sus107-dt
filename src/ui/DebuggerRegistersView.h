@@ -41,6 +41,30 @@ class Debugger;
 class DebuggerRegistersView: public wxFrame, public EmulatorListener, public DebuggerListener {
 public:
 	// begin wxGlade: DebuggerRegistersView::ids
+	enum {
+		REGISTER_AF = wxID_HIGHEST + 1048,
+		REGISTER_AF2 = wxID_HIGHEST + 1050,
+		REGISTER_BC = wxID_HIGHEST + 1052,
+		REGISTER_BC2 = wxID_HIGHEST + 1054,
+		REGISTER_DE = wxID_HIGHEST + 1056,
+		REGISTER_DE2 = wxID_HIGHEST + 1058,
+		REGISTER_HL = wxID_HIGHEST + 1060,
+		REGISTER_HL2 = wxID_HIGHEST + 1062,
+		REGISTER_PC = wxID_HIGHEST + 1064,
+		REGISTER_SP = wxID_HIGHEST + 1066,
+		REGISTER_IX = wxID_HIGHEST + 1068,
+		REGISTER_IY = wxID_HIGHEST + 1070,
+		REGISTER_I = wxID_HIGHEST + 1072,
+		REGISTER_R = wxID_HIGHEST + 1074,
+		FLAG_S = wxID_HIGHEST + 1076,
+		FLAG_Z = wxID_HIGHEST + 1078,
+		FLAG_Y = wxID_HIGHEST + 1080,
+		FLAG_H = wxID_HIGHEST + 1082,
+		FLAG_X = wxID_HIGHEST + 1084,
+		FLAG_P = wxID_HIGHEST + 1086,
+		FLAG_N = wxID_HIGHEST + 1088,
+		FLAG_C = wxID_HIGHEST + 1090
+	};
 	// end wxGlade
 
 	DebuggerRegistersView(wxWindow* parent, int id, const wxString& title, const wxPoint& pos=wxDefaultPosition, const wxSize& size=wxDefaultSize, long style=wxDEFAULT_FRAME_STYLE);
@@ -61,40 +85,64 @@ private:
 
 protected:
 	// begin wxGlade: DebuggerRegistersView::attributes
+	wxStaticText* label_1;
 	wxStaticText* label_af;
 	wxTextCtrl* reg_af;
+	wxStaticText* label_af2;
+	wxTextCtrl* reg_af2;
 	wxStaticText* label_bc;
 	wxTextCtrl* reg_bc;
+	wxStaticText* label_bc2;
+	wxTextCtrl* reg_bc2;
 	wxStaticText* label_de;
 	wxTextCtrl* reg_de;
+	wxStaticText* label_de2;
+	wxTextCtrl* reg_de2;
 	wxStaticText* label_hl;
 	wxTextCtrl* reg_hl;
+	wxStaticText* label_hl2;
+	wxTextCtrl* reg_hl2;
+	wxStaticText* label_2;
 	wxStaticText* label_pc;
 	wxTextCtrl* reg_pc;
 	wxStaticText* label_sp;
 	wxTextCtrl* reg_sp;
-	wxStaticText* label_i;
-	wxTextCtrl* reg_i;
-	wxStaticText* label_af2;
-	wxTextCtrl* reg_af2;
-	wxStaticText* label_bc2;
-	wxTextCtrl* reg_bc2;
-	wxStaticText* label_de2;
-	wxTextCtrl* reg_de2;
-	wxStaticText* label_hl2;
-	wxTextCtrl* reg_hl2;
+	wxStaticText* label_3;
 	wxStaticText* label_ix;
 	wxTextCtrl* reg_ix;
 	wxStaticText* label_iy;
 	wxTextCtrl* reg_iy;
+	wxStaticText* label_4;
+	wxStaticText* label_i;
+	wxTextCtrl* reg_i;
 	wxStaticText* label_r;
 	wxTextCtrl* reg_r;
+	wxStaticText* label_5;
+	wxStaticText* label_9;
+	wxStaticText* label_10;
+	wxStaticText* label_11;
+	wxStaticText* label_12;
+	wxStaticText* label_13;
+	wxStaticText* label_14;
+	wxStaticText* label_15;
+	wxStaticText* label_16;
+	wxCheckBox* checkbox_flag_s;
+	wxCheckBox* checkbox_flag_z;
+	wxCheckBox* checkbox_flag_y;
+	wxCheckBox* checkbox_flag_h;
+	wxCheckBox* checkbox_flag_x;
+	wxCheckBox* checkbox_flag_p;
+	wxCheckBox* checkbox_flag_n;
+	wxCheckBox* checkbox_flag_c;
+	wxPanel* panel_1;
+	wxPanel* panel_2;
 	// end wxGlade
 
 	DECLARE_EVENT_TABLE();
 
 public:
 	virtual void OnRegEnter(wxCommandEvent &event); // wxGlade: <event_handler>
+	virtual void OnFlagCheckbox(wxCommandEvent &event); // wxGlade: <event_handler>
     void attach(Emulator *emulator, Debugger *debugger);
 }; // wxGlade: end class
 
