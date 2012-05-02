@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sus107-dt\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-05-02 02:47+0100\n"
-"PO-Revision-Date: 2012-05-02 03:02+0100\n"
+"POT-Creation-Date: 2012-05-02 03:20+0100\n"
+"PO-Revision-Date: 2012-05-02 03:22+0100\n"
 "Last-Translator: Miroslav Šustek <sus107@vsb.cz>\n"
 "Language-Team:  <sus107@vsb.cz>\n"
 "Language: \n"
@@ -258,27 +258,35 @@ msgid "File 48.rom not found"
 msgstr "Soubor 48.rom nenalezen"
 
 #: ../src/ui/EmulatorView.cpp:194
-#: ../src/ui/EmulatorView.cpp:244
+#: ../src/ui/EmulatorView.cpp:245
 msgid "Open file"
 msgstr "Otevřít soubor"
 
-#: ../src/ui/EmulatorView.cpp:203
+#: ../src/ui/EmulatorView.cpp:196
+msgid "Snapshot files (*.z80;*.szx;*.sna;*.zxs;*.snp)|*.z80;*.Z80;*.szx;*.SZX;*.sna;*.SNA;*.zxs;*.ZXS;*.snp;*.SNP|All files (*.*)|*.*"
+msgstr "Soubory snapshot (*.z80;*.szx;*.sna;*.zxs;*.snp)|*.z80;*.Z80;*.szx;*.SZX;*.sna;*.SNA;*.zxs;*.ZXS;*.snp;*.SNP|Všechny soubory (*.*)|*.*"
+
+#: ../src/ui/EmulatorView.cpp:204
 msgid "Could not load selected snapshot."
 msgstr "Nepodařilo se načíst snapshot."
 
-#: ../src/ui/EmulatorView.cpp:203
+#: ../src/ui/EmulatorView.cpp:204
 msgid "Error loading snapshot"
 msgstr "Chyba při načítání snapshotu"
 
-#: ../src/ui/EmulatorView.cpp:205
+#: ../src/ui/EmulatorView.cpp:206
 msgid "Loaded snapshot is not targeted for ZX Spectrum 48K."
 msgstr "Načtený snapshot není určen pro ZX Spectrum 48K."
 
-#: ../src/ui/EmulatorView.cpp:205
+#: ../src/ui/EmulatorView.cpp:206
 msgid "Improper snapshot machine"
 msgstr "Snapshot pro nesprávný počítač"
 
-#: ../src/ui/EmulatorView.cpp:396
+#: ../src/ui/EmulatorView.cpp:247
+msgid "Tape image files (*.tap;*.tzx;*.spc;*.sta;*.ltp)|*.tap;*.TAP;*.tzx;*.TZX;*.spc;*.SPC;*.sta;*.STA;*.ltp;*.LTP|All files (*.*)|*.*"
+msgstr "Soubory tape image (*.tap;*.tzx;*.spc;*.sta;*.ltp)|*.tap;*.TAP;*.tzx;*.TZX;*.spc;*.SPC;*.sta;*.STA;*.ltp;*.LTP|Všechny soubory (*.*)|*.*"
+
+#: ../src/ui/EmulatorView.cpp:398
 msgid "Emulator"
 msgstr "Emulátor"
 
@@ -297,7 +305,7 @@ msgstr "Instrukce"
 #: ../src/ui/DebuggerView.cpp:35
 #: ../src/ui/DebuggerView.cpp:159
 msgid "Go to address..."
-msgstr "Jít na adresu:"
+msgstr "Jít na adresu..."
 
 #: ../src/ui/DebuggerView.cpp:35
 msgid "Add or remove breakpoint at selected address"

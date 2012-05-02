@@ -22,13 +22,12 @@
 #include "Memory.h"
 
 Ula::Ula() {
-	// TODO Auto-generated constructor stub
 	borderColor = 0;
 	lastInterruptTime = 0;
 }
 
 Ula::~Ula() {
-	// TODO Auto-generated destructor stub
+
 }
 
 void Ula::attach(Machine *machine, Memory *memory, Cpu *cpu, Keyboard *keyboard,

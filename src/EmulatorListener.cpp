@@ -18,11 +18,10 @@
 #include "EmulatorListener.h"
 
 EmulatorListener::EmulatorListener() {
-	// TODO Auto-generated constructor stub
 
 }
 
 EmulatorListener::~EmulatorListener() {
-	// TODO Auto-generated destructor stub
+
 }
 

@@ -57,8 +57,7 @@ private:
 	Ula *ula;
 	Memory *memory;
 
-	// current emulation time (TODO: in t-states?)
-	uint64_t currentTime;
+	uint64_t currentTime; // current emulation time (t-states)
 	uint64_t cpuFreq;
 
 	bool interruptRequest;

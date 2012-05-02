@@ -21,11 +21,11 @@
 #include "Ports.h"
 
 Ports::Ports() {
-	// TODO Auto-generated constructor stub
+
 }
 
 Ports::~Ports() {
-	// TODO Auto-generated destructor stub
+	devices.clear();
 }
 
 uint8_t Ports::pread(uint16_t port)

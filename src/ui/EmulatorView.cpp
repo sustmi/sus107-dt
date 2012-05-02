@@ -193,7 +193,8 @@ void EmulatorView::OnFileOpen(wxCommandEvent & event)
 {
 	wxFileDialog* openFileDialog = new wxFileDialog(this, _("Open file"),
 			wxT(""), wxT(""),
-			wxT("Snapshot files (*.z80;*.sna)|*.z80;*.sna|All files (*.*)|*.*"),
+			_("Snapshot files (*.z80;*.szx;*.sna;*.zxs;*.snp)|*.z80;*.Z80;*.szx;*.SZX;*.sna;*.SNA;*.zxs;*.ZXS;*.snp;*.SNP"
+					"|All files (*.*)|*.*"),
 			wxFD_OPEN|wxFD_FILE_MUST_EXIST, wxDefaultPosition);
 
 	if (openFileDialog->ShowModal() == wxID_OK) {
@@ -243,7 +244,8 @@ void EmulatorView::OnTapeOpen(wxCommandEvent & event)
 {
 	wxFileDialog* openFileDialog = new wxFileDialog(this, _("Open file"),
 			wxT(""), wxT(""),
-			wxT("Tape files (*.tap;*.tzx)|*.tap;*.tzx|All files (*.*)|*.*"),
+			_("Tape image files (*.tap;*.tzx;*.spc;*.sta;*.ltp)|*.tap;*.TAP;*.tzx;*.TZX;*.spc;*.SPC;*.sta;*.STA;*.ltp;*.LTP"
+					"|All files (*.*)|*.*"),
 			wxFD_OPEN|wxFD_FILE_MUST_EXIST, wxDefaultPosition);
 
 	if (openFileDialog->ShowModal() == wxID_OK) {

@@ -115,8 +115,6 @@ void Emulator::runUntil(uint64_t time_ms)
 		uint16_t pc = machine->getCpu()->getRegister(regPC);
 		if (debugger->isBreakpoint(pc)) {
 			stop();
-			// TODO: zajistit, aby stopky neměly čas o jednu dávku v budoucnu
-			// a po opětovném startu nedošlo k přeskočení určitého času
 			break;
 		}
 

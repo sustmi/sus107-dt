@@ -18,11 +18,10 @@
 #include "DebuggerListener.h"
 
 DebuggerListener::DebuggerListener() {
-	// TODO Auto-generated constructor stub
 
 }
 
 DebuggerListener::~DebuggerListener() {
-	// TODO Auto-generated destructor stub
+
 }
 

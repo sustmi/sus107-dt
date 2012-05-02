@@ -22,7 +22,7 @@ Debugger::Debugger() {
 }
 
 Debugger::~Debugger() {
-	// TODO Auto-generated destructor stub
+
 }
 
 void Debugger::addListener(DebuggerListener *listener)

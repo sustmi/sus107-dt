@@ -42,7 +42,7 @@ Keyboard::Keyboard() {
 }
 
 Keyboard::~Keyboard() {
-	// TODO Auto-generated destructor stub
+
 }
 
 uint8_t Keyboard::getKbData(uint8_t addrCode) {

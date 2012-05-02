@@ -116,11 +116,11 @@ void DebuggerCodeGui::OnCellChange(wxGridEvent &event)
 	// make sure that CELL_CHANGE event doesn't loop,
 	// because code_grid->DeleteRows() in uiUpdate() emits another CELL_CHANGE event
 	if (cellChangeMutex.TryLock() == wxMUTEX_NO_ERROR) {
-		if (event.GetCol() == 3) { // data
+		if (event.GetCol() == 2) { // data
 			int row = event.GetRow();
 			int addr = rowToAddressMap[row];
 
-			wxString value = code_grid->GetCellValue(row, 3);
+			wxString value = code_grid->GetCellValue(row, 2);
 			unsigned char data[100];
 			int dataLen;
 			if ((dataLen = parseHex(value, data, 100)) >= 0) {
