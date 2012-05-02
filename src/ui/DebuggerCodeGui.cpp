@@ -40,9 +40,9 @@ DebuggerCodeGui::DebuggerCodeGui(wxWindow* parent, int id, const wxPoint& pos, c
 	code_grid->Connect(wxEVT_SIZE, wxSizeEventHandler(DebuggerCodeGui::OnCodeGridSize), NULL, this);
 
 	rowContextMenu = new wxMenu();
-	rowContextMenu->Append(DEBUGGER_TOGGLE_BREAKPOINT, wxT("Toggle breakpoint"), wxEmptyString, wxITEM_NORMAL);
+	rowContextMenu->Append(DEBUGGER_TOGGLE_BREAKPOINT, _("Toggle breakpoint"), wxEmptyString, wxITEM_NORMAL);
 	rowContextMenu->AppendSeparator();
-	rowContextMenu->Append(DEBUGGER_SHOW_IN_HEXVIEW, wxT("Show in Hex view"), wxEmptyString, wxITEM_NORMAL);
+	rowContextMenu->Append(DEBUGGER_SHOW_IN_HEXVIEW, _("Show in Hex view"), wxEmptyString, wxITEM_NORMAL);
 }
 
 DebuggerCodeGui::~DebuggerCodeGui()

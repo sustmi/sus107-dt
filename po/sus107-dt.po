@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sus107-dt\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-05-02 03:42+0100\n"
-"PO-Revision-Date: 2012-05-02 03:42+0100\n"
+"POT-Creation-Date: 2012-05-02 03:52+0100\n"
+"PO-Revision-Date: 2012-05-02 03:54+0100\n"
 "Last-Translator: Miroslav Šustek <sus107@vsb.cz>\n"
 "Language-Team:  <sus107@vsb.cz>\n"
 "Language: \n"
@@ -254,6 +254,14 @@ msgstr "Soubory tape image (*.tap;*.tzx;*.spc;*.sta;*.ltp)|*.tap;*.TAP;*.tzx;*.T
 #: ../src/ui/EmulatorView.cpp:398
 msgid "Emulator"
 msgstr "Emulátor"
+
+#: ../src/ui/DebuggerCodeGui.cpp:43
+msgid "Toggle breakpoint"
+msgstr "Přepnout breakpoint"
+
+#: ../src/ui/DebuggerCodeGui.cpp:45
+msgid "Show in Hex view"
+msgstr "Označit v hexadecimálním zobrazení"
 
 #: ../src/ui/DebuggerCodeGui.cpp:358
 msgid "Address"

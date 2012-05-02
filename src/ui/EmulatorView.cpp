@@ -118,6 +118,16 @@ void EmulatorView::init() {
 	keyboardMapping['Z'] = KEY_Z;
 	keyboardMapping[WXK_RETURN] = KEY_ENTER;
 	keyboardMapping[WXK_SPACE] = KEY_SPACE;
+	keyboardMapping['0'] = KEY_0;
+	keyboardMapping['1'] = KEY_1;
+	keyboardMapping['2'] = KEY_2;
+	keyboardMapping['3'] = KEY_3;
+	keyboardMapping['4'] = KEY_4;
+	keyboardMapping['5'] = KEY_5;
+	keyboardMapping['6'] = KEY_6;
+	keyboardMapping['7'] = KEY_7;
+	keyboardMapping['8'] = KEY_8;
+	keyboardMapping['9'] = KEY_9;
 	keyboardMapping[WXK_NUMPAD0] = KEY_0;
 	keyboardMapping[WXK_NUMPAD1] = KEY_1;
 	keyboardMapping[WXK_NUMPAD2] = KEY_2;
@@ -167,10 +177,17 @@ void EmulatorView::emulatorEvent(EmulatorEvent event)
 	if (event == EMULATOR_EVENT_EMULATION_START) {
 		GetMenuBar()->Enable(MENU_MACHINE_START, false);
 		GetMenuBar()->Enable(MENU_MACHINE_STOP, true);
+		timer->Start(20);
 	}
 	if (event == EMULATOR_EVENT_EMULATION_STOP) {
 		GetMenuBar()->Enable(MENU_MACHINE_START, true);
 		GetMenuBar()->Enable(MENU_MACHINE_STOP, false);
+		timer->Stop();
+	}
+	if (event == EMULATOR_EVENT_MEMORY_CHANGED ||
+		event == EMULATOR_EVENT_VIDEO_FRAME)
+	{
+		Refresh();
 	}
 }
 
@@ -375,19 +392,6 @@ void EmulatorView::OnKeyUp(wxKeyEvent &event) {
 		emulator->getKeyboard()->keyReleased(it->second);
 	}
 }
-
-/*void EmulatorView::OnJoystickEvent(wxJoystickEvent& event) {
-	printf("OnJoystickEvent\n");
-
-	printf("%d\n", joystick->GetVPosition());
-
-	if (event.ButtonDown()) {
-		printf("button down\n");
-		emulator->getJoystick()->keyPressed(JOY_FIRE);
-	} else if (event.ButtonUp()) {
-		emulator->getJoystick()->keyReleased(JOY_FIRE);
-	}
-}*/
 
 // wxGlade: add EmulatorView event handlers
 
