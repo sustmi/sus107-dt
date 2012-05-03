@@ -40,8 +40,8 @@ public:
 private:
 	Machine *machine;
 
-	static const int PAGE_SIZE = 0x4000;
-	uint8_t mem[PAGE_SIZE*4];
+	static const int SPECTRUM_MEM_PAGE_SIZE = 0x4000;
+	uint8_t mem[SPECTRUM_MEM_PAGE_SIZE*4];
 };
 
 #endif /* MEMORY_H_ */

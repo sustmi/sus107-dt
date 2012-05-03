@@ -2,7 +2,7 @@ cmake_minimum_required (VERSION 2.6)
 project (sus107-dt)
 
 # wxWidgets library
-find_package(wxWidgets COMPONENTS core base adv stc richtext xml REQUIRED)
+find_package(wxWidgets COMPONENTS core base adv xml REQUIRED)
 include( "${wxWidgets_USE_FILE}" )
 
 # Portaudio library
@@ -67,3 +67,6 @@ set (Z80EX_STATIC_ONLY true)
 add_subdirectory (${Z80EX_PATH} ${Z80EX_BINARY_DIR})
 link_directories (${Z80EX_BINARY_DIR})
 target_link_libraries (sus107-dt z80ex-static z80ex_dasm-static)
+
+# installation
+install (TARGETS sus107-dt DESTINATION bin)

@@ -19,7 +19,6 @@
 
 #include <wx/wx.h>
 #include <wx/image.h>
-#include <wx/stc/stc.h>
 #include <wx/textdlg.h>
 
 #ifndef DEBUGGERVIEW_H
