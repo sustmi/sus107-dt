@@ -1,6 +1,8 @@
 == Requirements ==
+- CMake
 - libspectrum-1.0.0
-- wxWidgets-2.8-unicode
+- PortAudio V19
+- wxWidgets-2.8.12-unicode
 
 == Build commands ==
 cmake .
