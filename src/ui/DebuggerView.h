@@ -64,8 +64,6 @@ public:
 	void emulatorEvent(EmulatorEvent event);
 	void debuggerEvent(DebuggerEvent event);
 
-	void gotoAddress(uint16_t address);
-
 private:
 	// begin wxGlade: DebuggerView::methods
 	void set_properties();

@@ -59,6 +59,7 @@ Speaker::~Speaker() {
 		Pa_Terminate();
 	}
 	pthread_mutex_destroy(&mutex);
+	soundBuffer.clear();
 }
 
 void Speaker::attach(Machine *machine)

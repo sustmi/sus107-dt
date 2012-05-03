@@ -22,7 +22,17 @@ Emulator::Emulator() {
 }
 
 Emulator::~Emulator() {
-	// TODO Auto-generated destructor stub
+	delete debugger;
+	clock->stop();
+	delete machine;
+	delete tapeRecorder;
+	delete keyboard;
+	delete joystick;
+	delete speaker;
+	delete memory;
+	delete cpu;
+	delete ula;
+	delete ports;
 }
 
 void Emulator::addListener(EmulatorListener *listener)
@@ -47,10 +57,10 @@ void Emulator::init()
 {
 	running = false;
 
-	Memory *memory = new Memory();
+	memory = new Memory();
 	cpu = new Cpu();
 	ula = new Ula();
-	Ports *ports = new Ports();
+	ports = new Ports();
 
 	tapeRecorder = new TapeRecorder();
 	keyboard = new Keyboard();

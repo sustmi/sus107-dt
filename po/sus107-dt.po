@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sus107-dt\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-05-02 03:52+0100\n"
-"PO-Revision-Date: 2012-05-02 03:54+0100\n"
+"POT-Creation-Date: 2012-05-03 17:21+0100\n"
+"PO-Revision-Date: 2012-05-03 17:25+0100\n"
 "Last-Translator: Miroslav Šustek <sus107@vsb.cz>\n"
 "Language-Team:  <sus107@vsb.cz>\n"
 "Language: \n"
@@ -168,90 +168,96 @@ msgstr ""
 msgid "Registers"
 msgstr "Registry"
 
-#: ../src/ui/EmulatorView.cpp:39
-#: ../src/ui/EmulatorView.cpp:50
+#: ../src/ui/EmulatorView.cpp:41
+#: ../src/ui/EmulatorView.cpp:52
 msgid "Open..."
 msgstr "Otevřít..."
 
-#: ../src/ui/EmulatorView.cpp:40
+#: ../src/ui/EmulatorView.cpp:42
 msgid "Exit"
 msgstr "Konec"
 
-#: ../src/ui/EmulatorView.cpp:41
+#: ../src/ui/EmulatorView.cpp:43
 msgid "File"
 msgstr "Soubor"
 
-#: ../src/ui/EmulatorView.cpp:43
+#: ../src/ui/EmulatorView.cpp:45
 msgid "Start"
 msgstr "Spustit"
 
-#: ../src/ui/EmulatorView.cpp:44
-#: ../src/ui/EmulatorView.cpp:52
+#: ../src/ui/EmulatorView.cpp:46
+#: ../src/ui/EmulatorView.cpp:54
 msgid "Stop"
 msgstr "Zastavit"
 
-#: ../src/ui/EmulatorView.cpp:45
+#: ../src/ui/EmulatorView.cpp:47
 msgid "Reset"
 msgstr "Resetovat"
 
-#: ../src/ui/EmulatorView.cpp:47
+#: ../src/ui/EmulatorView.cpp:49
 msgid "Debugger..."
 msgstr "Debugger..."
 
-#: ../src/ui/EmulatorView.cpp:48
+#: ../src/ui/EmulatorView.cpp:50
 msgid "Machine"
 msgstr "Počítač"
 
-#: ../src/ui/EmulatorView.cpp:51
+#: ../src/ui/EmulatorView.cpp:53
 msgid "Play"
 msgstr "Přehrát"
 
-#: ../src/ui/EmulatorView.cpp:53
+#: ../src/ui/EmulatorView.cpp:55
 msgid "Rewind"
 msgstr "Přetočit"
 
-#: ../src/ui/EmulatorView.cpp:54
+#: ../src/ui/EmulatorView.cpp:56
 msgid "Tape"
 msgstr "Magnetofon"
 
-#: ../src/ui/EmulatorView.cpp:78
-msgid "Please put ROM file named 48.rom into application directory and restart application."
-msgstr "Prosím uložte ROM soubor s názvem 48.rom do složky s aplikací a restartujete aplikaci."
+#: ../src/ui/EmulatorView.cpp:113
+#, c-format
+msgid ""
+"Please place ROM file '%s' into current directory or one of these paths:\n"
+"%s"
+msgstr ""
+"Prosím uložte ROM soubor '%s' do aktuální složky nebo do jedné z následujících složek:\n"
+"%s"
 
-#: ../src/ui/EmulatorView.cpp:79
-msgid "File 48.rom not found"
-msgstr "Soubor 48.rom nenalezen"
+#: ../src/ui/EmulatorView.cpp:115
+#, c-format
+msgid "File %s not found"
+msgstr "Soubor %s nenalezen"
 
-#: ../src/ui/EmulatorView.cpp:194
-#: ../src/ui/EmulatorView.cpp:245
+#: ../src/ui/EmulatorView.cpp:258
+#: ../src/ui/EmulatorView.cpp:308
 msgid "Open file"
 msgstr "Otevřít soubor"
 
-#: ../src/ui/EmulatorView.cpp:196
+#: ../src/ui/EmulatorView.cpp:260
 msgid "Snapshot files (*.z80;*.szx;*.sna;*.zxs;*.snp)|*.z80;*.Z80;*.szx;*.SZX;*.sna;*.SNA;*.zxs;*.ZXS;*.snp;*.SNP|All files (*.*)|*.*"
 msgstr "Soubory snapshot (*.z80;*.szx;*.sna;*.zxs;*.snp)|*.z80;*.Z80;*.szx;*.SZX;*.sna;*.SNA;*.zxs;*.ZXS;*.snp;*.SNP|Všechny soubory (*.*)|*.*"
 
-#: ../src/ui/EmulatorView.cpp:204
+#: ../src/ui/EmulatorView.cpp:267
 msgid "Could not load selected snapshot."
 msgstr "Nepodařilo se načíst snapshot."
 
-#: ../src/ui/EmulatorView.cpp:204
+#: ../src/ui/EmulatorView.cpp:267
 msgid "Error loading snapshot"
 msgstr "Chyba při načítání snapshotu"
 
-#: ../src/ui/EmulatorView.cpp:206
+#: ../src/ui/EmulatorView.cpp:269
 msgid "Loaded snapshot is not targeted for ZX Spectrum 48K."
 msgstr "Načtený snapshot není určen pro ZX Spectrum 48K."
 
-#: ../src/ui/EmulatorView.cpp:206
+#: ../src/ui/EmulatorView.cpp:269
 msgid "Improper snapshot machine"
 msgstr "Snapshot pro nesprávný počítač"
 
-#: ../src/ui/EmulatorView.cpp:247
+#: ../src/ui/EmulatorView.cpp:310
 msgid "Tape image files (*.tap;*.tzx;*.spc;*.sta;*.ltp)|*.tap;*.TAP;*.tzx;*.TZX;*.spc;*.SPC;*.sta;*.STA;*.ltp;*.LTP|All files (*.*)|*.*"
 msgstr "Soubory tape image (*.tap;*.tzx;*.spc;*.sta;*.ltp)|*.tap;*.TAP;*.tzx;*.TZX;*.spc;*.SPC;*.sta;*.STA;*.ltp;*.LTP|Všechny soubory (*.*)|*.*"
 
-#: ../src/ui/EmulatorView.cpp:398
+#: ../src/ui/EmulatorView.cpp:444
 msgid "Emulator"
 msgstr "Emulátor"
 
@@ -263,15 +269,15 @@ msgstr "Přepnout breakpoint"
 msgid "Show in Hex view"
 msgstr "Označit v hexadecimálním zobrazení"
 
-#: ../src/ui/DebuggerCodeGui.cpp:358
+#: ../src/ui/DebuggerCodeGui.cpp:360
 msgid "Address"
 msgstr "Adresa"
 
-#: ../src/ui/DebuggerCodeGui.cpp:360
+#: ../src/ui/DebuggerCodeGui.cpp:362
 msgid "Data"
 msgstr "Data"
 
-#: ../src/ui/DebuggerCodeGui.cpp:362
+#: ../src/ui/DebuggerCodeGui.cpp:364
 msgid "Instruction"
 msgstr "Instrukce"
 

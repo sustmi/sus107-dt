@@ -47,7 +47,7 @@ void Memory::rawWrite(uint16_t addr, uint8_t value) {
 }
 
 void Memory::writePage(int page, const uint8_t *data, int size) {
-	memcpy(&mem[page*SPECTRUM_MEM_PAGE_SIZE], data, (size <= SPECTRUM_MEM_PAGE_SIZE) ? size : SPECTRUM_MEM_PAGE_SIZE);
+	memcpy(&mem[page*SPECTRUM_PAGE_SIZE], data, (size <= SPECTRUM_PAGE_SIZE) ? size : SPECTRUM_PAGE_SIZE);
 }
 
 

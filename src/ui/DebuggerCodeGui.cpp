@@ -322,7 +322,9 @@ void DebuggerCodeGui::uiUpdate()
 			row++;
 		}
 
-		code_grid->DeleteRows(row, code_grid->GetRows() - row);
+		if (code_grid->GetRows() >= row) {
+			code_grid->DeleteRows(row, code_grid->GetRows() - row + 1);
+		}
 
 		code_grid->EndBatch();
 	}

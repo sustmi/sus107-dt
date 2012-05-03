@@ -19,6 +19,8 @@
 #define EMULATOR_H_
 
 #include "Machine.h"
+#include "Memory.h"
+#include "Ports.h"
 #include "Cpu.h"
 #include "Ula.h"
 #include "TapeRecorder.h"
@@ -31,6 +33,8 @@
 #include "EmulatorListener.h"
 
 class Machine;
+class Memory;
+class Ports;
 class Cpu;
 class Ula;
 class TapeRecorder;
@@ -73,6 +77,8 @@ private:
 	Debugger *debugger;
 
 	Machine *machine;
+	Memory *memory;
+	Ports *ports;
 	Cpu *cpu;
 	Ula *ula;
 	TapeRecorder *tapeRecorder;
