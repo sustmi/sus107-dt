@@ -23,6 +23,8 @@ DebuggerHexGui::DebuggerHexGui(wxWindow* parent, int id, const wxPoint& pos, con
 	emulator = NULL;
 	debugger = NULL;
 
+	saveFileDialog = NULL;
+
 	offset_scroll->Enable(true);
 	offset_ctrl->SetOffsetLimit(65536);
 	offset_ctrl->offset_mode = 'X';
@@ -46,6 +48,9 @@ DebuggerHexGui::~DebuggerHexGui() {
 	}
 	if (debugger) {
 		debugger->removeListener(this);
+	}
+	if (saveFileDialog) {
+		delete saveFileDialog;
 	}
 
 	hex_ctrl->Disconnect(wxEVT_CHAR, wxKeyEventHandler(DebuggerHexGui::OnKeyboardChar), NULL, this);
@@ -407,10 +412,12 @@ void DebuggerHexGui::CopySelection()
 
 void DebuggerHexGui::OnSaveAsFile(wxCommandEvent & event)
 {
-	wxFileDialog* saveFileDialog = new wxFileDialog(this, _("Save as file"),
+	if (!saveFileDialog) {
+		saveFileDialog = new wxFileDialog(this, _("Save as file"),
 			wxEmptyString, wxEmptyString,
 			wxT("All files (*.*)|*.*"),
-			wxFD_SAVE | wxFD_OVERWRITE_PROMPT);
+			wxFD_SAVE | wxFD_OVERWRITE_PROMPT | wxFD_CHANGE_DIR);
+	}
 
 	if (saveFileDialog->ShowModal() == wxID_OK) {
 		unsigned char *buffer = NULL;

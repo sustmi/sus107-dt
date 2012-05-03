@@ -71,6 +71,9 @@ private:
 	void do_layout();
 	// end wxGlade
 
+	wxFileDialog* openTapeFileDialog;
+	wxFileDialog* openSnapFileDialog;
+
 	wxTimer *timer;
 	wxStopWatch *stopWatch;
 #ifdef wxUSE_JOYSTICK

@@ -67,6 +67,8 @@ private:
 	Emulator *emulator;
 	Debugger *debugger;
 
+	wxFileDialog* saveFileDialog;
+
 protected:
 	DECLARE_EVENT_TABLE()
 };

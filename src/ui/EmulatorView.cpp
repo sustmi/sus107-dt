@@ -68,6 +68,9 @@ EmulatorView::EmulatorView(wxWindow* parent, int id, const wxString& title, cons
 
 	emulator = NULL;
 
+	openTapeFileDialog = NULL;
+	openSnapFileDialog = NULL;
+
 	buffer = new uint32_t[352*288];
 }
 
@@ -188,6 +191,12 @@ EmulatorView::~EmulatorView()
 	if (emulator) {
 		emulator->removeListener(this);
 	}
+	if (openTapeFileDialog) {
+		delete openTapeFileDialog;
+	}
+	if (openSnapFileDialog) {
+		delete openSnapFileDialog;
+	}
 	delete buffer;
 }
 
@@ -253,14 +262,16 @@ END_EVENT_TABLE();
 void EmulatorView::OnFileOpen(wxCommandEvent & event)
 {
 	stop();
-	wxFileDialog* openFileDialog = new wxFileDialog(this, _("Open file"),
+	if (!openSnapFileDialog) {
+		openSnapFileDialog = new wxFileDialog(this, _("Open file"),
 			wxT(""), wxT(""),
 			_("Snapshot files (*.z80;*.szx;*.sna;*.zxs;*.snp)|*.z80;*.Z80;*.szx;*.SZX;*.sna;*.SNA;*.zxs;*.ZXS;*.snp;*.SNP"
 					"|All files (*.*)|*.*"),
-			wxFD_OPEN|wxFD_FILE_MUST_EXIST, wxDefaultPosition);
+			wxFD_OPEN|wxFD_FILE_MUST_EXIST|wxFD_CHANGE_DIR, wxDefaultPosition);
+	}
 
-	if (openFileDialog->ShowModal() == wxID_OK) {
-		int ret = emulator->getMachine()->loadSnapshot(openFileDialog->GetPath().mb_str().data());
+	if (openSnapFileDialog->ShowModal() == wxID_OK) {
+		int ret = emulator->getMachine()->loadSnapshot(openSnapFileDialog->GetPath().mb_str().data());
 		if (ret == -1) {
 			wxMessageBox(_("Could not load selected snapshot."), _("Error loading snapshot"), wxICON_ERROR);
 		} else if (ret == 0) {
@@ -303,15 +314,17 @@ void EmulatorView::OnMachineDebug(wxCommandEvent & event)
 
 void EmulatorView::OnTapeOpen(wxCommandEvent & event)
 {
-	wxFileDialog* openFileDialog = new wxFileDialog(this, _("Open file"),
+	if (!openTapeFileDialog) {
+		openTapeFileDialog = new wxFileDialog(this, _("Open file"),
 			wxT(""), wxT(""),
 			_("Tape image files (*.tap;*.tzx;*.spc;*.sta;*.ltp)|*.tap;*.TAP;*.tzx;*.TZX;*.spc;*.SPC;*.sta;*.STA;*.ltp;*.LTP"
 					"|All files (*.*)|*.*"),
-			wxFD_OPEN|wxFD_FILE_MUST_EXIST, wxDefaultPosition);
+			wxFD_OPEN|wxFD_FILE_MUST_EXIST|wxFD_CHANGE_DIR, wxDefaultPosition);
+	}
 
-	if (openFileDialog->ShowModal() == wxID_OK) {
+	if (openTapeFileDialog->ShowModal() == wxID_OK) {
 		emulator->getTapeRecorder()->stop();
-		emulator->getTapeRecorder()->load(openFileDialog->GetPath().mb_str().data());
+		emulator->getTapeRecorder()->load(openTapeFileDialog->GetPath().mb_str().data());
 		if (emulator->getTapeRecorder()->getState() != TAPE_RECORDER_STATE_EMPTY) {
 			GetMenuBar()->Enable(MENU_TAPE_PLAY, true);
 			GetMenuBar()->Enable(MENU_TAPE_STOP, false);
